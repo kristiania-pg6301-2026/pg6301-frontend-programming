@@ -1,0 +1,641 @@
+# PG6301 Web Development and API design
+
+Welcome to this course in Web Development and API Design. In this course, we will
+look at creating single-page applications with React backed by APIs implemented
+with React. The application will store data in MongoDB and be deployed on Clever Cloud
+
+- [Lectures](#lectures)
+- [Reference material](#reference-material)
+
+## Understanding the course
+
+In this course, we expect you to become proficient at building web applications
+with JavaScript, React and Hono. During the lectures, you will see live coding
+of how such applications may be constructed and many topics will be explained
+along the way.
+
+The course will not have slides, but all the lectures will be recorded and made
+available on Canvas. Each lecture will consist of 10-15 commits which will be
+available on GitHub for student's reference.
+
+There are many topics that we believe are more suitable for self-study than
+classroom explanations, and you will not always be shown how all topics are used
+in a more general situation. _You will be expected to master some such topics
+to get a top grade at the exam_. In order to be prepared for the exam, you have
+to follow the lectures, but you also have to be able to solve new problems and
+find relevant information along the way. To be able to do this, it's extremely
+valuable for you to follow the exercises along the lectures.
+
+The lectures will be recorded and the recordings will be available to students in Panopto in Canvas.
+
+### The example applications
+
+In the course we will mainly be building two example applications:
+
+- The todo-application: This is a very common example, and you can see lots of examples
+  using this online. The application lets to users create tasks and mark them as
+  complete. In addition, we will be adding details to the tasks and give access to
+  tasks to other users
+- Movie reviews
+
+## Lectures
+
+### Lecture 1: Programming skills
+
+[![Lecture 1 Mentimeter](https://img.shields.io/badge/Lecture_1-mentimenter-yellow)]()
+
+[![Lecture 1 code](https://img.shields.io/badge/Lecture_1-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/01)
+[![Lecture 1 reference](https://img.shields.io/badge/Lecture_1-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/01)
+[![Lecture 1 exercise](https://img.shields.io/badge/Lecture_1-exercise-pink)](./exercises/EXERCISES.md#exercise-1)
+
+In this lecture, we will look at some popular and effective software engineering practices:
+
+- Test-driven development: Alternating between writing testing code and production code, writing the test code first
+- Pair-programming: Two developers working together on the same code with one keyboard and mouse, preferably alternating frequently who is at the keyboard
+- Refactoring: Improving the structure of the code without changing the behavior, preferably using refactoring support in the IDE
+- Continuous integration: Sharing the code frequently with the rest of the team, preferably running automated checks whenever the code is pushed
+
+These are some of the practices of Extreme Programming, the first Agile method to be widely documented and used.
+
+### Lecture 2: Programming tools
+
+[![Lecture 2 code](https://img.shields.io/badge/Lecture_2-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/02)
+[![Lecture 2 reference](https://img.shields.io/badge/Lecture_2-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/02)
+[![Lecture 2 exercise](https://img.shields.io/badge/Lecture_2-exercise-pink)](./exercises/EXERCISES.md#exercise-2)
+[![Lecture 2 issues](https://img.shields.io/badge/Lecture_2-issues-green)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/milestone/2)
+
+This lecture covers GitHub Actions, Pull requests, GitHub issues and Code Reviews. This completes most of the practices from Extreme Programming:
+
+- Pair programming
+- Test-driven development
+- Simple design
+- Refactoring
+- Continuous integration
+- Coding standard
+- (Collective code ownership)
+- (Sustainable pace)
+
+### Lecture 3: A tour of React, Hono and Clever Cloud
+
+[![Lecture 3 code](https://img.shields.io/badge/Lecture_3-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/03)
+[![Lecture 3 reference](https://img.shields.io/badge/Lecture_3-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/03)
+[![Lecture 3 exercise](https://img.shields.io/badge/Lecture_3-exercise-pink)](./exercises/EXERCISES.md#exercise-3)
+
+We explore the most important parts to the whole application up and running on
+a server. This lecture will be _way too fast to understand_ and will serve merely
+as a teaser to topics that will be important through the course. After the
+lecture, you will only be expected to know the basics of how to create a React
+application with Vite and React Router
+
+[Reference server running on Clever Cloud](...)
+[Lecture server running on Clever Cloud](...)
+
+### Lecture 4: React, `useState` and props
+
+[![Lecture 4 code](https://img.shields.io/badge/Lecture_4-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/04)
+[![Lecture 4 reference](https://img.shields.io/badge/Lecture_4-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/04)
+[![Lecture 4 exercise](https://img.shields.io/badge/Lecture_4-exercise-pink)](./exercises/EXERCISES.md#exercise-4)
+
+We will review the React topics from the last lecture: Creating a React app,
+creating functional components and using props, state and effects.
+
+#### Reference material
+
+- [Fireship: React in 100 seconds](https://youtu.be/Tn6-PIqc4UM)
+- [Fireship: every React hook](https://youtu.be/TNhaISOUy6Q)
+
+### Lecture 5: `useEffect`, `useRef` and React Router
+
+[![Lecture 5 code](https://img.shields.io/badge/Lecture_5-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/05)
+[![Lecture 5 reference](https://img.shields.io/badge/Lecture_5-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/05)
+[![Lecture 5 exercise](https://img.shields.io/badge/Lecture_5-exercise-pink)](./exercises/EXERCISES.md#exercise-5)
+
+We will continue on the React topics from the last lecture of creating components.
+We will use the `useEffect` and `useRef` hooks to set up interaction between our app and the DOM-objects in the browser
+in order to create a Dialog component using the HTML `<dialog />` element
+We will also look at navigating in the app with React Router.
+
+#### Reference material
+
+- [Fireship: every React hook](https://youtu.be/TNhaISOUy6Q)
+
+### Lecture 6: Implementing a React backend with Hono
+
+[![Lecture 6 code](https://img.shields.io/badge/Lecture_6-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/06)
+[![Lecture 6 reference](https://img.shields.io/badge/Lecture_6-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/06)
+[![Lecture 6 exercise](https://img.shields.io/badge/Lecture_6-exercise-pink)](./exercises/EXERCISES.md#exercise-6)
+
+We will create an Hono server which serves a React application that uses an API implemented in [Hono](https://hono.dev/) to implement
+functionality.
+See [Convert to serve from Hono] on the steps to take the code from the
+previous lecture to be served from Hono.
+
+### Lecture 7: Publishing your application on Clever Cloud
+
+[![Lecture 7 code](https://img.shields.io/badge/Lecture_7-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/07)
+[![Lecture 7 reference](https://img.shields.io/badge/Lecture_7-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/07)
+[![Lecture 7 exercise](https://img.shields.io/badge/Lecture_7-exercise-pink)](./exercises/EXERCISES.md#exercise-7)
+
+In this lecture, we will upload a simple web application to a cloud service and look at automatic deploys.
+See [the steps to deploy to Clever Cloud](#deploying-to-clever-cloud).
+
+In this lecture, we also look at ways to make sure our code is good, from formatting, to linting, to testing.
+We will look at the tools husky, prettier and Typescript. We will also be using GitHub to run our quality
+checks automatically.
+
+### Lecture 8: Communication between client and server
+
+[![Lecture 8 code](https://img.shields.io/badge/Lecture_8-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/08)
+[![Lecture 8 reference](https://img.shields.io/badge/Lecture_8-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/08)
+[![Lecture 8 exercise](https://img.shields.io/badge/Lecture_8-exercise-pink)](./exercises/EXERCISES.md#exercise-8)
+
+In this lecture, we will start from a blank application to review what we have covered so far. This will also give us
+some chance to deal with some information we have glossed over about the communication between the client and the server.
+
+In this lecture, we will also hand out the assignment for the course on
+[Mattermost](https://mattermost.kristiania.no/it-h2024/channels/3s-pg6301-webutvikling-og-api-design)
+
+**Reference material:**
+
+In this lecture, we will be seeing Promises and async/await a lot more. This can be confusing and I recommend these
+video descriptions:
+
+- [Fireship.io video on Async/await and promises](https://www.youtube.com/watch?v=vn3tm0quoqE)
+- [The JavaScript Event Loop (Jake Archibald)](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+
+### Lecture 9: Storing data MongoDB
+
+[![Lecture 9 code](https://img.shields.io/badge/Lecture_9-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/09)
+[![Lecture 9 reference](https://img.shields.io/badge/Lecture_9-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/09)
+[![Lecture 9 exercise](https://img.shields.io/badge/Lecture_9-exercise-pink)](./exercises/EXERCISES.md#exercise-9)
+
+In this lecture, we learn how to store and retrieve data in [MongoDB](https://www.mongodb.com/). See [reference notes for MongoDB](#mongodb)
+
+**Reference material:**
+
+- [MongoDB Skills](https://www.youtube.com/watch?v=0vPt7GI-2kc) - very useful and brief
+- [MongoDB in 100 seconds (Fireship.io)](https://www.youtube.com/watch?v=-bt_y4Loofg)
+- [MongoDB University: JavaScript](https://university.mongodb.com/courses/M220JS/about)
+- [MongoDB documentation: How to query collections](https://www.mongodb.com/docs/manual/reference/operator/query/)
+- [MongoDB documentation: How to insert a document](https://www.mongodb.com/docs/drivers/node/current/usage-examples/insertOne/)
+
+### Lecture 10: Who's your user? OpenID Connect
+
+[![Lecture 10 Mentimeter](https://img.shields.io/badge/Lecture_10-mentimenter-yellow)](https://www.menti.com/)
+
+[![Lecture 10 code](https://img.shields.io/badge/Lecture_10-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/10)
+[![Lecture 10 reference](https://img.shields.io/badge/Lecture_10-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/10)
+[![Lecture 10 exercise](https://img.shields.io/badge/Lecture_10-exercise-pink)](./exercises/EXERCISES.md#exercise-10)
+
+In this lecture we will implement "log in with Google"-functionality. We will also explore other identity
+services that also implement OpenID Connect, such as LinkedIn and Microsoft Entra ID.
+
+### Lecture 11: Completing OpenID Connect and MongoDB
+
+[![Lecture 11 code](https://img.shields.io/badge/Lecture_11-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/11)
+[![Lecture 11 reference](https://img.shields.io/badge/Lecture_11-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/11)
+
+We were unable to fully complete the contents of lecture 9 and 10 so we will complete this this week, working with [Open-ID Connect](#openid-connect---log-on-with-google) and [MongoDB](#mongodb).
+
+There is no separate exercise for this lecture - instead: make sure that you complete the exercises for lecture 7 through 10.
+
+### Lecture 12: Repetition of everything
+
+[![Lecture 12 Mentimeter](https://img.shields.io/badge/Lecture_12-mentimenter-yellow)](https://www.menti.com/al3cqrg2gh6g)
+
+[![Lecture 12 code](https://img.shields.io/badge/Lecture_12-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/12)
+[![Lecture 12 reference](https://img.shields.io/badge/Lecture_12-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/12)
+[![Lecture 12 exercise](https://img.shields.io/badge/Lecture_12-exercise-pink)](./exercises/exam-prep.md)
+
+This week's lecture, we will talk a [little about the exam](./exercises/exam-prep.md).
+We start then with a simple map and then discuss how to move forward based on the wishes
+of the audience, so the lecture has no reference code.
+
+For the exercise-time start on the last exercise that you haven't completed. You can also work on the exam prep.
+
+## Reference material
+
+### Creating a React application
+
+This list of commands:
+
+1. Creates a `package.json`-file
+2. Installs [Vite](https://vite.dev) which transforms `index.html` + `.tsx`-files to JavaScript
+3. Installs [TypeScript](https://www.typescriptlang.org/) to check the correctness of your code
+4. Installs [Prettier](https://prettier.io/) to check the coding style of your code
+5. Installs [Husky](https://typicode.github.io/husky/) which runs checks before each login
+6. Installs the [Vitest](https://vitest.dev) testing library
+
+```shell
+npm init -y
+npm install -D vite
+npm pkg set type=module
+npm install react react-dom
+npm pkg set scripts.dev=vite
+
+npm install -D typescript
+npm install -D @types/react @types/react-dom
+npx tsc --init --jsx react
+
+npm install -D prettier
+npx prettier --write .
+npm pkg set scripts.test="tsc --noEmit && prettier --check ."
+
+npm install -D husky
+npx husky init
+
+npm install vitest
+
+```
+
+#### Minimal `index.html`
+
+```html
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="src/main.tsx" type="module"></script>
+</html>
+```
+
+#### Minimal `src/main.tsx`
+
+```jsx
+import React from "react";
+import { createRoot } from "react-dom/client";
+
+createRoot(document.getElementById("root")).render(<h1>Hello React</h1>);
+```
+
+#### Commiting to Git
+
+1. Create a `.gitignore`-file that excludes `node_modules`, `dist` and `.idea`
+2. Make sure all files are formatted with Prettier
+
+## Deploying your application to the internet
+
+You can either deploy using [GitHub pages](#a-deployment-to-github-pages) or [Clever Cloud](https://clever.cloud).
+GitHub pages is the simplest option, but it cannot run a database. If you want to include a database, you need
+to use Clever Cloud or a similar service
+
+### A. Deployment to GitHub Pages
+
+<details>
+
+#### Minimal `vite.config.ts`
+
+```ts
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  // This has to be equal to the name of your repository
+  // For example, since this repository is https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming,
+  //  `base` has to be `/pg6301-frontend-programming`
+  base: "/pg6301-frontend-programming",
+});
+```
+
+#### Minimal `.github/workflows/publish-to-github-pages.yml`
+
+<details>
+
+```yml
+on:
+  push:
+    # Only deploy when the branch name matches one of these
+    # You probably only need `main`, the others are provided to work with the lecture
+    branches: ["main", "reference/*", "lecture/*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22.x, cache: "npm" }
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+      - uses: actions/deploy-pages@v4
+
+    permissions:
+      id-token: write # to verify the deployment originates from an appropriate source
+      pages: write # to deploy to Pages
+      contents: read # to checkout private repositories
+```
+
+</details>
+</details>
+
+### B. Deploying to Clever Cloud
+
+<details>
+
+#### Deploying to Clever Cloud
+
+By running on Clever Cloud, you can have a server-side application which accesses a database.
+
+In order to deploy to Clever Cloud you need to register an account with the [Clever Cloud](https://clever.cloud)
+organization created for the class to avoid cloud bills.
+
+#### Creating a Hono Application
+
+This sets up your application to have a subdirectory for the server which should have node modules installed and be
+started by Clever Cloud.
+
+This list of commands:
+
+1. Sets up the scripts to build and start the application on Clever Cloud
+2. Creates a directory for the server with a separate `package.json`
+3. Adds dependencies on [Hono](https://hono.dev/)
+4. Creates the scripts to develop and run the server
+
+```shell
+npm pkg set scripts.postinstall="cd server && npm install --include=dev"
+npm pkg set scripts.build="vite build"
+npm pkg set scripts.start="cd server && npm start"
+
+npm install -D @types/node
+
+mkdir server
+cd server
+npm init -y
+
+npm install hono @hono/node-server
+npm install --save-dev tsx
+npm pkg set type=module
+npm pkg set scripts.dev="tsx --watch index.ts"
+npm pkg set scripts.start="tsx index.ts"
+
+```
+
+**`server/index.ts`**
+
+```typescript
+import { Hono } from "hono";
+import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
+
+const app = new Hono();
+// `serveStatic` makes Hono serve the output from `vite build`
+app.use("*", serveStatic({ root: "../dist" }));
+
+serve(app);
+```
+
+**Deploying to Clever Cloud**
+
+To set up your application to run with Clever Cloud:
+
+....
+
+</details>
+
+### Handling API calls:
+
+<details>
+
+**Make Vite proxy (forward) calls to /api to port 3000 when running locally:**
+
+```js
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  server: {
+    proxy: { "/api": "http://localhost:3000" },
+  },
+});
+```
+
+**In React: fetching data:**
+
+```jsx
+const [tasks, setTasks] = useState([]);
+async function loadTasks() {
+  const res = await fetch("/api/tasks");
+  setTasks(await res.json());
+}
+
+useEffect(() => {
+  loadTasks();
+}, []);
+```
+
+**In Hono: fetching data:**
+
+```jsx
+app.get("/api/tasks", (c) => {
+  return c.json(tasks);
+});
+```
+
+**In React: updating data:**
+
+```jsx
+const [description, setDescription] = useState("");
+async function handleSubmit(event) {
+  event.preventDefault();
+  await fetch("/api/tasks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ description }),
+  });
+}
+```
+
+**In Hono: updating data:**
+
+```jsx
+app.post("/api/tasks", async (c) => {
+  const task = await c.req.json();
+  tasks.push(task);
+  return c.newResponse(null, 201);
+});
+```
+
+</details>
+
+## Testing
+
+#### Snapshot testing - check that a view is rendered correctly
+
+For testing react code, I recommend [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/)
+
+<details>
+
+To test with react, install devDependencies `@testing-library/react` and `jsdom`
+
+1. `npm install --save-dev vitest @testing-library/react jsdom`
+2. Add the following to your `vite.config.js`:
+
+   ```js
+   import { defineConfig } from "vite";
+
+   export default defineConfig({
+     test: {
+       environment: "jsdom",
+     },
+   });
+   ```
+
+- Use `render` from `@testing-library/react` to instantiate components
+- Use `expect(RenderResult.baseElement).toMatchSnapshot()` for a test that checks that nothing has changed
+- Use `RenderResult.baseElement.{querySelector,querySelectorAll}` to find DOM elements to inspect in the test
+- You can also use [`RenderResult.findBy{Text,LabelText}`](https://testing-library.com/docs/queries/about) to find elements - this retries for up to one second
+- Use `fireEvent` from `@testing-library/react` to create change, submit and other events
+- Use [`vitest.fn()`](https://vitest.dev/guide/mocking) to create a [Mock](https://vitest.dev/guide/mocking) function that can be used to verify that an event was triggered
+
+```javascript
+import { afterEach, describe, expect, it, vitest } from "vitest";
+import { cleanup, render } from "@testing-library/react";
+import React from "react";
+
+// Without this, each test will extend the web page from the previous instead of starting over
+afterEach(cleanup);
+
+it("matches snapshot", async () => {
+  const app = render(
+    <MemoryRouter initialEntries={["/"]}>
+      <MoviesRoutes fetchMovies={() => movies} />,
+    </MemoryRouter>,
+  );
+  expect(app.baseElement).toMatchSnapshot();
+  expect(
+    [...app.baseElement.querySelectorAll("h3")].map((c) => c.textContent),
+  ).toEqual(["Barbie", "Oppenheimer"]);
+});
+```
+
+</details>
+
+#### Simulate events
+
+<details>
+
+```javascript
+import { afterEach, describe, expect, it, vitest } from "vitest";
+import { cleanup, fireEvent, render } from "@testing-library/react";
+import React from "react";
+
+// Without this, each test will extend the web page from the previous instead of starting over
+afterEach(cleanup);
+
+it("handles event", async () => {
+  const handleClick = vitest.fn();
+  const app = render(
+    <button onClick={() => handleClick(123)}>Click me</button>,
+  );
+  fireEvent.click(await app.findByText("Click me"));
+  expect(handleClick).toBeCalledWith(123);
+});
+```
+
+</details>
+
+#### Testing Hono endpoints
+
+For testing Hono files, I recommend [the Hono test guide](https://hono.dev/docs/guides/testing)
+
+## OpenID Connect - Log on with Google
+
+See the [notes for exercise 10](./exercises/EXERCISES.md#exercise-10) for notes on how OpenID Connect works.
+
+## MongoDB
+
+### Reading data from MongoDb
+
+<details>
+
+Run `cd server` and `npm install mongodb` to install the MongoDB dependency. In this example, we use the `sample_mflix` database that comes with [Atlas MongoDB](https://cloud.mongodb.com/)
+
+**Example of a get-route to retrieve data from MongoDB**
+
+```js
+import { MongoClient } from "mongodb";
+
+const client = new MongoClient(process.env.MONGODB_URL);
+const connection = await client.connect();
+
+const moviesCollection = connection.db("sample_mflix").collection("movies");
+
+app.get("/api/movies", async (c) => {
+  return c.json(
+    await moviesCollection
+      .find({ year: { $gt: 2000, $lt: 2010 }, countries: "Norway" })
+      .sort({ metacritic: -1 })
+      .limit(100)
+      .toArray(),
+  );
+});
+```
+
+In this example, the database username, password and databasename is provided in `MONGODB_URL`. During local development, this value should be placed in a `server/.env`-file, which should be added to `.gitignore`. Update the `dev` script in the server to `tsx --env-file .env --watch index.ts` to read environment variables at startup.
+
+When deploying to Clever Cloud, add `MONGODB_URL` to ...
+
+When deploying to Clever Cloud using [Atlas MongoDB](https://cloud.mongodb.com/), you also need to make sure Clever Cloud has network access to your database under Security > Network Access. Here, you need to add `0.0.0.0/0` as an IP-address.
+
+</details>
+
+## Tools
+
+### IntellJ shortcuts
+
+<details>
+These are some of the most versatile keyboard shortcuts in IntelliJ. There are many more, but learning these 12 will really speed up your code
+
+| Shortcut (Windows)   | Shortcut (Mac)      | Command                                    |
+| -------------------- | ------------------- | ------------------------------------------ |
+| alt-enter            | opt-enter           | Show content action (quick fix)            |
+| ctrl-alt-shift-t     | ctrl-t              | Refactor this (show refactor menu)         |
+| alt-insert           | cmd-n               | New... (add some content)                  |
+| ctrl-w               | opt-up              | Expand selection                           |
+| shift-alt-f10        | ctrl-alt-r          | Run....                                    |
+| shift-alt-f9         | ctrl-alt-d          | Debug....                                  |
+| shift-f10            | ctrl-d              | Rerun last....                             |
+| ctrl-b               | cmd-b               | Navigate to symbol                         |
+| alt-j                | ctrl-g              | Add next match to selection (multi-cursor) |
+| shift-ctrl-backspace | shift-cmd-backspace | Goto last edit location                    |
+| shift, shift         | shift, shift        | Search anywhere                            |
+
+Make yourself familiar with `Refactor this` (ctrl-alt-shift-t / ctrl-t) and use it to learn the shortcut keys for your
+favorite refactorings like Extract method, Rename and Inline.
+
+</details>
+
+### Git commands
+
+<details>
+
+| Command      | Description                              | IntelliJ shortcut                         |
+| ------------ | ---------------------------------------- | ----------------------------------------- |
+| `git init`   | Creates a new local git repo in `.git/`  | VCS > Import into version control         |
+| `git add`    | Stage files to include in next commit    | (not needed)                              |
+| `git commit` | Store your local changes in git history  | ctrl-k / cmd-k                            |
+| `git push`   | Upload changes to remote repo (github)   | ctrl-sh-k / cmd-sh-k                      |
+| `git clone`  | Create a local copy from remote (github) | File > New > Project from version control |
+| `git pull`   | Update local copy with others' changes   | ctrl-t / cmd-t                            |
+| `git log`    | View change history                      | View > Tool Windows > Version control     |
+
+</details>
+
+## Software and libraries used in this course:
+
+- [Vite](https://vitejs.dev/)
+- [Vitest](https://vitest.dev/)
+- [React](https://react.dev)
+- [NodeJs](https://nodejs.org)
+- [Hono](https://hono.dev/)
+- [IntelliJ](https://www.jetbrains.com/idea/)
+- [Clever Cloud](https://clever.cloud)
+- [MongoDB](https://www.mongodb.com/)
+- [Husky](https://typicode.github.io/husky/)
+- [Prettier](https://prettier.io/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Supertest](https://github.com/ladjs/supertest)
+- Google Login
+- Entra ID (?)
