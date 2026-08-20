@@ -5,7 +5,9 @@ function showMinefield(minefield) {
     return minefield[row][col] === "*";
   }
   function cellValue(row, col) {
-    return hasMine(row, col) ? "*" : "0";
+    if (hasMine(row, col)) return "*";
+    if (hasMine(row, col - 1)) return "1";
+    return "0";
   }
 
   let hints = [];
