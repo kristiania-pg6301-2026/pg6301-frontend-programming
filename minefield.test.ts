@@ -1,11 +1,11 @@
 import { test, expect } from "vitest";
 
-function showMinefield(minefield) {
-  function hasMine(row, col) {
+function showMinefield(minefield: string[]) {
+  function hasMine(row: number, col: number) {
     if (!minefield[row]) return false;
     return minefield[row][col] === "*";
   }
-  function cellValue(row, col) {
+  function cellValue(row: number, col: number) {
     if (hasMine(row, col)) return "*";
     let neighbours = 0;
     for (let r = row - 1; r <= row + 1; r++) {
@@ -19,7 +19,7 @@ function showMinefield(minefield) {
   let hints = [];
   for (let row = 0; row < minefield.length; row++) {
     let hintRow = "";
-    for (let col = 0; col < minefield[row].length; col++) {
+    for (let col = 0; col < (minefield[row]?.length || 0); col++) {
       hintRow += cellValue(row, col);
     }
     hints.push(hintRow);
