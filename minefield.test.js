@@ -14,3 +14,6 @@ test("empty minefield", () => {
 test("multiple rows", () => {
   expect(showMinefield([".", ".", "."])).toEqual(["0", "0", "0"]);
 });
+test("multiple columns", () => {
+  expect(showMinefield(["...."])).toEqual(["0000"]);
+});
