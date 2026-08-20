@@ -7,6 +7,7 @@ function showMinefield(minefield) {
   function cellValue(row, col) {
     if (hasMine(row, col)) return "*";
     if (hasMine(row, col - 1)) return "1";
+    if (hasMine(row, col + 1)) return "1";
     return "0";
   }
 
