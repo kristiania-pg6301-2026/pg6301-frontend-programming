@@ -13,3 +13,6 @@ test("that years divisible by four are leap years", () =>
 
 test("that years divisible by 100 are not leap years", () =>
   expect(isLeapYear(2100)).toBe(false));
+
+test("that years divisible by 400 are not leap years", () =>
+  expect(isLeapYear(2400)).toBe(true));
