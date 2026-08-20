@@ -1,5 +1,9 @@
 import { test, expect } from "vitest";
 
+function showMinefield(minefield) {
+  return ["0"];
+}
+
 test("empty minefield", () => {
-  expect(showMinefield(["."]).toBe(["0"]));
+  expect(showMinefield(["."])).toEqual(["0"]);
 });
