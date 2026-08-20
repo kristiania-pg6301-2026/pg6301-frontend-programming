@@ -7,12 +7,13 @@ function showMinefield(minefield) {
   }
   function cellValue(row, col) {
     if (hasMine(row, col)) return "*";
+    let neighbours = 0;
     for (let r = row - 1; r <= row + 1; r++) {
       for (let c = col - 1; c <= col + 1; c++) {
-        if (hasMine(r, c)) return 1;
+        if (hasMine(r, c)) neighbours += 1;
       }
     }
-    return 0;
+    return neighbours;
   }
 
   let hints = [];
