@@ -2,10 +2,10 @@ import { test, expect } from "vitest";
 
 function showMinefield(minefield) {
   let hints = [];
-  for (const row of minefield) {
+  for (let row = 0; row < minefield.length; row++) {
     let hintRow = "";
-    for (let i = 0; i < row.length; i++) {
-      if (row[i] === "*") {
+    for (let col = 0; col < minefield[row].length; col++) {
+      if (minefield[row][col] === "*") {
         hintRow += "*";
       } else {
         hintRow += "0";
