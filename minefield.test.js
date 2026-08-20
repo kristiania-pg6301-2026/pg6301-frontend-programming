@@ -11,6 +11,11 @@ function showMinefield(minefield) {
     if (hasMine(row - 1, col)) return 1;
     if (hasMine(row + 1, col)) return 1;
     if (hasMine(row, col + 1)) return 1;
+    for (let r = row - 1; r <= row + 1; r++) {
+      for (let c = col - 1; c <= col + 1; c++) {
+        if (hasMine(r, c)) return 1;
+      }
+    }
     return 0;
   }
 
