@@ -2,11 +2,14 @@ import { test, expect } from "vitest";
 
 function showMinefield(minefield) {
   function hasMine(row, col) {
+    if (!minefield[row]) return false;
     return minefield[row][col] === "*";
   }
   function cellValue(row, col) {
     if (hasMine(row, col)) return "*";
     if (hasMine(row, col - 1)) return 1;
+    if (hasMine(row - 1, col)) return 1;
+    if (hasMine(row + 1, col)) return 1;
     if (hasMine(row, col + 1)) return 1;
     return 0;
   }
