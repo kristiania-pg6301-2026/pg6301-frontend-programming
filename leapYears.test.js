@@ -1,7 +1,7 @@
 import {test, expect} from "vitest";
 
 function isLeapYear(number) {
-    return false;
+    return number % 4 === 0;
 }
 
 test("that normal years are not leap years", () => expect(isLeapYear(2026)).toBe(false));
