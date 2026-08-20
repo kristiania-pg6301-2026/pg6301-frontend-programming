@@ -43,3 +43,6 @@ test("hints on same row", () => {
 test("hints on same column", () => {
   expect(showMinefield([".", "*", "."])).toEqual(["1", "*", "1"]);
 });
+test("hints around mine", () => {
+  expect(showMinefield(["...", ".*.", "..."])).toEqual(["111", "1*1", "111"]);
+});
