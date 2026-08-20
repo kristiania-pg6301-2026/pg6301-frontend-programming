@@ -24,7 +24,7 @@ see [Coding Dojo description of Roman Numerals](https://codingdojo.org/kata/Roma
 
 ### Step 1: Install and sign up for necessary tools
 
-1. Install [NodeJS](https://nodejs.org/en/download/package-manager) (if you don't already have it)
+1. Install [Node.js](https://nodejs.org/en/download/package-manager) (if you don't already have it)
 2. Sign up for [GitHub student developer pack](https://education.github.com/pack/join) which gives you access to
    important resources like IntelliJ Ultimate. Make sure to use your school email address for the
    registration.
@@ -33,7 +33,7 @@ see [Coding Dojo description of Roman Numerals](https://codingdojo.org/kata/Roma
    use [the IntelliJ student page](https://www.jetbrains.com/shop/eform/students)
    to get a long term license
 
-### Step 2: Create a new project with NodeJS and Vitest
+### Step 2: Create a new project with Node.js and Vitest
 
 1. Find a partner
 2. One of you should [create a new repository](https://github.com/new) on GitHub
@@ -48,8 +48,8 @@ see [Coding Dojo description of Roman Numerals](https://codingdojo.org/kata/Roma
    5. `npm pkg set scripts.test:watch="vitest --watch"`
 7. Start running the tests: `npm run test:watch`
 
-You should now see an error message saying "No test files found. You can change the file name pattern by pressing "p"".
-This means that your tests are configured correctly.
+You should now see an error message saying 'No test files found. You can change the file name pattern by pressing "p"'.
+This means that your tests are configured correctly (but you don't have any tests).
 
 ### Step 3: Write your first failing test
 
@@ -70,7 +70,7 @@ This means that your tests are configured correctly.
    ran, but we haven't yet created the code for it to test
 4. In IntelliJ, press F2 to select the next problem and `Alt-enter` (`opt-enter` on Mac) to get a quick fix. You can now
    select to create a new function.
-5. Creating an empty function is fine. You test will fail with "AssertionError: expected undefined to be 'I' //
+5. Creating an empty function is fine. Your test will fail with "AssertionError: expected undefined to be 'I' //
    Object.is equality"
 
 This means that it is time to give control to your partner. You need to commit your code. In IntelliJ, you can select
@@ -90,7 +90,7 @@ The other programmer should now take over.
 2. In IntelliJ, select ☰ > File > New Project from Version Control and copy your GitHub repo as the URL
 3. In the terminal, run `npm install`, then run `npm run test:watch`. You should now get a failing test
 4. Implement the test as simply as possible: Just make `romanNumerals` always `return "I"`
-5. You tests run green. You should now give each other a HIGH FIVE
+5. Your tests run green. You should now give each other a HIGH FIVE
 6. Implement the second test:
    ```js
    test("2 in roman numerals is II", () => {
@@ -122,7 +122,7 @@ The other programmer should take over.
 2. See the test run green. Now you can refactor.
 3. Instead of having a list of "ifs", make a loop that adds one "I" to the resulting value. Changing the working code is
    called "refactoring"
-4. If you do it correctly, you tests will still pass
+4. If you do it correctly, your tests will still pass
 5. You can now add a test for 4 ("IV"). If you do it correctly, you will get the message "AssertionError: expected
    'IIII' to be 'IV'". This a satifying result as it is reflecting the current understanding in your code
 
@@ -223,7 +223,7 @@ Your application should have the following:
 
 ### Before you begin
 
-Make sure you have signed up for GitHub Education and installed NodeJS and IntelliJ.
+Make sure you have signed up for GitHub Education and installed Node.js and IntelliJ.
 
 ### Getting started
 
@@ -289,7 +289,7 @@ exercise.
 
 ### Goal #1: Mark tasks as checked or and unchecked
 
-When the user checks the "complete" checkbox for a task, the task should be changed to completed. In order
+When the user checks the "complete" checkbox for a task, the task should be changed to "completed". In order
 to make this work, you need to implement an id for each task in the list.
 
 ### Goal #2: View and update details about tasks
@@ -509,7 +509,7 @@ For the full instructions, see the [reference materials](../README.md#creating-a
 ### Self-directed: Update state
 
 You probably want to be able to check tasks as done. The usual way of doing this is to use
-use fetch to call `PUT /tasks/:taskId` with the id of the task in question.
+fetch to call `PUT /tasks/:taskId` with the id of the task in question.
 
 In order to implement this, you have to make the following changes:
 
@@ -530,12 +530,12 @@ In order to implement this, you have to make the following changes:
 
 ### Bonus challenge: Typescript
 
-You should add Typescript to the application. For the server, this
+You should add TypeScript to the application. For the server, this
 requires you to replace `nodemon` with `tsx`. Try to put the definition
 of `TaskItem` in a place where both the client and the server use the
 same `.ts`-file.
 
-It's easiest to do this by 1. adding typescript, 2. renaming `vite.config.{js => ts}`
+It's easiest to do this by 1. adding TypeScript, 2. renaming `vite.config.{js => ts}`
 and committing, 3. rename `src/main.{jsx => tsx}`, fix errors and commit,
 and 4. rename `server/index.{js => ts}` fix scripts and commit. Then add
 the `TaskItem` type and use it in the client and server.
@@ -556,7 +556,7 @@ created in exercise 5 and 6.
 ### Step-by-step: Getting the client ready
 
 1. Create a new GitHub repository and open it in IntelliJ
-2. Create a basic Node project with Vite, Husky, Prettier, and Typescript
+2. Create a basic Node project with Vite, Husky, Prettier, and TypeScript
    1. `npm init -y`
    2. `npm pkg set type=module`
    3. `npm i -D husky prettier typescript vite`
@@ -573,7 +573,7 @@ created in exercise 5 and 6.
 
 3. Update `.gitignore` and commit
    1. `echo .idea/ > .gitignore`
-      - NOTE: This doesn't work with Powershell. You have to update `.gitignore` manually
+      - NOTE: This doesn't work with PowerShell. You have to update `.gitignore` manually
    2. `echo node_modules/ >> .gitignore`
    3. Commit and push your project
 4. Create a React application
@@ -839,7 +839,7 @@ app.post("/api/tasks", async (c) => {
 
 ## Create a Hono API for MongoDB
 
-Create an Hono application similarly to how we have done before:
+Create a Hono application similarly to how we have done before:
 
 ## Give the API access to the Mongo database
 
@@ -957,7 +957,7 @@ Account. You should have completed [exercise 8](#exercise-8) before attempting t
 4. Store the `access_token` in a cookie: `setCookie(c, "access_token", access_token)`
 5. Implement `get("/api/userinfo")`: `getToken(c, "access_token")` and
    call fetch on `userinfo_endpoint` from https://accounts.google.com/.well-known/openid-configuration
-   using the access token as a Authorization header:
+   using the access token as an Authorization header:
    ```ts
    const res = await fetch(userinfo_endpoint, {
      headers: { Authorization: `Bearer ${access_token}` },
@@ -977,7 +977,7 @@ Account. You should have completed [exercise 8](#exercise-8) before attempting t
   the redirect url using `c.req.url`. In Clever Cloud, you should add the client secret
   ...
 - Try to implement alternative logins like LinkedIn. For a slightly bigger challenge,
-  you can implement login with GitHub. How would you change you application to
+  you can implement login with GitHub. How would you change your application to
   support multiple logins?
 
 </details>

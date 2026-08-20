@@ -14,7 +14,7 @@ with JavaScript, React and Hono. During the lectures, you will see live coding
 of how such applications may be constructed and many topics will be explained
 along the way.
 
-The course will not have slides, but all the lectures will be recorded and made
+The course won't have slides, but all the lectures will be recorded and made
 available on Canvas. Each lecture will consist of 10-15 commits which will be
 available on GitHub for student's reference.
 
@@ -26,7 +26,8 @@ to follow the lectures, but you also have to be able to solve new problems and
 find relevant information along the way. To be able to do this, it's extremely
 valuable for you to follow the exercises along the lectures.
 
-The lectures will be recorded and the recordings will be available to students in Panopto in Canvas.
+The lectures will be recorded and the recordings will be available to students in
+Panopto in Canvas.
 
 ### The example applications
 
@@ -36,13 +37,14 @@ In the course we will mainly be building two example applications:
   using this online. The application lets to users create tasks and mark them as
   complete. In addition, we will be adding details to the tasks and give access to
   tasks to other users
-- Movie reviews
+- Movie reviews: This is a sample database in MongoDB so we will have information
+  available to play with
 
 ## Lectures
 
 ### Lecture 1: Programming skills
 
-[![Lecture 1 Mentimeter](https://img.shields.io/badge/Lecture_1-mentimenter-yellow)]()
+[![Lecture 1 Mentimeter](https://img.shields.io/badge/Lecture_1-mentimenter-yellow)](https://www.menti.com/alo5cgyfi2qf)
 
 [![Lecture 1 code](https://img.shields.io/badge/Lecture_1-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/01)
 [![Lecture 1 reference](https://img.shields.io/badge/Lecture_1-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/01)
