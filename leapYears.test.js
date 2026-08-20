@@ -1,6 +1,7 @@
 import {test, expect} from "vitest";
 
 function isLeapYear(number) {
+    if (number % 100 === 0) return false;
     return number % 4 === 0;
 }
 
