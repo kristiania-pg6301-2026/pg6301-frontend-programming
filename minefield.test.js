@@ -47,3 +47,6 @@ test("hints on same column", () => {
 test("hints around mine", () => {
   expect(showMinefield(["...", ".*.", "..."])).toEqual(["111", "1*1", "111"]);
 });
+test("count mines cell", () => {
+  expect(showMinefield(["***", "*.*", "***"])).toEqual(["***", "*8*", "***"]);
+});
