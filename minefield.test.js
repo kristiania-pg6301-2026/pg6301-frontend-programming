@@ -2,8 +2,12 @@ import { test, expect } from "vitest";
 
 function showMinefield(minefield) {
   let hints = [];
-  for (const row in minefield) {
-    hints.push("0");
+  for (const row of minefield) {
+    let hintRow = "";
+    for (let i = 0; i < row.length; i++) {
+      hintRow += "0";
+    }
+    hints.push(hintRow);
   }
   return hints;
 }
