@@ -1,11 +1,15 @@
 import { test, expect } from "vitest";
 
 function showMinefield(minefield) {
+  function hasMine(row, col) {
+    return minefield[row][col] === "*";
+  }
+
   let hints = [];
   for (let row = 0; row < minefield.length; row++) {
     let hintRow = "";
     for (let col = 0; col < minefield[row].length; col++) {
-      if (minefield[row][col] === "*") {
+      if (hasMine(row, col)) {
         hintRow += "*";
       } else {
         hintRow += "0";
