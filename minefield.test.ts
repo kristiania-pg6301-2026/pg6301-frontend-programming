@@ -1,11 +1,11 @@
 import { test, expect } from "vitest";
 
 function showMinefield(minefield: string[]) {
-  function hasMine(row: number, col: number) {
+  function hasMine(row: number, col: number): boolean {
     if (!minefield[row]) return false;
     return minefield[row][col] === "*";
   }
-  function cellValue(row: number, col: number) {
+  function cellValue(row: number, col: number): number | "*" {
     if (hasMine(row, col)) return "*";
     let neighbours = 0;
     for (let r = row - 1; r <= row + 1; r++) {
