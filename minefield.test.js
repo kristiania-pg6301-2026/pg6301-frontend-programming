@@ -31,3 +31,6 @@ test("multiple columns", () => {
 test("minefield with mines", () => {
   expect(showMinefield(["**", "**"])).toEqual(["**", "**"]);
 });
+test("hints right of mine", () => {
+  expect(showMinefield(["*."])).toEqual(["*1"]);
+});
