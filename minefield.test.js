@@ -9,11 +9,7 @@ function showMinefield(minefield) {
   for (let row = 0; row < minefield.length; row++) {
     let hintRow = "";
     for (let col = 0; col < minefield[row].length; col++) {
-      if (hasMine(row, col)) {
-        hintRow += "*";
-      } else {
-        hintRow += "0";
-      }
+      hintRow += hasMine(row, col) ? "*" : "0";
     }
     hints.push(hintRow);
   }
