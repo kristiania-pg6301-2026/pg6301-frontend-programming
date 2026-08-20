@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "prettier --check .",
+    "test": "tsc --noEmit && prettier --check .",
     "test:watch": "vitest --watch",
     "prepare": "husky"
   },
@@ -15,7 +15,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/issues"
   },
@@ -23,6 +23,7 @@
   "devDependencies": {
     "husky": "^9.1.7",
     "prettier": "^3.9.6",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.11"
   }
 }
