@@ -21,3 +21,6 @@ test("multiple rows", () => {
 test("multiple columns", () => {
   expect(showMinefield(["...."])).toEqual(["0000"]);
 });
+test("minefield with mines", () => {
+  expect(showMinefield(["**", "**"])).toEqual(["**", "**"]);
+});
