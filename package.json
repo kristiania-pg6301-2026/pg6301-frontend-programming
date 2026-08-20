@@ -1,0 +1,27 @@
+{
+  "name": "pg6301-frontend-programming-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:watch": "vitest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/issues"
+  },
+  "homepage": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming#readme",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "prettier": "^3.9.6",
+    "vitest": "^4.1.11"
+  }
+}
