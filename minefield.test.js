@@ -5,7 +5,11 @@ function showMinefield(minefield) {
   for (const row of minefield) {
     let hintRow = "";
     for (let i = 0; i < row.length; i++) {
-      hintRow += "0";
+      if (row[i] === "*") {
+        hintRow += "*";
+      } else {
+        hintRow += "0";
+      }
     }
     hints.push(hintRow);
   }
