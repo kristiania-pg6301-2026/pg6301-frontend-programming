@@ -4,12 +4,15 @@ function showMinefield(minefield) {
   function hasMine(row, col) {
     return minefield[row][col] === "*";
   }
+  function cellValue(row, col) {
+    return hasMine(row, col) ? "*" : "0";
+  }
 
   let hints = [];
   for (let row = 0; row < minefield.length; row++) {
     let hintRow = "";
     for (let col = 0; col < minefield[row].length; col++) {
-      hintRow += hasMine(row, col) ? "*" : "0";
+      hintRow += cellValue(row, col);
     }
     hints.push(hintRow);
   }
