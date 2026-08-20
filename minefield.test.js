@@ -37,3 +37,6 @@ test("minefield with mines", () => {
 test("hints on same row", () => {
   expect(showMinefield([".*."])).toEqual(["1*1"]);
 });
+test("hints on same column", () => {
+  expect(showMinefield([".", "*", "."])).toEqual(["1", "*", "1"]);
+});
