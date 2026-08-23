@@ -23,4 +23,4 @@ app.put("/api/tasks/:id", async (c) => {
   return c.newResponse(null, 200);
 });
 app.get("*", serveStatic({ root: "../dist" }));
-serve(app);
+serve({ fetch: app.fetch, port: 8080 });
