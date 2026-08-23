@@ -2,12 +2,7 @@ import { createRoot } from "react-dom/client";
 import { useEffect, useState } from "react";
 
 function Application() {
-  const [tasks, setTasks] = useState([
-    { title: "Create client app", completed: true },
-    { title: "Fetch from server", completed: false },
-    { title: "Post to server", completed: false },
-    { title: "Deploy to clever.cloud", completed: false },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   async function fetchData() {
     const res = await fetch("/api/tasks");
