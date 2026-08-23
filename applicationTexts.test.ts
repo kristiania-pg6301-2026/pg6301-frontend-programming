@@ -29,10 +29,11 @@ test("user error", () => {
 });
 
 test("invalid weekday", () => {
-  expect(
-    applicationTexts(norwegian, { code: "invalidWeekday", day: "festdag" }),
-  ).toBe('Verdien "festdag" er ikke en gyldig ukedag');
-  expect(
-    applicationTexts(english, { code: "invalidWeekday", day: "doomsday" }),
-  ).toBe('"doomsday" is not a valid weekday');
+  const error = { code: "invalidWeekday", day: "festdag" } as const;
+  expect(applicationTexts(norwegian, error)).toBe(
+    'Verdien "festdag" er ikke en gyldig ukedag',
+  );
+  expect(applicationTexts(english, error)).toBe(
+    '"festdag" is not a valid weekday',
+  );
 });
