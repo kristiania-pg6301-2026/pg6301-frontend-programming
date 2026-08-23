@@ -2,6 +2,10 @@ import { test, expect } from "vitest";
 
 function toRoman(n) {
   let result = "";
+  if (n >= 10) {
+    result += "X";
+    n -= 10;
+  }
   if (n === 9) return "IX";
   if (n >= 5) {
     result += "V";
@@ -27,3 +31,4 @@ testRoman(5, "V");
 testRoman(6, "VI");
 testRoman(7, "VII");
 testRoman(9, "IX");
+testRoman(10, "X");
