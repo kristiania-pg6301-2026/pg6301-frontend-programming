@@ -1,7 +1,6 @@
 import { test, expect } from "vitest";
 
 function toRoman(n) {
-  if (n === 5) return "V";
   if (n === 4) return "IV";
   let result = "";
   if (n >= 5) {
