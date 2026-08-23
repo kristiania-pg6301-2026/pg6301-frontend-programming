@@ -18,9 +18,16 @@ function Application() {
 
   const [newTask, setNewTask] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setTasks((old) => [...old, { title: newTask }]);
+    await fetch("/api/tasks", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ title: newTask }),
+    });
+    await fetchData();
   }
 
   return (
