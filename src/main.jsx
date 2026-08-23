@@ -2,11 +2,13 @@ import { createRoot } from "react-dom/client";
 import { useState } from "react";
 
 function Application() {
+  const [tasks, setTasks] = useState([]);
+
   const [newTask, setNewTask] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    alert("Submitting!");
+    setTasks((old) => [...old, { title: newTask }]);
   }
 
   return (
@@ -30,6 +32,15 @@ function Application() {
       </form>
 
       <h2>Existing tasks</h2>
+
+      <ul>
+        {tasks.map((t) => (
+          <li>
+            <input type={"checkbox"} />
+            {t.title}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
