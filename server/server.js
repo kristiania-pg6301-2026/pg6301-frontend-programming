@@ -8,7 +8,7 @@ const tasks = [
   { id: 1, title: "Fetch from server", completed: true },
   { id: 2, title: "Post to server", completed: true },
   { id: 3, title: "Update on server", completed: true },
-  { id: 4, title: "Deploy to clever.cloud", completed: false },
+  { id: 4, title: "Deploy to clever.cloud", completed: true },
 ];
 app.get("/api/tasks", (c) => c.json(tasks));
 app.post("/api/tasks", async (c) => {
