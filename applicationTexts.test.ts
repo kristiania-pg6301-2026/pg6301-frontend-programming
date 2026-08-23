@@ -7,3 +7,12 @@ test("general error message", () => {
     "An error has occurred",
   );
 });
+
+test("network error", () => {
+  expect(applicationTexts(norwegian, "networkError")).toBe(
+    "Mistet kontakt med serveren",
+  );
+  expect(applicationTexts(english, "networkError")).toBe(
+    "Failed to connect to server",
+  );
+});
