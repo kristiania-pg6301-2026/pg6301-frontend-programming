@@ -1,12 +1,13 @@
 import { test, expect } from "vitest";
 
 function toRoman(n) {
-  if (n === 4) return "IV";
   let result = "";
+  if (n === 9) return "IX";
   if (n >= 5) {
     result += "V";
     n -= 5;
   }
+  if (n === 4) return "IV";
   for (let i = 0; i < n; i++) {
     result += "I";
   }
@@ -25,3 +26,4 @@ testRoman(4, "IV");
 testRoman(5, "V");
 testRoman(6, "VI");
 testRoman(7, "VII");
+testRoman(9, "IX");
