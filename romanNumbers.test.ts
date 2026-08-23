@@ -8,6 +8,8 @@ function toRoman(n: number) {
       n -= digitValue;
     }
   }
+  convertDigit(400, "CD");
+  convertDigit(40, "XL");
   convertDigit(10, "X");
   convertDigit(9, "IX");
   convertDigit(5, "V");
@@ -31,4 +33,5 @@ testRoman(7, "VII");
 testRoman(9, "IX");
 testRoman(10, "X");
 testRoman(14, "XIV");
-testRoman(20, "XX");
+testRoman(38, "XXXVIII");
+testRoman(444, "CDXLIV");
