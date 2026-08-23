@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Application() {
   const [tasks, setTasks] = useState([
@@ -8,6 +8,18 @@ function Application() {
     { title: "Post to server", completed: false },
     { title: "Deploy to clever.cloud", completed: false },
   ]);
+
+  async function fetchData() {
+    const res = await fetch("/api/tasks");
+    if (res.ok) {
+      const tasks = await res.json();
+      setTasks(tasks);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const [newTask, setNewTask] = useState("");
 
