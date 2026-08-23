@@ -11,7 +11,10 @@ function toRoman(n) {
     result += "V";
     n -= 5;
   }
-  if (n === 4) return "IV";
+  if (n === 4) {
+    result += "IV";
+    n -= 4;
+  }
   for (let i = 0; i < n; i++) {
     result += "I";
   }
@@ -32,3 +35,4 @@ testRoman(6, "VI");
 testRoman(7, "VII");
 testRoman(9, "IX");
 testRoman(10, "X");
+testRoman(14, "XIV");
