@@ -1,15 +1,9 @@
-import { test, expect } from "vitest";
-
-const norwegian = {};
-const english = {};
-function applicationMessage(language: any, error: string) {
-  if (language === english) return "An error has occurred";
-  return "Noe gikk feil";
-}
+import { expect, test } from "vitest";
+import { applicationTexts, english, norwegian } from "./applicationTexts.js";
 
 test("general error message", () => {
-  expect(applicationMessage(norwegian, "generalError")).toBe("Noe gikk feil");
-  expect(applicationMessage(english, "generalError")).toBe(
+  expect(applicationTexts(norwegian, "generalError")).toBe("Noe gikk feil");
+  expect(applicationTexts(english, "generalError")).toBe(
     "An error has occurred",
   );
 });
