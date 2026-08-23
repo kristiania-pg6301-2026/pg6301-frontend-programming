@@ -21,3 +21,12 @@ test("user error", () => {
   expect(applicationTexts(norwegian, "userError")).toBe("Feil i input");
   expect(applicationTexts(english, "userError")).toBe("Malformed input");
 });
+
+test("invalid weekday", () => {
+  expect(
+    applicationTexts(norwegian, { code: "invalidWeekday", day: "festdag" }),
+  ).toBe('Verdien "festdag" er ikke en gyldig ukedag');
+  expect(
+    applicationTexts(english, { code: "invalidWeekday", day: "doomsday" }),
+  ).toBe('"doomsday" is not a valid weekday');
+});
