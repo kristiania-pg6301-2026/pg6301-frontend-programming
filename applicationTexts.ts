@@ -20,10 +20,12 @@ export const english: ApplicationTexts = {
 
 export function applicationTexts(
   language: ApplicationTexts,
-  error: keyof ApplicationTexts | { code: "invalidWeekday"; day: string },
+  error:
+    | { code: "invalidWeekday"; day: string }
+    | { code: Exclude<keyof ApplicationTexts, "invalidWeekday"> },
 ) {
-  if (error instanceof Object && "code" in error) {
-    return language[error.code]({ day: error.day });
+  if (error.code === "invalidWeekday") {
+    return language.invalidWeekday(error);
   }
-  return language[error];
+  return language[error.code];
 }
