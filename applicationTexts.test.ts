@@ -16,3 +16,8 @@ test("network error", () => {
     "Failed to connect to server",
   );
 });
+
+test("user error", () => {
+  expect(applicationTexts(norwegian, "userError")).toBe("Feil i input");
+  expect(applicationTexts(english, "userError")).toBe("Malformed input");
+});
