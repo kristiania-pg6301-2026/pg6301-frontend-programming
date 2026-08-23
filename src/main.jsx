@@ -2,7 +2,12 @@ import { createRoot } from "react-dom/client";
 import { useState } from "react";
 
 function Application() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([
+    { title: "Create client app", completed: true },
+    { title: "Fetch from server", completed: false },
+    { title: "Post to server", completed: false },
+    { title: "Deploy to clever.cloud", completed: false },
+  ]);
 
   const [newTask, setNewTask] = useState("");
 
@@ -36,7 +41,7 @@ function Application() {
       <ul>
         {tasks.map((t) => (
           <li>
-            <input type={"checkbox"} />
+            <input type={"checkbox"} checked={t.completed} />
             {t.title}
           </li>
         ))}
