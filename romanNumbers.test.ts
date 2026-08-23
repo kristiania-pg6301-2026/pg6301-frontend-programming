@@ -12,9 +12,7 @@ function toRoman(n: number) {
   convertDigit(9, "IX");
   convertDigit(5, "V");
   convertDigit(4, "IV");
-  for (let i = 0; i < n; i++) {
-    result += "I";
-  }
+  convertDigit(1, "I");
   return result;
 }
 
