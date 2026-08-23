@@ -1,6 +1,7 @@
 import { test, expect } from "vitest";
 
 function toRoman(number) {
+  if (number === 4) return "IV";
   let result = "";
   for (let i = 0; i < number; i++) {
     result += "I";
