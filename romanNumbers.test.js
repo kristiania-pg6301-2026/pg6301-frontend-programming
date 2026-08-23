@@ -1,9 +1,11 @@
 import { test, expect } from "vitest";
 
 function toRoman(number) {
-  if (number === 3) return "III";
-  if (number === 2) return "II";
-  return "I";
+  let result = "";
+  for (let i = 0; i < number; i++) {
+    result += "I";
+  }
+  return result;
 }
 
 function testRoman(n, expected) {
