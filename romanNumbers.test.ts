@@ -3,7 +3,7 @@ import { test, expect } from "vitest";
 function toRoman(n: number) {
   let result = "";
   function convertDigit(digitValue: number, digitSymbol: string) {
-    if (n >= digitValue) {
+    while (n >= digitValue) {
       result += digitSymbol;
       n -= digitValue;
     }
@@ -33,3 +33,4 @@ testRoman(7, "VII");
 testRoman(9, "IX");
 testRoman(10, "X");
 testRoman(14, "XIV");
+testRoman(20, "XX");
