@@ -9,15 +9,9 @@ function toRoman(n: number) {
     }
   }
   convertDigit(10, "X");
-  if (n === 9) return "IX";
-  if (n >= 5) {
-    result += "V";
-    n -= 5;
-  }
-  if (n === 4) {
-    result += "IV";
-    n -= 4;
-  }
+  convertDigit(9, "IX");
+  convertDigit(5, "V");
+  convertDigit(4, "IV");
   for (let i = 0; i < n; i++) {
     result += "I";
   }
