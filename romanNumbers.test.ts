@@ -9,9 +9,11 @@ function toRoman(n: number) {
     }
   }
   convertDigit(1000, "M");
+  convertDigit(900, "CM");
   convertDigit(500, "D");
   convertDigit(400, "CD");
   convertDigit(100, "C");
+  convertDigit(90, "XC");
   convertDigit(50, "L");
   convertDigit(40, "XL");
   convertDigit(10, "X");
@@ -39,4 +41,5 @@ testRoman(10, "X");
 testRoman(14, "XIV");
 testRoman(38, "XXXVIII");
 testRoman(444, "CDXLIV");
+testRoman(999, "CMXCIX");
 testRoman(3888, "MMMDCCCLXXXVIII");
