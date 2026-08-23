@@ -6,7 +6,9 @@
   "scripts": {
     "test": "prettier --check .",
     "prepare": "husky",
-    "dev": "vite"
+    "start": "cd server && npm start",
+    "dev": "vite",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",

@@ -22,4 +22,5 @@ app.put("/api/tasks/:id", async (c) => {
   tasks[id] = { ...tasks[id], ...delta };
   return c.newResponse(null, 200);
 });
+app.get("*", serveStatic({ root: "../dist" }));
 serve(app);
