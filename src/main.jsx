@@ -21,11 +21,22 @@ function Application() {
   async function handleSubmit(event) {
     event.preventDefault();
     await fetch("/api/tasks", {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ title: newTask }),
+    });
+    await fetchData();
+  }
+
+  async function handleTaskChecked(id, checked) {
+    await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ checked }),
     });
     await fetchData();
   }
@@ -55,7 +66,11 @@ function Application() {
       <ul>
         {tasks.map((t) => (
           <li>
-            <input type={"checkbox"} checked={t.completed} />
+            <input
+              type={"checkbox"}
+              checked={t.completed}
+              onChange={(e) => handleTaskChecked(t.id, e.target.checked)}
+            />
             {t.title}
           </li>
         ))}
