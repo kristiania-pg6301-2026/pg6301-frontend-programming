@@ -1,14 +1,14 @@
 import { test, expect } from "vitest";
 
-function toRoman(n) {
+function toRoman(n: number) {
   let result = "";
-  function convertDigit(digitValue, digitSymbol) {
+  function convertDigit(digitValue: number, digitSymbol: string) {
     if (n >= digitValue) {
       result += digitSymbol;
       n -= digitValue;
     }
   }
-  convertDigit("X", 10);
+  convertDigit(10, "X");
   if (n === 9) return "IX";
   if (n >= 5) {
     result += "V";
@@ -24,7 +24,7 @@ function toRoman(n) {
   return result;
 }
 
-function testRoman(n, expected) {
+function testRoman(n: number, expected: string) {
   test(`that ${n} in roman numbers is ${expected}`, () =>
     expect(toRoman(n)).toBe(expected));
 }
