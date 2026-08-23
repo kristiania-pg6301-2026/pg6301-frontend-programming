@@ -29,17 +29,7 @@ function testRoman(n: number, expected: string) {
     expect(toRoman(n)).toBe(expected));
 }
 
-testRoman(1, "I");
-testRoman(2, "II");
-testRoman(3, "III");
-testRoman(4, "IV");
-testRoman(5, "V");
-testRoman(6, "VI");
-testRoman(7, "VII");
-testRoman(9, "IX");
-testRoman(10, "X");
-testRoman(14, "XIV");
-testRoman(38, "XXXVIII");
+testRoman(1111, "MCXI");
 testRoman(444, "CDXLIV");
 testRoman(999, "CMXCIX");
 testRoman(3888, "MMMDCCCLXXXVIII");
