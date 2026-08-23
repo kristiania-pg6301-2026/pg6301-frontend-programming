@@ -30,13 +30,13 @@ function Application() {
     await fetchData();
   }
 
-  async function handleTaskChecked(id, checked) {
+  async function handleTaskChecked(id, completed) {
     await fetch(`/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ checked }),
+      body: JSON.stringify({ completed }),
     });
     await fetchData();
   }
