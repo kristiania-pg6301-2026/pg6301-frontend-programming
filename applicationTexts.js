@@ -1,13 +1,14 @@
-export const norwegian = {};
-export const english = {};
+export const norwegian = {
+  networkError: "Mistet kontakt med serveren",
+  generalError: "En feil har inntruffet",
+  userError: "Feil i brukerinput",
+};
+export const english = {
+  networkError: "Cannot communicate with the server",
+  generalError: "Something went wrong",
+  userError: "Invalid input",
+};
 
 export function showText(errorCode, language) {
-  if (language === norwegian) {
-    if (errorCode === "networkError") return "Mistet kontakt med serveren";
-    if (errorCode === "generalError") return "En feil har inntruffet";
-    if (errorCode === "userError") return "Feil i brukerinput";
-  }
-  if (errorCode === "networkError") return "Cannot communicate with the server";
-  if (errorCode === "generalError") return "Something went wrong";
-  if (errorCode === "userError") return "Invalid input";
+  return language[errorCode];
 }
