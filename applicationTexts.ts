@@ -1,3 +1,9 @@
+interface ApplicationTexts {
+  generalError: string;
+  networkError: string;
+  userError: string;
+}
+
 export const norwegian = {
   networkError: "Mistet kontakt med serveren",
   generalError: "En feil har inntruffet",
@@ -9,6 +15,9 @@ export const english = {
   userError: "Invalid input",
 };
 
-export function showText(errorCode, language) {
+export function showText(
+  errorCode: keyof ApplicationTexts,
+  language: ApplicationTexts,
+) {
   return language[errorCode];
 }
