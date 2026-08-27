@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming#readme",
   "devDependencies": {
+    "prettier": "^3.9.6",
     "vitest": "^4.1.11"
   }
 }
