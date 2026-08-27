@@ -1,5 +1,7 @@
 import { test, expect } from "vitest";
 
+import { showText, norwegian, english } from "./applicationTexts";
+
 test("general error in both languages", () => {
   expect(showText("generalError", norwegian)).toBe("En feil har inntruffet");
   expect(showText("generalError", english)).toBe("Something went wrong");

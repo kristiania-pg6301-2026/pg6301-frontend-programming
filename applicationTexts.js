@@ -1,7 +1,7 @@
-const norwegian = {};
-const english = {};
+export const norwegian = {};
+export const english = {};
 
-function showText(errorCode, language) {
+export function showText(errorCode, language) {
   if (language === norwegian) {
     if (errorCode === "networkError") return "Mistet kontakt med serveren";
     if (errorCode === "generalError") return "En feil har inntruffet";
