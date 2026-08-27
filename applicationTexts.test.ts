@@ -20,3 +20,9 @@ test("user error in both languages", () => {
   expect(showText("userError", norwegian)).toBe("Feil i brukerinput");
   expect(showText("userError", english)).toBe("Invalid input");
 });
+
+test("invalid email in norwegian", () => {
+  expect(showText("invalidEmail", norwegian)).toBe(
+    'adressen "hei-at-verden.no" er ugyldig',
+  );
+});
