@@ -33,3 +33,18 @@ test("invalid email in norwegian", () => {
     ),
   ).toBe('adressen "hei-at-verden.no" er ugyldig');
 });
+
+test("invalid email domain in english", () => {
+  expect(
+    showText(
+      {
+        code: "invalidEmailDomain",
+        emailAddress: "hei@verden.no",
+        validDomains: ["student.kristiania.no", "kristiania.no"],
+      },
+      english,
+    ),
+  ).toBe(
+    'the email address "hei@verden.no" should be in the domains: student.kristiania.no, kristiania.no',
+  );
+});
