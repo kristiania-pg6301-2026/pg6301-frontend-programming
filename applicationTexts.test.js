@@ -4,7 +4,8 @@ const norwegian = {};
 const english = {};
 
 function showText(errorCode, language) {
-    return undefined;
+    if (language === norwegian) return "En feil har inntruffet";
+    return "Something went wrong";
 }
 
 test("general error in both languages", () => {
