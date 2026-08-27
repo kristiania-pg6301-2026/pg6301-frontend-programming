@@ -25,3 +25,8 @@ test("network error in both languages", () => {
     "Cannot communicate with the server",
   );
 });
+
+test("user error in both languages", () => {
+  expect(showText("userError", norwegian)).toBe("Feil i brukerinput");
+  expect(showText("userError", english)).toBe("Invalid input");
+});
