@@ -6,10 +6,10 @@ const english = {};
 function showText(errorCode, language) {
   if (language === norwegian) {
     if (errorCode === "networkError") return "Mistet kontakt med serveren";
-    return "En feil har inntruffet";
+    if (errorCode === "generalError") return "En feil har inntruffet";
   }
   if (errorCode === "networkError") return "Cannot communicate with the server";
-  return "Something went wrong";
+  if (errorCode === "generalError") return "Something went wrong";
 }
 
 test("general error in both languages", () => {
