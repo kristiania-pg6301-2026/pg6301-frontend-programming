@@ -12,8 +12,8 @@ export const norwegian: ApplicationTexts = {
   userError: "Feil i brukerinput",
 };
 export const english: ApplicationTexts = {
-  invalidEmail: (emailAdress) =>
-    `the email address "${emailAdress}" is invalid`,
+  invalidEmail: (emailAddress) =>
+    `the email address "${emailAddress}" is invalid`,
   networkError: "Cannot communicate with the server",
   generalError: "Something went wrong",
   userError: "Invalid input",
