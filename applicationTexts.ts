@@ -18,9 +18,11 @@ export const english: ApplicationTexts = {
   userError: "Invalid input",
 };
 
+type ErrorCodeParam = { code: keyof ApplicationTexts; emailAddress?: string };
+
 export function showText(
-  errorCode: keyof ApplicationTexts,
+  errorCode: ErrorCodeParam,
   language: ApplicationTexts,
 ) {
-  return language[errorCode];
+  return language[errorCode.code];
 }
