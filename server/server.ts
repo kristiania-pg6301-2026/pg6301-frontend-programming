@@ -22,4 +22,4 @@ app.post("/api/tasks", async (c) => {
   return c.newResponse(null, 200);
 });
 app.use("*", serveStatic({ root: "../dist" }));
-serve(app);
+serve({ fetch: app.fetch, port: 8080 });
