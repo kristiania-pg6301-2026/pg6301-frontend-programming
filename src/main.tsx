@@ -19,15 +19,16 @@ function Application() {
     loadTasks();
   }, []);
 
-  function handleSubmit(event: SubmitEvent) {
+  async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    setTasks((old) => [
-      ...old,
-      {
-        name: taskName,
-        completed: false,
+    await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({ name: taskName, completed: false }),
+      headers: {
+        "Content-Type": "application/json",
       },
-    ]);
+    });
+    loadTasks();
   }
 
   return (
