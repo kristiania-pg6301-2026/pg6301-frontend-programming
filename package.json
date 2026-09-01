@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
     "test": "tsc --noEmit && prettier --check .",
     "prepare": "husky"
   },

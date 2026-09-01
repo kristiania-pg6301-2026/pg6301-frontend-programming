@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 const tasks = [
   { name: "Create new project", completed: true },
@@ -20,4 +21,5 @@ app.post("/api/tasks", async (c) => {
   tasks.push(task);
   return c.newResponse(null, 200);
 });
+app.use("*", serveStatic({ root: "../dist" }));
 serve(app);

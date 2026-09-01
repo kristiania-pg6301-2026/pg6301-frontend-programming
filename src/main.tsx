@@ -33,7 +33,7 @@ function Application() {
 
   return (
     <>
-      <h1>My tasks</h1>
+      <h1>My task application</h1>
       <ol>
         {tasks.map((t) => (
           <li>
