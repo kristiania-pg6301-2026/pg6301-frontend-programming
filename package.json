@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "test": "prettier --check .",
+    "test": "tsc --noEmit && prettier --check .",
     "prepare": "husky"
   },
   "repository": {
@@ -13,15 +13,21 @@
     "url": "git+https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming.git"
   },
   "keywords": [],
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/issues"
   },
   "homepage": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming#readme",
   "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "husky": "^9.1.7",
     "prettier": "^3.9.6",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   }
 }
