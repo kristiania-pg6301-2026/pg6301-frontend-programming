@@ -9,7 +9,7 @@ const tasks = [
   { name: "Create new task", completed: true },
   { name: "Fetch tasks from server", completed: true },
   { name: "Create task on server", completed: true },
-  { name: "Deploy application to Clever Cloud", completed: false },
+  { name: "Deploy application to Clever Cloud", completed: true },
   { name: "Update task on server", completed: false },
 ];
 
