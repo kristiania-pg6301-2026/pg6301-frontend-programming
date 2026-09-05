@@ -2,7 +2,7 @@
 
 ## Exercise 1
 
-<details open>
+<details>
 
 Good programming is about getting frequent feedback from what you are working on, both from team members and from
 programming tools.
