@@ -10,7 +10,11 @@ export default function TaskList({
   return (
     <ul>
       {tasks.map((t) => (
-        <li>
+        <li
+          style={{
+            textDecoration: t.completed ? "line-through" : undefined,
+          }}
+        >
           <input
             type={"checkbox"}
             checked={t.completed}
