@@ -1,11 +1,24 @@
+import { useState } from "react";
+
 export function NewTaskForm({ onNewTask }) {
+  const [desciption, setDesciption] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onNewTask({ desciption });
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
-        Description: <input />
+        Description:{" "}
+        <input
+          value={desciption}
+          onChange={(e) => setDesciption(e.target.value)}
+        />
       </div>
       <div>
-        <button>Save</button>
+        <button>Save {desciption}</button>
       </div>
     </form>
   );
