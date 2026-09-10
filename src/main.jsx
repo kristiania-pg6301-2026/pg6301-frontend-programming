@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
+import { TaskList } from "./taskList";
 
 function Application() {
   const [tasks, setTasks] = useState([
@@ -10,11 +11,7 @@ function Application() {
   return (
     <>
       <h1>Tasks</h1>
-      <ul>
-        {tasks.map((t) => (
-          <li>{t.description}</li>
-        ))}
-      </ul>
+      <TaskList tasks={tasks} />
     </>
   );
 }
