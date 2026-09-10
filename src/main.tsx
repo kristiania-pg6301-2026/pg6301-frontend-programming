@@ -1,14 +1,14 @@
 import { createRoot } from "react-dom/client";
+import { FrontPage } from "./frontPage.js";
 import { useState } from "react";
-import { TaskList } from "./taskList.js";
-import { NewTaskForm } from "./newTaskForm.js";
 import type { TaskItem } from "./taskItem.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
     { description: "create npm app", completed: true },
     { description: "create react app", completed: true },
-    { description: "checkboxes", completed: false },
+    { description: "checkboxes", completed: true },
+    { description: "details", completed: false },
   ]);
 
   function handleNewTask(task: TaskItem) {
@@ -18,15 +18,12 @@ function Application() {
   function handleCheckedChanged(task: TaskItem, completed: boolean) {
     setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
   }
-
   return (
-    <>
-      <h1>Tasks</h1>
-      <TaskList tasks={tasks} onCheckedChanged={handleCheckedChanged} />
-      <h2>Create new task</h2>
-      <NewTaskForm onNewTask={handleNewTask} />
-      <pre>{JSON.stringify(tasks, null, 2)}</pre>
-    </>
+    <FrontPage
+      tasks={tasks}
+      onCheckedChanged={handleCheckedChanged}
+      onNewTask={handleNewTask}
+    />
   );
 }
 
