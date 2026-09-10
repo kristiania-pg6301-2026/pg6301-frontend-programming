@@ -277,7 +277,7 @@ emojiis on other entries. Despite knowing better from experience, I will let the
 
 ## Exercise 4
 
-<details>
+<details open>
 
 ### Updating tasks
 

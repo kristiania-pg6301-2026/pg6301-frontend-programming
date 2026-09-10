@@ -1,5 +1,7 @@
 # PG6301 Web Development and API design
 
+[![Running website on GH pages](https://img.shields.io/badge/Course-website-green)](https://kristiania-pg6301-2026.github.io/pg6301-frontend-programming/)
+
 Welcome to this course in Web Development and API Design. In this course, we will
 look at creating single-page applications with React backed by APIs implemented
 with React. The application will store data in MongoDB and be deployed on Clever Cloud
