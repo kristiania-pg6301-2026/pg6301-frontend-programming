@@ -1,4 +1,6 @@
-export function TaskList({ tasks }) {
+import React from "react";
+
+export function TaskList({ tasks }: { tasks: any[] }) {
   return (
     <ul>
       {tasks.map((t) => (

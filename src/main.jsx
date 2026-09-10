@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
-import { TaskList } from "./taskList";
+import { TaskList } from "./taskList.tsx";
 import { NewTaskForm } from "./newTaskForm";
 
 function Application() {
