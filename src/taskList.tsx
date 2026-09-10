@@ -20,7 +20,7 @@ export function TaskList({
             checked={t.completed}
             onChange={(e) => onCheckedChanged(t, e.target.checked)}
           />{" "}
-          <Link to={"/tasks/id"}>{t.description}</Link>
+          <Link to={`/tasks/${t.id}`}>{t.description}</Link>
         </li>
       ))}
     </ul>

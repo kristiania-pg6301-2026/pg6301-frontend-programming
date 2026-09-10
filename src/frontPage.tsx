@@ -9,7 +9,7 @@ export function FrontPage({
 }: {
   tasks: TaskItem[];
   onCheckedChanged(task: TaskItem, completed: boolean): void;
-  onNewTask(task: TaskItem): void;
+  onNewTask(task: Omit<TaskItem, "id">): void;
 }) {
   return (
     <>

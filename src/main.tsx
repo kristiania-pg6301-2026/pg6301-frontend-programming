@@ -2,18 +2,19 @@ import { createRoot } from "react-dom/client";
 import { FrontPage } from "./frontPage.js";
 import { useState } from "react";
 import type { TaskItem } from "./taskItem.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { TaskPage } from "./taskPage.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
-    { description: "create npm app", completed: true },
-    { description: "create react app", completed: true },
-    { description: "checkboxes", completed: true },
-    { description: "details", completed: false },
+    { id: 0, description: "create npm app", completed: true },
+    { id: 1, description: "create react app", completed: true },
+    { id: 2, description: "checkboxes", completed: true },
+    { id: 3, description: "details", completed: false },
   ]);
 
-  function handleNewTask(task: TaskItem) {
-    setTasks((old) => [...old, task]);
+  function handleNewTask(task: Omit<TaskItem, "id">) {
+    setTasks((old) => [...old, { id: old.length, ...task }]);
   }
 
   function handleCheckedChanged(task: TaskItem, completed: boolean) {
@@ -31,7 +32,7 @@ function Application() {
           />
         }
       />
-      <Route path={"/tasks/id"} element={<h1>A task</h1>} />
+      <Route path={"/tasks/:id"} element={<TaskPage tasks={tasks} />} />
       <Route path={"*"} element={<h1>Not found</h1>} />
     </Routes>
   );
