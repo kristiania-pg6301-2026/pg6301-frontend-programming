@@ -10,7 +10,12 @@ function Application() {
     { id: 0, description: "create npm app", completed: true },
     { id: 1, description: "create react app", completed: true },
     { id: 2, description: "checkboxes", completed: true },
-    { id: 3, description: "details", completed: false },
+    {
+      id: 3,
+      description: "details",
+      details: "Implement detail view",
+      completed: false,
+    },
   ]);
 
   function handleNewTask(task: Omit<TaskItem, "id">) {
@@ -20,6 +25,11 @@ function Application() {
   function handleCheckedChanged(task: TaskItem, completed: boolean) {
     setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
   }
+
+  function handleUpdateTaskDetails(task: TaskItem, details: string) {
+    setTasks((old) => old.map((o) => (o === task ? { ...o, details } : o)));
+  }
+
   return (
     <Routes>
       <Route
@@ -32,7 +42,15 @@ function Application() {
           />
         }
       />
-      <Route path={"/tasks/:id"} element={<TaskPage tasks={tasks} />} />
+      <Route
+        path={"/tasks/:id"}
+        element={
+          <TaskPage
+            tasks={tasks}
+            onUpdateTaskDetails={handleUpdateTaskDetails}
+          />
+        }
+      />
       <Route path={"*"} element={<h1>Not found</h1>} />
     </Routes>
   );

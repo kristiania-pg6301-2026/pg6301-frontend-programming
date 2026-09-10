@@ -1,15 +1,50 @@
 import type { TaskItem } from "./taskItem.js";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { type SubmitEvent, useState } from "react";
 
-function TaskView({ task }: { task: TaskItem }) {
-  return <h2>{task.description}</h2>;
+function TaskView({
+  task,
+  onUpdateTaskDetails,
+}: {
+  task: TaskItem;
+  onUpdateTaskDetails(task: TaskItem, details: string): void;
+}) {
+  const [details, setDetails] = useState(task.details || "");
+  const navigate = useNavigate();
+
+  function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    onUpdateTaskDetails(task, details);
+    navigate("/");
+  }
+
+  return (
+    <>
+      <h2>{task.description}</h2>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+        />
+        <div>
+          <button>Update</button>
+        </div>
+      </form>
+    </>
+  );
 }
 
-export function TaskPage({ tasks }: { tasks: TaskItem[] }) {
+export function TaskPage({
+  tasks,
+  onUpdateTaskDetails,
+}: {
+  tasks: TaskItem[];
+  onUpdateTaskDetails(task: TaskItem, details: string): void;
+}) {
   const { id } = useParams();
 
   const task = id && tasks.find((t) => t.id === parseInt(id));
   if (!task) return <h1>Missing task with {id}</h1>;
 
-  return <TaskView task={task} />;
+  return <TaskView task={task} onUpdateTaskDetails={onUpdateTaskDetails} />;
 }
