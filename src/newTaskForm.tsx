@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
+import type { TaskItem } from "./taskItem.js";
 
-export function NewTaskForm({ onNewTask }: any) {
-  const [desciption, setDesciption] = useState("");
+export function NewTaskForm({
+  onNewTask,
+}: {
+  onNewTask(task: TaskItem): void;
+}) {
+  const [description, setDescription] = useState("");
 
-  function handleSubmit(event: any) {
+  function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    onNewTask({ desciption });
+    onNewTask({ description });
   }
 
   return (
@@ -13,12 +18,12 @@ export function NewTaskForm({ onNewTask }: any) {
       <div>
         Description:{" "}
         <input
-          value={desciption}
-          onChange={(e) => setDesciption(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </div>
       <div>
-        <button>Save {desciption}</button>
+        <button>Save {description}</button>
       </div>
     </form>
   );
