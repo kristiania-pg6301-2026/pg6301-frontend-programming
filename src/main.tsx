@@ -1,15 +1,16 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
-import { TaskList } from "./taskList.tsx";
-import { NewTaskForm } from "./newTaskForm";
+import { TaskList } from "./taskList.js";
+import { NewTaskForm } from "./newTaskForm.js";
+import type { TaskItem } from "./taskItem.js";
 
 function Application() {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<TaskItem[]>([
     { description: "create npm app" },
     { description: "create react app" },
   ]);
 
-  function handleNewTask(task) {
+  function handleNewTask(task: TaskItem) {
     setTasks((old) => [...old, task]);
   }
 
@@ -23,4 +24,4 @@ function Application() {
   );
 }
 
-createRoot(document.getElementById("app")).render(<Application />);
+createRoot(document.getElementById("app")!).render(<Application />);

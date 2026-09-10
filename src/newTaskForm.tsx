@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export function NewTaskForm({ onNewTask }) {
+export function NewTaskForm({ onNewTask }: any) {
   const [desciption, setDesciption] = useState("");
 
-  function handleSubmit(event) {
+  function handleSubmit(event: any) {
     event.preventDefault();
     onNewTask({ desciption });
   }
