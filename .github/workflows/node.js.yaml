@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - main
+      - lecture/*
+      - reference/*
+
+jobs:
+  publish_to_gh_pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.x
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: "dist/"
+      - uses: actions/deploy-pages@v4
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
