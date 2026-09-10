@@ -1,4 +1,4 @@
-import type { TaskItem } from "./taskItem.js";
+import type { OnNewTask, OnUpdateTask, TaskItem } from "./taskItem.js";
 import { TaskList } from "./taskList.js";
 import { NewTaskForm } from "./newTaskForm.js";
 
@@ -8,8 +8,8 @@ export function FrontPage({
   onNewTask,
 }: {
   tasks: TaskItem[];
-  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
-  onNewTask(task: Omit<TaskItem, "id">): void;
+  onUpdateTask: OnUpdateTask;
+  onNewTask: OnNewTask;
 }) {
   return (
     <>

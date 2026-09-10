@@ -1,11 +1,7 @@
-import { useState, type SubmitEvent } from "react";
-import type { TaskItem } from "./taskItem.js";
+import { type SubmitEvent, useState } from "react";
+import type { OnNewTask } from "./taskItem.js";
 
-export function NewTaskForm({
-  onNewTask,
-}: {
-  onNewTask(task: Omit<TaskItem, "id">): void;
-}) {
+export function NewTaskForm({ onNewTask }: { onNewTask: OnNewTask }) {
   const [description, setDescription] = useState("");
 
   function handleSubmit(event: SubmitEvent) {

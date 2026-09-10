@@ -1,5 +1,5 @@
 import React from "react";
-import type { TaskItem } from "./taskItem.js";
+import type { OnUpdateTask, TaskItem } from "./taskItem.js";
 import { Link } from "react-router-dom";
 
 export function TaskList({
@@ -7,7 +7,7 @@ export function TaskList({
   onUpdateTask,
 }: {
   tasks: TaskItem[];
-  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
+  onUpdateTask: OnUpdateTask;
 }) {
   return (
     <ul>

@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { FrontPage } from "./frontPage.js";
 import { useState } from "react";
-import type { TaskItem } from "./taskItem.js";
+import type { OnNewTask, OnUpdateTask, TaskItem } from "./taskItem.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TaskPage } from "./taskPage.js";
 
@@ -18,13 +18,11 @@ function Application() {
     },
   ]);
 
-  function handleNewTask(task: Omit<TaskItem, "id">) {
+  const handleNewTask: OnNewTask = (task) =>
     setTasks((old) => [...old, { id: old.length, ...task }]);
-  }
 
-  function handleUpdateTask(id: number, delta: Partial<TaskItem>) {
+  const handleUpdateTask: OnUpdateTask = (id, delta) =>
     setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
-  }
 
   return (
     <Routes>

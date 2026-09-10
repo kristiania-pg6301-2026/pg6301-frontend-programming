@@ -1,4 +1,4 @@
-import type { TaskItem } from "./taskItem.js";
+import type { OnUpdateTask, TaskItem } from "./taskItem.js";
 import { useParams, useNavigate } from "react-router-dom";
 import { type SubmitEvent, useState } from "react";
 
@@ -7,7 +7,7 @@ function TaskView({
   onUpdateTask,
 }: {
   task: TaskItem;
-  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
+  onUpdateTask: OnUpdateTask;
 }) {
   const [details, setDetails] = useState(task.details || "");
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export function TaskPage({
   onUpdateTask,
 }: {
   tasks: TaskItem[];
-  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
+  onUpdateTask: OnUpdateTask;
 }) {
   const { id } = useParams();
 
