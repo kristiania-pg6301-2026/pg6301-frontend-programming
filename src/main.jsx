@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { TaskList } from "./taskList";
+import { NewTaskForm } from "./newTaskForm";
 
 function Application() {
   const [tasks, setTasks] = useState([
@@ -8,10 +9,16 @@ function Application() {
     { description: "create react app" },
   ]);
 
+  function handleNewTask(task) {
+    setTasks((old) => [...old, task]);
+  }
+
   return (
     <>
       <h1>Tasks</h1>
       <TaskList tasks={tasks} />
+      <h2>Create new task</h2>
+      <NewTaskForm onNewTask={handleNewTask} />
     </>
   );
 }
