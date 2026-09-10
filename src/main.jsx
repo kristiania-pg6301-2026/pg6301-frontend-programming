@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import TaskList from "./TaskList";
 
 function Application() {
   const tasks = [
@@ -8,9 +9,7 @@ function Application() {
   return (
     <>
       <h1>My Tasks</h1>
-      {tasks.map((t) => (
-        <li>{t.description}</li>
-      ))}
+      <TaskList tasks={tasks} />
     </>
   );
 }
