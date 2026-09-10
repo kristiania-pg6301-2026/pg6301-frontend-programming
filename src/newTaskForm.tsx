@@ -10,7 +10,7 @@ export function NewTaskForm({
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    onNewTask({ description });
+    onNewTask({ description, completed: false });
   }
 
   return (
