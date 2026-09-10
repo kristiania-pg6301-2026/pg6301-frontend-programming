@@ -292,6 +292,13 @@ exercise.
 When the user checks the "complete" checkbox for a task, the task should be changed to "completed". In order
 to make this work, you need to implement an id for each task in the list.
 
+### Goal #1 b: Add TypeScript and break the code into several components
+
+- `npm install -D typescript`
+- `npx tsc --init`
+- `npm pkg set scripts.test="tsc --noEmit && prettier --check ."`
+- Rename `main.jsx` to `main.tsx` and fix all the errors (type=module in `package.json`, add @types/react and @types/react-dom, add types to functions)
+
 ### Goal #2: View and update details about tasks
 
 Add react-router-dom as a dependency.
