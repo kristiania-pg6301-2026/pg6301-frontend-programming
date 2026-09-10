@@ -4,17 +4,17 @@ import { type SubmitEvent, useState } from "react";
 
 function TaskView({
   task,
-  onUpdateTaskDetails,
+  onUpdateTask,
 }: {
   task: TaskItem;
-  onUpdateTaskDetails(task: TaskItem, details: string): void;
+  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
 }) {
   const [details, setDetails] = useState(task.details || "");
   const navigate = useNavigate();
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    onUpdateTaskDetails(task, details);
+    onUpdateTask(task.id, { details });
     navigate("/");
   }
 
@@ -36,15 +36,15 @@ function TaskView({
 
 export function TaskPage({
   tasks,
-  onUpdateTaskDetails,
+  onUpdateTask,
 }: {
   tasks: TaskItem[];
-  onUpdateTaskDetails(task: TaskItem, details: string): void;
+  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
 }) {
   const { id } = useParams();
 
   const task = id && tasks.find((t) => t.id === parseInt(id));
   if (!task) return <h1>Missing task with {id}</h1>;
 
-  return <TaskView task={task} onUpdateTaskDetails={onUpdateTaskDetails} />;
+  return <TaskView task={task} onUpdateTask={onUpdateTask} />;
 }

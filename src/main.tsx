@@ -26,14 +26,6 @@ function Application() {
     setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
   }
 
-  function handleCheckedChanged(task: TaskItem, completed: boolean) {
-    handleUpdateTask(task.id, { completed });
-  }
-
-  function handleUpdateTaskDetails(task: TaskItem, details: string) {
-    handleUpdateTask(task.id, { details });
-  }
-
   return (
     <Routes>
       <Route
@@ -41,19 +33,14 @@ function Application() {
         element={
           <FrontPage
             tasks={tasks}
-            onCheckedChanged={handleCheckedChanged}
+            onUpdateTask={handleUpdateTask}
             onNewTask={handleNewTask}
           />
         }
       />
       <Route
         path={"/tasks/:id"}
-        element={
-          <TaskPage
-            tasks={tasks}
-            onUpdateTaskDetails={handleUpdateTaskDetails}
-          />
-        }
+        element={<TaskPage tasks={tasks} onUpdateTask={handleUpdateTask} />}
       />
       <Route path={"*"} element={<h1>Not found</h1>} />
     </Routes>

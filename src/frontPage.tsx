@@ -4,17 +4,17 @@ import { NewTaskForm } from "./newTaskForm.js";
 
 export function FrontPage({
   tasks,
-  onCheckedChanged,
+  onUpdateTask,
   onNewTask,
 }: {
   tasks: TaskItem[];
-  onCheckedChanged(task: TaskItem, completed: boolean): void;
+  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
   onNewTask(task: Omit<TaskItem, "id">): void;
 }) {
   return (
     <>
       <h1>Tasks</h1>
-      <TaskList tasks={tasks} onCheckedChanged={onCheckedChanged} />
+      <TaskList tasks={tasks} onUpdateTask={onUpdateTask} />
       <h2>Create new task</h2>
       <NewTaskForm onNewTask={onNewTask} />
       <pre>{JSON.stringify(tasks, null, 2)}</pre>
