@@ -8,7 +8,7 @@ export default function FrontPage({
   onTaskCompeteUpdated,
 }: {
   tasks: TaskItem[];
-  onNewTask: (task: TaskItem) => void;
+  onNewTask: (task: Omit<TaskItem, "id">) => void;
   onTaskCompeteUpdated: (task: TaskItem, completed: boolean) => void;
 }) {
   return (

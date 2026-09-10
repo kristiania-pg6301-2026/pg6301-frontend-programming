@@ -4,7 +4,7 @@ import type { TaskItem } from "./TaskItem.js";
 export default function NewTaskForm({
   onNewTask,
 }: {
-  onNewTask(task: TaskItem): void;
+  onNewTask(task: Omit<TaskItem, "id">): void;
 }) {
   const [description, setDescription] = useState("");
 

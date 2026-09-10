@@ -21,7 +21,7 @@ export default function TaskList({
             checked={t.completed}
             onChange={(e) => onTaskCompleteUpdated(t, e.target.checked)}
           />
-          <Link to={"/tasks/id"}>{t.description}</Link>
+          <Link to={`/tasks/${t.id}`}>{t.description}</Link>
         </li>
       ))}
     </ul>
