@@ -22,12 +22,16 @@ function Application() {
     setTasks((old) => [...old, { id: old.length, ...task }]);
   }
 
+  function handleUpdateTask(id: number, delta: Partial<TaskItem>) {
+    setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
+  }
+
   function handleCheckedChanged(task: TaskItem, completed: boolean) {
-    setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
+    handleUpdateTask(task.id, { completed });
   }
 
   function handleUpdateTaskDetails(task: TaskItem, details: string) {
-    setTasks((old) => old.map((o) => (o === task ? { ...o, details } : o)));
+    handleUpdateTask(task.id, { details });
   }
 
   return (
