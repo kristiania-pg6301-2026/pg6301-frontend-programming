@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { FrontPage } from "./frontPage.js";
 import { useState } from "react";
 import type { OnNewTask, OnUpdateTask, TaskItem } from "./taskItem.js";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { TaskPage } from "./taskPage.js";
 
 function Application() {
@@ -46,7 +46,7 @@ function Application() {
 }
 
 createRoot(document.getElementById("app")!).render(
-  <BrowserRouter>
+  <HashRouter>
     <Application />
-  </BrowserRouter>,
+  </HashRouter>,
 );

@@ -44,7 +44,7 @@ export function TaskPage({
   const { id } = useParams();
 
   const task = id && tasks.find((t) => t.id === parseInt(id));
-  if (!task) return <h1>Missing task with {id}</h1>;
+  if (!task) return <h1>Missing task with id {id}</h1>;
 
   return <TaskView task={task} onUpdateTask={onUpdateTask} />;
 }
