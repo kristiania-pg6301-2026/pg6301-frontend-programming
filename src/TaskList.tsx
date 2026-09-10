@@ -4,7 +4,10 @@ export default function TaskList({ tasks }: { tasks: TaskItem[] }) {
   return (
     <ul>
       {tasks.map((t) => (
-        <li>{t.description}</li>
+        <li>
+          <input type={"checkbox"} checked={t.completed} />
+          {t.description}
+        </li>
       ))}
     </ul>
   );
