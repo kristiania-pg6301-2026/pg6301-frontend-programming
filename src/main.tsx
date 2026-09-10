@@ -9,6 +9,12 @@ function Application() {
     { description: "Show current tasks", completed: true },
     { description: "Create new tasks", completed: true },
     { description: "Mark task as done", completed: true },
+    { description: "Implement routing", completed: false },
+    {
+      description: "Update task details",
+      completed: false,
+      details: "Update more information about a task",
+    },
   ]);
 
   function handleNewTask(task: TaskItem) {
