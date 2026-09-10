@@ -1,6 +1,4 @@
-interface TaskItem {
-  description: string;
-}
+import type { TaskItem } from "./TaskItem.js";
 
 export default function TaskList({ tasks }: { tasks: TaskItem[] }) {
   return (
