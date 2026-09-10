@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
-import TaskList from "./TaskList.js";
-import NewTaskForm from "./NewTaskForm.js";
 import type { TaskItem } from "./TaskItem.js";
+import { HashRouter } from "react-router-dom";
+import FrontPage from "./FrontPage.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
@@ -26,16 +26,16 @@ function Application() {
   }
 
   return (
-    <>
-      <h1>My Tasks</h1>
-      <TaskList
-        tasks={tasks}
-        onTaskCompleteUpdated={handleTaskCompleteUpdated}
-      />
-      <h2>Create new task</h2>
-      <NewTaskForm onNewTask={handleNewTask} />
-    </>
+    <FrontPage
+      tasks={tasks}
+      onNewTask={handleNewTask}
+      onTaskCompeteUpdated={handleTaskCompleteUpdated}
+    />
   );
 }
 
-createRoot(document.getElementById("app")!).render(<Application />);
+createRoot(document.getElementById("app")!).render(
+  <HashRouter>
+    <Application />
+  </HashRouter>,
+);

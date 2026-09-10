@@ -1,4 +1,5 @@
 import type { TaskItem } from "./TaskItem.js";
+import { Link } from "react-router-dom";
 
 export default function TaskList({
   tasks,
@@ -20,7 +21,7 @@ export default function TaskList({
             checked={t.completed}
             onChange={(e) => onTaskCompleteUpdated(t, e.target.checked)}
           />
-          {t.description}
+          <Link to={"/tasks/id"}>{t.description}</Link>
         </li>
       ))}
     </ul>
