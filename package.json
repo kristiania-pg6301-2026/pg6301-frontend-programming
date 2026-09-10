@@ -6,7 +6,8 @@
   "scripts": {
     "test": "tsc --noEmit && prettier --check .",
     "prepare": "husky",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
