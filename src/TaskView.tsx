@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 export default function TaskView({
   task,
-  onUpdateTaskDetails,
+  onUpdateTask,
 }: {
   task: TaskItem;
-  onUpdateTaskDetails(id: number, value: string): void;
+  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -23,7 +23,7 @@ export default function TaskView({
         <div>
           <textarea
             value={task.details}
-            onChange={(e) => onUpdateTaskDetails(task.id, e.target.value)}
+            onChange={(e) => onUpdateTask(task.id, { details: e.target.value })}
           ></textarea>
           <div>
             <button onClick={() => setIsEditing(false)}>Save</button>

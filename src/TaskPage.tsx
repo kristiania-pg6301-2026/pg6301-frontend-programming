@@ -4,14 +4,14 @@ import TaskView from "./TaskView.js";
 
 export default function TaskPage({
   tasks,
-  onUpdateTaskDetails,
+  onUpdateTask,
 }: {
   tasks: TaskItem[];
-  onUpdateTaskDetails(id: number, value: string): void;
+  onUpdateTask(id: number, delta: Partial<TaskItem>): void;
 }) {
   const { id } = useParams();
 
   const task = tasks.find((t) => t.id === parseInt(id!));
   if (!task) return <h1>Not found: Task with id {id}</h1>;
-  return <TaskView task={task} onUpdateTaskDetails={onUpdateTaskDetails} />;
+  return <TaskView task={task} onUpdateTask={onUpdateTask} />;
 }

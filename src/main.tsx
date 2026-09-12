@@ -27,10 +27,6 @@ function Application() {
     setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
   }
 
-  function handleUpdateTaskDetails(id: number, details: string) {
-    setTasks((old) => old.map((o) => (o.id === id ? { ...o, details } : o)));
-  }
-
   return (
     <Routes>
       <Route
@@ -45,12 +41,7 @@ function Application() {
       />
       <Route
         path={"/tasks/:id"}
-        element={
-          <TaskPage
-            tasks={tasks}
-            onUpdateTaskDetails={handleUpdateTaskDetails}
-          />
-        }
+        element={<TaskPage tasks={tasks} onUpdateTask={handleUpdateTask} />}
       />
       <Route path={"*"} element={<h1>Page not found</h1>} />
     </Routes>
