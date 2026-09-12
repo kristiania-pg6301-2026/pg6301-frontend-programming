@@ -1,5 +1,5 @@
 import type { TaskItem } from "./TaskItem.js";
-import { useState, type SubmitEvent } from "react";
+import { useState, type SubmitEvent, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function TaskView({
@@ -11,6 +11,11 @@ export default function TaskView({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [details, setDetails] = useState(task.details || "");
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  useEffect(() => {
+    if (isEditing) dialogRef.current!.showModal();
+    else dialogRef.current!.close();
+  }, [isEditing]);
 
   function handleSave(event: SubmitEvent) {
     event.preventDefault();
@@ -31,7 +36,7 @@ export default function TaskView({
       </div>
 
       <h2>Details</h2>
-      {isEditing && (
+      <dialog ref={dialogRef}>
         <form onSubmit={handleSave}>
           <div>
             <textarea
@@ -44,14 +49,10 @@ export default function TaskView({
             </div>
           </div>
         </form>
-      )}
+      </dialog>
 
-      {isEditing || (
-        <>
-          <div>{task.details}</div>
-          <button onClick={() => setIsEditing((b) => !b)}>Edit</button>
-        </>
-      )}
+      <div>{task.details}</div>
+      <button onClick={() => setIsEditing(true)}>Edit</button>
     </>
   );
 }
