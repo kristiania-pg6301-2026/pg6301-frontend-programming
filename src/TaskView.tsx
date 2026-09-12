@@ -1,5 +1,5 @@
 import type { TaskItem } from "./TaskItem.js";
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { Link } from "react-router-dom";
 
 export default function TaskView({
@@ -10,6 +10,18 @@ export default function TaskView({
   onUpdateTask(id: number, delta: Partial<TaskItem>): void;
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [details, setDetails] = useState(task.details || "");
+
+  function handleSave(event: SubmitEvent) {
+    event.preventDefault();
+    onUpdateTask(task.id, { details });
+    setIsEditing(false);
+  }
+
+  function handleCancel() {
+    setDetails(task.details || "");
+    setIsEditing(false);
+  }
 
   return (
     <>
@@ -20,15 +32,18 @@ export default function TaskView({
 
       <h2>Details</h2>
       {isEditing && (
-        <div>
-          <textarea
-            value={task.details}
-            onChange={(e) => onUpdateTask(task.id, { details: e.target.value })}
-          ></textarea>
+        <form onSubmit={handleSave}>
           <div>
-            <button onClick={() => setIsEditing(false)}>Save</button>
+            <textarea
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+            />
+            <div>
+              <button>Save</button>
+              <button onClick={handleCancel}>Cancel</button>
+            </div>
           </div>
-        </div>
+        </form>
       )}
 
       {isEditing || (
