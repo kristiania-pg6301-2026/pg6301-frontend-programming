@@ -16,6 +16,9 @@ export default function TaskView({
     if (isEditing) dialogRef.current!.showModal();
     else dialogRef.current!.close();
   }, [isEditing]);
+  useEffect(() => {
+    dialogRef.current!.addEventListener("close", () => setIsEditing(false));
+  }, []);
 
   function handleSave(event: SubmitEvent) {
     event.preventDefault();
@@ -35,7 +38,7 @@ export default function TaskView({
         <Link to={"/"}>Back</Link>
       </div>
 
-      <h2>Details</h2>
+      <h2>Details {isEditing && "editing"}</h2>
       <dialog ref={dialogRef}>
         <form onSubmit={handleSave}>
           <div>
