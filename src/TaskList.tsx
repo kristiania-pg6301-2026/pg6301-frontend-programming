@@ -6,7 +6,7 @@ export default function TaskList({
   onTaskCompleteUpdated,
 }: {
   tasks: TaskItem[];
-  onTaskCompleteUpdated(task: TaskItem, completed: boolean): void;
+  onTaskCompleteUpdated(id: number, completed: boolean): void;
 }) {
   return (
     <ul>
@@ -19,7 +19,7 @@ export default function TaskList({
           <input
             type={"checkbox"}
             checked={t.completed}
-            onChange={(e) => onTaskCompleteUpdated(t, e.target.checked)}
+            onChange={(e) => onTaskCompleteUpdated(t.id, e.target.checked)}
           />
           <Link to={`/tasks/${t.id}`}>{t.description}</Link>
         </li>

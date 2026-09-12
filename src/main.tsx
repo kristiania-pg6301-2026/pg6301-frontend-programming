@@ -23,8 +23,8 @@ function Application() {
     setTasks((old) => [{ id: old.length, ...task }, ...old]);
   }
 
-  function handleTaskCompleteUpdated(task: TaskItem, completed: boolean) {
-    setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
+  function handleTaskCompleteUpdated(id: number, completed: boolean) {
+    setTasks((old) => old.map((o) => (o.id === id ? { ...o, completed } : o)));
   }
 
   function handleUpdateTaskDetails(id: number, details: string) {
