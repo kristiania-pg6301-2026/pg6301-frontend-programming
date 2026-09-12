@@ -1,9 +1,11 @@
 import { createRoot } from "react-dom/client";
+import * as React from "react";
 import { useState } from "react";
 import type { TaskItem } from "./TaskItem.js";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
+import { TaskListContext } from "./taskListContext.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
@@ -28,23 +30,19 @@ function Application() {
   }
 
   return (
-    <Routes>
-      <Route
-        path={"/"}
-        element={
-          <FrontPage
-            tasks={tasks}
-            onNewTask={handleNewTask}
-            onUpdateTask={handleUpdateTask}
-          />
-        }
-      />
-      <Route
-        path={"/tasks/:id"}
-        element={<TaskPage tasks={tasks} onUpdateTask={handleUpdateTask} />}
-      />
-      <Route path={"*"} element={<h1>Page not found</h1>} />
-    </Routes>
+    <TaskListContext
+      value={{
+        tasks,
+        onUpdateTask: handleUpdateTask,
+        onNewTask: handleNewTask,
+      }}
+    >
+      <Routes>
+        <Route path={"/"} element={<FrontPage />} />
+        <Route path={"/tasks/:id"} element={<TaskPage />} />
+        <Route path={"*"} element={<h1>Page not found</h1>} />
+      </Routes>
+    </TaskListContext>
   );
 }
 
