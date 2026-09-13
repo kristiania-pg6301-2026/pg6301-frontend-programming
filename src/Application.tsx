@@ -1,5 +1,63 @@
 import { useRef } from "react";
 
+function SvgPerson({ translate }: { translate: string }) {
+  return (
+    <g style={{ translate }}>
+      <path
+        style={{ translate: "19px 0", scale: 2 }}
+        d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"
+      ></path>
+    </g>
+  );
+}
+
+function SvgOldClient({
+  translate,
+  text = "Hello",
+}: {
+  translate: string;
+  text?: string;
+}) {
+  return (
+    <g className="old-client" style={{ translate }}>
+      <rect x="0" y="0" width={100} height={50} />
+      <text x="50" y="30">
+        {text}
+      </text>
+    </g>
+  );
+}
+
+function SvgArrow({ translate }: { translate: string }) {
+  return (
+    <path
+      style={{ translate }}
+      marker-end="url(#head)"
+      stroke-width="4"
+      fill="none"
+      stroke="black"
+      d="M50,0 50,30"
+    />
+  );
+}
+
+function SvgMessage({
+  ref,
+  text,
+}: {
+  ref: React.RefObject<SVGGElement | null>;
+  text: string;
+}) {
+  return (
+    <g className="message" ref={ref}>
+      <rect x="140" y="100" width={60} height={25} />
+      <text x="170" y="120" style={{ textAnchor: "middle" }}>
+        {text}
+      </text>
+    </g>
+  );
+}
+
 export default function Application() {
   const messageRef = useRef<SVGGElement | null>(null);
 
@@ -17,52 +75,19 @@ export default function Application() {
       viewBox="0 0 1000 1000"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g className="old-client">
-        <rect x="100" y="120" />
-        <text x="150" y="150">
-          Hello
-        </text>
-      </g>
-      <path
-        marker-end="url(#head)"
-        stroke-width="4"
-        fill="none"
-        stroke="black"
-        d="M150,80 150,110"
-      />
-      <g className="message" ref={messageRef}>
-        <rect x="140" y="100"></rect>
-        <text x="170" y="120">
-          Hello
-        </text>
-      </g>
-      <g className="old-client">
-        <rect x="300" y="120" />
-        <text x="350" y="150">
-          Hello
-        </text>
-      </g>
-      <path
-        marker-end="url(#head)"
-        stroke-width="4"
-        fill="none"
-        stroke="black"
-        d="M350,80 350,110"
-      />
-      <g className="old-client">
-        <rect x="500" y="120" />
-        <text x="550" y="150">
-          Hello 2
-        </text>
-      </g>
+      <SvgPerson translate={"100px 20px"} />
+      <SvgOldClient translate={"100px 120px"} />
+      <SvgArrow translate={"100px 80px"} />
 
-      <g style={{ translate: "119px 20px", scale: 2 }}>
-        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path>
-      </g>
+      <SvgMessage ref={messageRef} text={"Hello"} />
 
-      <g style={{ translate: "319px 20px", scale: 2 }}>
-        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path>
-      </g>
+      <SvgPerson translate={"300px 20px"} />
+      <SvgOldClient translate={"300px 120px"} />
+      <SvgArrow translate={"300px 80px"} />
+
+      <SvgPerson translate={"500px 20px"} />
+      <SvgOldClient translate={"500px 120px"} text={"Hello 2"} />
+      <SvgArrow translate={"500px 80px"} />
 
       <defs>
         <marker
