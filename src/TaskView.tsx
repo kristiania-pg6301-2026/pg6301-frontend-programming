@@ -17,6 +17,12 @@ export default function TaskView({
     if (isEditing) dialogRef.current!.showModal();
     else dialogRef.current!.close();
   }, [isEditing]);
+  useEffect(() => {
+    dialogRef.current!.addEventListener("close", () => {
+      setIsEditing(false);
+      setDetails(task.details || "");
+    });
+  }, []);
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -26,7 +32,11 @@ export default function TaskView({
 
   return (
     <>
-      <h1>Task: {task.description}</h1>
+      <h1>
+        Task: {task.description} {isEditing && " (editing)"}
+      </h1>
+
+      <div>Details: {length} characters</div>
 
       {task.details}
 
