@@ -7,10 +7,7 @@ export default function TaskPage({
   onTaskUpdate,
 }: {
   tasks: TaskItem[];
-  onTaskUpdate(
-    id: number,
-    delta: { details: string; completed?: boolean },
-  ): void;
+  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
 }) {
   const { id } = useParams();
 

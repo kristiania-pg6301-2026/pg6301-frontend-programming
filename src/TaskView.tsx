@@ -7,10 +7,7 @@ export default function TaskView({
   onTaskUpdate,
 }: {
   task: TaskItem;
-  onTaskUpdate(
-    id: number,
-    delta: { details: string; completed?: boolean },
-  ): void;
+  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
 }) {
   const [details, setDetails] = useState(task.details || "");
   const [isEditing, setIsEditing] = useState(false);

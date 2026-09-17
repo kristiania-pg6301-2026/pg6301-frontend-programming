@@ -6,10 +6,7 @@ export default function TaskList({
   onTaskUpdate,
 }: {
   tasks: TaskItem[];
-  onTaskUpdate(
-    id: number,
-    delta: { details?: string; completed?: boolean },
-  ): void;
+  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
 }) {
   return (
     <ul>

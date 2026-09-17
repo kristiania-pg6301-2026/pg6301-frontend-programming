@@ -9,10 +9,7 @@ export default function FrontPage({
 }: {
   tasks: TaskItem[];
   onNewTask: (task: Omit<TaskItem, "id">) => void;
-  onTaskUpdate: (
-    id: number,
-    delta: { details?: string; completed?: boolean },
-  ) => void;
+  onTaskUpdate: (id: number, delta: Partial<TaskItem>) => void;
 }) {
   return (
     <>

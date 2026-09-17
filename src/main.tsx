@@ -23,10 +23,7 @@ function Application() {
     setTasks((old) => [{ id: old.length, ...task }, ...old]);
   }
 
-  function handleTaskUpdate(
-    id: number,
-    delta: { details?: string; completed?: boolean },
-  ) {
+  function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
     setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
   }
 
