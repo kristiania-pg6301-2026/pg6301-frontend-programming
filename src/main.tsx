@@ -27,8 +27,11 @@ function Application() {
     setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
   }
 
-  function handleChangeTaskDetail(id: number, details: string) {
-    setTasks((old) => old.map((o) => (o.id === id ? { ...o, details } : o)));
+  function handleTaskUpdate(
+    id: number,
+    delta: { details: string; completed?: boolean },
+  ) {
+    setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
   }
 
   return (
@@ -45,9 +48,7 @@ function Application() {
       />
       <Route
         path={"/tasks/:id"}
-        element={
-          <TaskPage tasks={tasks} onChangeTaskDetail={handleChangeTaskDetail} />
-        }
+        element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
       />
       <Route path={"*"} element={<h1>Page not found</h1>} />
     </Routes>

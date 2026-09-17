@@ -4,17 +4,20 @@ import Dialog from "./Dialog.js";
 
 export default function TaskView({
   task,
-  onChangeTaskDetail,
+  onTaskUpdate,
 }: {
   task: TaskItem;
-  onChangeTaskDetail(id: number, description: string): void;
+  onTaskUpdate(
+    id: number,
+    delta: { details: string; completed?: boolean },
+  ): void;
 }) {
   const [details, setDetails] = useState(task.details || "");
   const [isEditing, setIsEditing] = useState(false);
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    onChangeTaskDetail(task.id, details);
+    onTaskUpdate(task.id, { details });
     setIsEditing(false);
   }
 
