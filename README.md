@@ -315,16 +315,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with: { node-version: 22.x, cache: "npm" }
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
 
     permissions:
       id-token: write # to verify the deployment originates from an appropriate source
@@ -372,12 +372,12 @@ npm init -y
 npm install hono @hono/node-server
 npm install --save-dev tsx
 npm pkg set type=module
-npm pkg set scripts.dev="tsx --watch index.ts"
-npm pkg set scripts.start="tsx index.ts"
+npm pkg set scripts.dev="tsx --watch server.ts"
+npm pkg set scripts.start="tsx server.ts"
 
 ```
 
-**`server/index.ts`**
+**`server/server.ts`**
 
 ```typescript
 import { Hono } from "hono";
@@ -388,14 +388,19 @@ const app = new Hono();
 // `serveStatic` makes Hono serve the output from `vite build`
 app.use("*", serveStatic({ root: "../dist" }));
 
-serve(app);
+serve({fetch: app.fetch, port: 8080});
 ```
 
 **Deploying to Clever Cloud**
 
 To set up your application to run with Clever Cloud:
 
-....
+1. Go to https://clever.cloud a select login
+2. Log in with your GitHub Account
+3. Select the "+ Create" button in Clever Cloud
+4. Select Application
+5. Select your repository from the GitHub dropdown
+6. Go to the Environment Variables page and add the `CC_POST_BUILD_HOOK` value `npm run build`
 
 </details>
 
@@ -474,7 +479,7 @@ For testing react code, I recommend [@testing-library/react](https://testing-lib
 To test with react, install devDependencies `@testing-library/react` and `jsdom`
 
 1. `npm install --save-dev vitest @testing-library/react jsdom`
-2. Add the following to your `vite.config.js`:
+2. Add the following to your `vite.config.ts`:
 
    ```js
    import { defineConfig } from "vite";
