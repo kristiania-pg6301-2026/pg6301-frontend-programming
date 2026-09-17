@@ -1,5 +1,5 @@
 import type { TaskItem } from "./TaskItem.js";
-import { type SubmitEvent, useState } from "react";
+import { type SubmitEvent, useEffect, useRef, useState } from "react";
 
 export default function TaskView({
   task,
@@ -10,6 +10,13 @@ export default function TaskView({
 }) {
   const [details, setDetails] = useState(task.details || "");
   const [isEditing, setIsEditing] = useState(false);
+
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  useEffect(() => {
+    if (isEditing) dialogRef.current!.showModal();
+    else dialogRef.current!.close();
+  }, [isEditing]);
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -27,7 +34,7 @@ export default function TaskView({
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </div>
 
-      {isEditing && (
+      <dialog ref={dialogRef}>
         <form onSubmit={handleSubmit}>
           <textarea
             value={details}
@@ -37,7 +44,7 @@ export default function TaskView({
             <button>Save</button>
           </div>
         </form>
-      )}
+      </dialog>
     </>
   );
 }
