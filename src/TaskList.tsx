@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 
 export default function TaskList({
   tasks,
-  onTaskCompleteUpdated,
+  onTaskUpdate,
 }: {
   tasks: TaskItem[];
-  onTaskCompleteUpdated(task: TaskItem, completed: boolean): void;
+  onTaskUpdate(
+    id: number,
+    delta: { details?: string; completed?: boolean },
+  ): void;
 }) {
   return (
     <ul>
@@ -19,7 +22,9 @@ export default function TaskList({
           <input
             type={"checkbox"}
             checked={t.completed}
-            onChange={(e) => onTaskCompleteUpdated(t, e.target.checked)}
+            onChange={(e) =>
+              onTaskUpdate(t.id, { completed: e.target.checked })
+            }
           />
           <Link to={`/tasks/${t.id}`}>{t.description}</Link>
         </li>

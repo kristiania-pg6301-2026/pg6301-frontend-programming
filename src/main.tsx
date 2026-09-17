@@ -23,13 +23,9 @@ function Application() {
     setTasks((old) => [{ id: old.length, ...task }, ...old]);
   }
 
-  function handleTaskCompleteUpdated(task: TaskItem, completed: boolean) {
-    setTasks((old) => old.map((o) => (o === task ? { ...o, completed } : o)));
-  }
-
   function handleTaskUpdate(
     id: number,
-    delta: { details: string; completed?: boolean },
+    delta: { details?: string; completed?: boolean },
   ) {
     setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
   }
@@ -42,7 +38,7 @@ function Application() {
           <FrontPage
             tasks={tasks}
             onNewTask={handleNewTask}
-            onTaskCompeteUpdated={handleTaskCompleteUpdated}
+            onTaskUpdate={handleTaskUpdate}
           />
         }
       />

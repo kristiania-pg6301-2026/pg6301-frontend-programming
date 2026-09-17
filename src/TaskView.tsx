@@ -1,5 +1,5 @@
 import type { TaskItem } from "./TaskItem.js";
-import { type SubmitEvent, useEffect, useRef, useState } from "react";
+import { type SubmitEvent, useState } from "react";
 import Dialog from "./Dialog.js";
 
 export default function TaskView({

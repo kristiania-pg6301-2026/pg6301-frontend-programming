@@ -5,16 +5,19 @@ import NewTaskForm from "./NewTaskForm.js";
 export default function FrontPage({
   tasks,
   onNewTask,
-  onTaskCompeteUpdated,
+  onTaskUpdate,
 }: {
   tasks: TaskItem[];
   onNewTask: (task: Omit<TaskItem, "id">) => void;
-  onTaskCompeteUpdated: (task: TaskItem, completed: boolean) => void;
+  onTaskUpdate: (
+    id: number,
+    delta: { details?: string; completed?: boolean },
+  ) => void;
 }) {
   return (
     <>
       <h1>My Tasks</h1>
-      <TaskList tasks={tasks} onTaskCompleteUpdated={onTaskCompeteUpdated} />
+      <TaskList tasks={tasks} onTaskUpdate={onTaskUpdate} />
       <h2>Create new task</h2>
       <NewTaskForm onNewTask={onNewTask} />
     </>
