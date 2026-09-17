@@ -13,7 +13,7 @@ function Application() {
     { id: 3, description: "Implement routing", completed: true },
     {
       id: 4,
-      description: "Update task details",
+      description: "Edit task details",
       completed: false,
       details: "Update more information about a task",
     },
