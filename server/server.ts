@@ -18,3 +18,14 @@ app.post("/api/tasks", async (c) => {
   tasks.push({ id: tasks.length, description, completed });
   return c.newResponse(null, 200);
 });
+app.put("/api/tasks/:id", async (c) => {
+  const { id } = c.req.param();
+  const task = tasks.find((o) => o.id === parseInt(id))!;
+
+  const { description, completed, details } = await c.req.json();
+  if (description !== undefined) task.description = description;
+  if (completed !== undefined) task.completed = completed;
+  if (details !== undefined) task.details = details;
+
+  return c.newResponse(null, 200);
+});

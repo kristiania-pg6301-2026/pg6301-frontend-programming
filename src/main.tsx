@@ -35,6 +35,7 @@ function Application() {
   }
 
   async function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
+    setError(undefined);
     const res = await fetch(`/api/tasks/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
