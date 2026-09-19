@@ -31,7 +31,7 @@ function Application() {
     if (!res.ok) {
       throw new Error(`Failed to write task: ${res.status} ${res.statusText}`);
     }
-    fetchTasks();
+    await fetchTasks();
   }
 
   async function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
