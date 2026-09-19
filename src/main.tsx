@@ -67,10 +67,14 @@ function Application() {
   }
 
   useEffect(() => {
-    doExpensiveOperation()
-      .then((res) => expensivelyTransformResult(res))
-      .then((res) => alert("Here we go: " + res))
-      .catch((error) => alert("something went wrong: " + error));
+    (async function () {
+      try {
+        const res = await doExpensiveOperation();
+        alert("Here we go " + (await expensivelyTransformResult(res)));
+      } catch (error) {
+        alert("Something went wrong: " + error);
+      }
+    })();
   }, []);
 
   return (
