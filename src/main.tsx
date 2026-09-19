@@ -9,28 +9,24 @@ import { TasksContext } from "./tasksContext.js";
 
 import "./application.css";
 
-function doExpensiveOperation(
-  callback: (error?: Error, result?: string) => void,
-) {
-  if (Math.random() < 0.25) {
-    callback(new Error("Something went wrong"));
-  } else {
-    setTimeout(() => callback(undefined, "something happened"), 500);
-  }
+function doExpensiveOperation() {
+  return new Promise<string>((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() < 0.5) return reject(new Error("something went wrong"));
+      resolve("something happened");
+    }, 500);
+  });
 }
 
-function expensivelyTransformResult(
-  input: string,
-  callback: (error?: Error, result2?: number) => void,
-) {
-  setTimeout(() => {
-    try {
-      callback(undefined, input.length);
-    } catch (error) {
-      console.log("We caught the error");
-      callback(error as Error);
-    }
-  }, 500);
+function expensivelyTransformResult(input: string) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() < 0.5) {
+        return reject(new Error("inner error"));
+      }
+      resolve(input.length);
+    }, 500);
+  });
 }
 
 function Application() {
@@ -75,19 +71,10 @@ function Application() {
   }
 
   useEffect(() => {
-    doExpensiveOperation((error, result) => {
-      if (error) {
-        alert("something went wrong on first callback: " + error);
-      } else {
-        expensivelyTransformResult(result!, (error, result2) => {
-          if (error) {
-            alert("something went wrong on second callback: " + error);
-          } else {
-            alert("here we go " + result2);
-          }
-        });
-      }
-    });
+    doExpensiveOperation()
+      .then((res) => expensivelyTransformResult(res))
+      .then((res) => alert("Here we go: " + res))
+      .catch((error) => alert("something went wrong: " + error));
   }, []);
 
   return (
