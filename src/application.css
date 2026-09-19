@@ -1,3 +1,11 @@
+input:user-invalid {
+  outline: 2px solid red;
+}
+
+input:user-valid {
+  outline: 2px solid green;
+}
+
 .error {
   padding: 0.5rem 1rem;
   border: 2px solid red;
