@@ -11,6 +11,7 @@ import "./application.css";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [error, setError] = useState<Error>();
 
   async function fetchTasks() {
     const res = await fetch("/api/tasks");
@@ -33,18 +34,30 @@ function Application() {
     fetchTasks();
   }
 
-  function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
-    setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
+  async function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
+    const res = await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(delta),
+    });
+    if (res.ok) {
+      fetchTasks();
+    } else {
+      setError(
+        new Error(`Failed to update task: ${res.status} ${res.statusText}`),
+      );
+    }
   }
 
   return (
     <TasksContext
       value={{
         tasks,
-        onTaskUpdate: handleTaskUpdate,
         onNewTask: handleNewTask,
+        onTaskUpdate: handleTaskUpdate,
       }}
     >
+      {error && <div className={"error"}>{error.toString()}</div>}
       <Routes>
         <Route path={"/"} element={<FrontPage />} />
         <Route path={"/tasks/:id"} element={<TaskPage />} />
