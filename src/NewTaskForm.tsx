@@ -4,14 +4,21 @@ import { TasksContext } from "./tasksContext.js";
 export default function NewTaskForm() {
   const [description, setDescription] = useState("");
   const { onNewTask } = useContext(TasksContext);
+  const [error, setError] = useState<Error>();
 
-  function handleSubmit(event: SubmitEvent) {
+  async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    onNewTask({ description, completed: false });
+    setError(undefined);
+    try {
+      await onNewTask({ description, completed: false });
+    } catch (error) {
+      setError(error as Error);
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <div className={"error"}>{error.toString()}</div>}
       <div>
         Task:{" "}
         <input

@@ -7,6 +7,8 @@ import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
 import { TasksContext } from "./tasksContext.js";
 
+import "./application.css";
+
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
     { id: 0, description: "Show current tasks", completed: true },
@@ -35,8 +37,15 @@ function Application() {
     fetchTasks();
   }, []);
 
-  function handleNewTask(task: Omit<TaskItem, "id">) {
-    setTasks((old) => [{ id: old.length, ...task }, ...old]);
+  async function handleNewTask(task: Omit<TaskItem, "id">) {
+    const res = await fetch("/api/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to write task: ${res.status} ${res.statusText}`);
+    }
   }
 
   function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
