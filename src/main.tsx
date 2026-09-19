@@ -1,20 +1,11 @@
 import { createRoot } from "react-dom/client";
+import * as React from "react";
 import { useState } from "react";
 import type { TaskItem } from "./TaskItem.js";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
-import * as React from "react";
-
-const TasksContext = React.createContext<{
-  tasks: TaskItem[];
-  onNewTask(task: TaskItem): void;
-  onTaskUpdated(id: number, delta: Partial<TaskItem>): void;
-}>({
-  tasks: [],
-  onNewTask: (_) => {},
-  onTaskUpdated: (_) => {},
-});
+import { TasksContext } from "./tasksContext.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
@@ -47,21 +38,12 @@ function Application() {
     <TasksContext
       value={{
         tasks,
-        onTaskUpdated: handleTaskUpdate,
+        onTaskUpdate: handleTaskUpdate,
         onNewTask: handleNewTask,
       }}
     >
       <Routes>
-        <Route
-          path={"/"}
-          element={
-            <FrontPage
-              tasks={tasks}
-              onNewTask={handleNewTask}
-              onTaskUpdate={handleTaskUpdate}
-            />
-          }
-        />
+        <Route path={"/"} element={<FrontPage onNewTask={handleNewTask} />} />
         <Route
           path={"/tasks/:id"}
           element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
