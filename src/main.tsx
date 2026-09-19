@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { TaskItem } from "./TaskItem.js";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import FrontPage from "./FrontPage.js";
@@ -25,6 +25,15 @@ function Application() {
       completed: false,
     },
   ]);
+
+  async function fetchTasks() {
+    const res = await fetch("/api/tasks");
+    setTasks(await res.json());
+  }
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   function handleNewTask(task: Omit<TaskItem, "id">) {
     setTasks((old) => [{ id: old.length, ...task }, ...old]);
