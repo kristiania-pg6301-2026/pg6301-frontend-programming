@@ -9,22 +9,6 @@ import { TasksContext } from "./tasksContext.js";
 
 import "./application.css";
 
-function delay(millis: number) {
-  return new Promise((resolve) => setTimeout(resolve, millis));
-}
-
-async function doExpensiveOperation() {
-  await delay(500);
-  if (Math.random() < 0.5) throw new Error("something went wrong");
-  return "something happened";
-}
-
-async function expensivelyTransformResult(input: string) {
-  await delay(500);
-  if (Math.random() < 0.5) throw new Error("inner error");
-  return input.length;
-}
-
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [error, setError] = useState<Error>();
@@ -65,17 +49,6 @@ function Application() {
       );
     }
   }
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const res = await doExpensiveOperation();
-        alert("Here we go " + (await expensivelyTransformResult(res)));
-      } catch (error) {
-        alert("Something went wrong: " + error);
-      }
-    })();
-  }, []);
 
   return (
     <TasksContext

@@ -10,8 +10,15 @@ const tasks: TaskItem[] = [
   { id: 2, description: "Create Hono backend", completed: true },
   { id: 3, description: "Update with Hono backend", completed: false },
 ];
-app.get("/api/tasks", (c) => {
-  return c.json(tasks);
+
+function delay(millis: number) {
+  return new Promise((resolve) => setTimeout(resolve, millis));
+}
+
+app.get("/api/tasks", async (c) => {
+  const result = c.json(tasks);
+  await delay(1000);
+  return result;
 });
 app.post("/api/tasks", (c) => {
   return c.req.json().then(({ description, completed }) => {
