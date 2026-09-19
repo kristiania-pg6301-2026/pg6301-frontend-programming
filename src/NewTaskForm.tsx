@@ -1,5 +1,6 @@
 import { type SubmitEvent, useContext, useState } from "react";
 import { TasksContext } from "./tasksContext.js";
+import ErrorView from "./ErrorView.js";
 
 export default function NewTaskForm() {
   const [description, setDescription] = useState("");
@@ -23,7 +24,7 @@ export default function NewTaskForm() {
   return (
     <form onSubmit={handleSubmit}>
       {updating && <div className={"progress"}>updating</div>}
-      {error && <div className={"error"}>{error.toString()}</div>}
+      {error && <ErrorView error={error} />}
       <div>
         Task:{" "}
         <input

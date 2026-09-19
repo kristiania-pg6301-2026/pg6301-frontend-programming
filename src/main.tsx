@@ -8,6 +8,7 @@ import TaskPage from "./TaskPage.js";
 import { TasksContext } from "./tasksContext.js";
 
 import "./application.css";
+import { UserError } from "./userError.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
@@ -39,6 +40,9 @@ function Application() {
       body: JSON.stringify(task),
     });
     if (!res.ok) {
+      if (res.status === 400) {
+        throw new UserError(await res.json());
+      }
       throw new Error(`Failed to write task: ${res.status} ${res.statusText}`);
     }
     await fetchTasks();

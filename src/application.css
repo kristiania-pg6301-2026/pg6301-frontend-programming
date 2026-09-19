@@ -3,6 +3,11 @@
   border: 2px solid red;
 }
 
+.userError {
+  padding: 0.5rem 1rem;
+  border: 2px solid gold;
+}
+
 .progress {
   content-visibility: hidden;
   aspect-ratio: 1;

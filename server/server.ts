@@ -17,12 +17,14 @@ function delay(millis: number) {
 
 app.get("/api/tasks", async (c) => {
   const result = c.json(tasks);
-  await delay(2000);
+  await delay(500);
   return result;
 });
 app.post("/api/tasks", async (c) => {
-  await delay(1000);
+  await delay(500);
   const { description, completed } = await c.req.json();
+  if (!description || description.length < 5)
+    return c.json({ error: "description is required" }, 400);
   tasks.push({ id: tasks.length, description, completed });
   return c.newResponse(null, 200);
 });
