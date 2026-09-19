@@ -9,6 +9,30 @@ import { TasksContext } from "./tasksContext.js";
 
 import "./application.css";
 
+function doExpensiveOperation(
+  callback: (error?: Error, result?: string) => void,
+) {
+  if (Math.random() < 0.25) {
+    callback(new Error("Something went wrong"));
+  } else {
+    setTimeout(() => callback(undefined, "something happened"), 500);
+  }
+}
+
+function expensivelyTransformResult(
+  input: string,
+  callback: (error?: Error, result2?: number) => void,
+) {
+  setTimeout(() => {
+    try {
+      callback(undefined, input.length);
+    } catch (error) {
+      console.log("We caught the error");
+      callback(error as Error);
+    }
+  }, 500);
+}
+
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [error, setError] = useState<Error>();
@@ -49,6 +73,22 @@ function Application() {
       );
     }
   }
+
+  useEffect(() => {
+    doExpensiveOperation((error, result) => {
+      if (error) {
+        alert("something went wrong on first callback: " + error);
+      } else {
+        expensivelyTransformResult(result!, (error, result2) => {
+          if (error) {
+            alert("something went wrong on second callback: " + error);
+          } else {
+            alert("here we go " + result2);
+          }
+        });
+      }
+    });
+  }, []);
 
   return (
     <TasksContext

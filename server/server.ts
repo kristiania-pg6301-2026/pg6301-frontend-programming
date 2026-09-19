@@ -13,15 +13,15 @@ const tasks: TaskItem[] = [
 app.get("/api/tasks", (c) => {
   return c.json(tasks);
 });
-app.post("/api/tasks", async (c) => {
-  const { description, completed } = await c.req.json();
-  tasks.push({ id: tasks.length, description, completed });
-  return c.newResponse(null, 200);
+app.post("/api/tasks", (c) => {
+  return c.req.json().then(({ description, completed }) => {
+    tasks.push({ id: tasks.length, description, completed });
+    return c.newResponse(null, 200);
+  });
 });
 app.put("/api/tasks/:id", async (c) => {
   const { id } = c.req.param();
   const task = tasks.find((o) => o.id === parseInt(id))!;
-
   const { description, completed, details } = await c.req.json();
   if (description !== undefined) task.description = description;
   if (completed !== undefined) task.completed = completed;
