@@ -12,6 +12,7 @@ export default function TaskList({
     <ul>
       {tasks.map((t) => (
         <li
+          key={t.id}
           style={{
             textDecoration: t.completed ? "line-through" : undefined,
           }}
