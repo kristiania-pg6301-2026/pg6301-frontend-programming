@@ -13,24 +13,16 @@ function delay(millis: number) {
   return new Promise((resolve) => setTimeout(resolve, millis));
 }
 
-function doExpensiveOperation() {
-  return new Promise<string>((resolve, reject) => {
-    return delay(500).then(() => {
-      if (Math.random() < 0.5) return reject(new Error("something went wrong"));
-      resolve("something happened");
-    });
-  });
+async function doExpensiveOperation() {
+  await delay(500);
+  if (Math.random() < 0.5) throw new Error("something went wrong");
+  return "something happened";
 }
 
-function expensivelyTransformResult(input: string) {
-  return new Promise((resolve, reject) => {
-    return delay(500).then(() => {
-      if (Math.random() < 0.5) {
-        return reject(new Error("inner error"));
-      }
-      resolve(input.length);
-    });
-  });
+async function expensivelyTransformResult(input: string) {
+  await delay(500);
+  if (Math.random() < 0.5) throw new Error("inner error");
+  return input.length;
 }
 
 function Application() {
