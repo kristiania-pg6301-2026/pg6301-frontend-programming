@@ -9,23 +9,27 @@ import { TasksContext } from "./tasksContext.js";
 
 import "./application.css";
 
+function delay(millis: number) {
+  return new Promise((resolve) => setTimeout(resolve, millis));
+}
+
 function doExpensiveOperation() {
   return new Promise<string>((resolve, reject) => {
-    setTimeout(() => {
+    return delay(500).then(() => {
       if (Math.random() < 0.5) return reject(new Error("something went wrong"));
       resolve("something happened");
-    }, 500);
+    });
   });
 }
 
 function expensivelyTransformResult(input: string) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    return delay(500).then(() => {
       if (Math.random() < 0.5) {
         return reject(new Error("inner error"));
       }
       resolve(input.length);
-    }, 500);
+    });
   });
 }
 
