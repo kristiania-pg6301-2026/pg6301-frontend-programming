@@ -3,7 +3,7 @@ import type { TaskItem } from "./TaskItem.js";
 
 export const TasksContext = React.createContext<{
   tasks: TaskItem[];
-  onNewTask(task: TaskItem): void;
+  onNewTask(task: Omit<TaskItem, "id">): void;
   onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
 }>({
   tasks: [],
