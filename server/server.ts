@@ -13,3 +13,8 @@ const tasks: TaskItem[] = [
 app.get("/api/tasks", (c) => {
   return c.json(tasks);
 });
+app.post("/api/tasks", async (c) => {
+  const { description, completed } = await c.req.json();
+  tasks.push({ id: tasks.length, description, completed });
+  return c.newResponse(null, 200);
+});

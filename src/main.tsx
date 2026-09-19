@@ -10,23 +10,7 @@ import { TasksContext } from "./tasksContext.js";
 import "./application.css";
 
 function Application() {
-  const [tasks, setTasks] = useState<TaskItem[]>([
-    { id: 0, description: "Show current tasks", completed: true },
-    { id: 1, description: "Create new tasks", completed: true },
-    { id: 2, description: "Mark task as done", completed: true },
-    { id: 3, description: "Implement routing", completed: true },
-    {
-      id: 4,
-      description: "Edit task details",
-      completed: true,
-      details: "Update more information about a task",
-    },
-    {
-      id: 5,
-      description: "Use context to avoid props drilling",
-      completed: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   async function fetchTasks() {
     const res = await fetch("/api/tasks");
@@ -46,6 +30,7 @@ function Application() {
     if (!res.ok) {
       throw new Error(`Failed to write task: ${res.status} ${res.statusText}`);
     }
+    fetchTasks();
   }
 
   function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
