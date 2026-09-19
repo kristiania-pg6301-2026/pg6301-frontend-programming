@@ -22,7 +22,7 @@ export default function NewTaskForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      {updating && <div>updating</div>}
+      {updating && <div className={"progress"}>updating</div>}
       {error && <div className={"error"}>{error.toString()}</div>}
       <div>
         Task:{" "}

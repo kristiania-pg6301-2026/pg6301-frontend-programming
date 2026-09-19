@@ -12,14 +12,24 @@ import "./application.css";
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [error, setError] = useState<Error>();
+  const [loading, setLoading] = useState(false);
 
   async function fetchTasks() {
     const res = await fetch("/api/tasks");
     setTasks(await res.json());
   }
 
+  async function initialize() {
+    setLoading(true);
+    try {
+      await fetchTasks();
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
-    fetchTasks();
+    initialize();
   }, []);
 
   async function handleNewTask(task: Omit<TaskItem, "id">) {
@@ -58,6 +68,7 @@ function Application() {
         onTaskUpdate: handleTaskUpdate,
       }}
     >
+      {loading && <div className={"progress"}>Loading</div>}
       {error && <div className={"error"}>{error.toString()}</div>}
       <Routes>
         <Route path={"/"} element={<FrontPage />} />
