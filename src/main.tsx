@@ -4,6 +4,17 @@ import type { TaskItem } from "./TaskItem.js";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
+import * as React from "react";
+
+const TasksContext = React.createContext<{
+  tasks: TaskItem[];
+  onNewTask(task: TaskItem): void;
+  onTaskUpdated(id: number, delta: Partial<TaskItem>): void;
+}>({
+  tasks: [],
+  onNewTask: (_) => {},
+  onTaskUpdated: (_) => {},
+});
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
@@ -14,8 +25,13 @@ function Application() {
     {
       id: 4,
       description: "Edit task details",
-      completed: false,
+      completed: true,
       details: "Update more information about a task",
+    },
+    {
+      id: 5,
+      description: "Use context to avoid props drilling",
+      completed: false,
     },
   ]);
 
@@ -28,23 +44,31 @@ function Application() {
   }
 
   return (
-    <Routes>
-      <Route
-        path={"/"}
-        element={
-          <FrontPage
-            tasks={tasks}
-            onNewTask={handleNewTask}
-            onTaskUpdate={handleTaskUpdate}
-          />
-        }
-      />
-      <Route
-        path={"/tasks/:id"}
-        element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
-      />
-      <Route path={"*"} element={<h1>Page not found</h1>} />
-    </Routes>
+    <TasksContext
+      value={{
+        tasks,
+        onTaskUpdated: handleTaskUpdate,
+        onNewTask: handleNewTask,
+      }}
+    >
+      <Routes>
+        <Route
+          path={"/"}
+          element={
+            <FrontPage
+              tasks={tasks}
+              onNewTask={handleNewTask}
+              onTaskUpdate={handleTaskUpdate}
+            />
+          }
+        />
+        <Route
+          path={"/tasks/:id"}
+          element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
+        />
+        <Route path={"*"} element={<h1>Page not found</h1>} />
+      </Routes>
+    </TasksContext>
   );
 }
 
