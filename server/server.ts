@@ -10,7 +10,7 @@ const tasks: TaskItem[] = [
   { id: 1, description: "Create on server", completed: true },
   { id: 2, description: "Refresh on client", completed: true },
   { id: 3, description: "Mark as checked on server", completed: true },
-  { id: 4, description: "Update task details", completed: false },
+  { id: 4, description: "Update task details", completed: true },
   { id: 5, description: "Understand Promises", completed: false },
 ];
 let index = 6;
@@ -24,10 +24,11 @@ app.post("/api/tasks", async (c) => {
 });
 app.put("/api/tasks/:id", async (c) => {
   const id = parseInt(c.req.param().id);
-  const { completed } = await c.req.json();
+  const { completed, details } = await c.req.json();
   for (const task of tasks) {
     if (task.id === id) {
-      task.completed = completed;
+      if (!(completed === undefined)) task.completed = completed;
+      if (!(details === undefined)) task.details = details;
     }
   }
   return c.newResponse(null, 200);
