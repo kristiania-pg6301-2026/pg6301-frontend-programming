@@ -248,8 +248,6 @@ npm pkg set scripts.test="tsc --noEmit && prettier --check ."
 npm install -D husky
 npx husky init
 
-npm install vitest
-
 ```
 
 #### Minimal `index.html`
@@ -582,7 +580,7 @@ app.get("/api/movies", async (c) => {
 });
 ```
 
-In this example, the database username, password and databasename is provided in `MONGODB_URL`. During local development, this value should be placed in a `server/.env`-file, which should be added to `.gitignore`. Update the `dev` script in the server to `tsx --env-file .env --watch index.ts` to read environment variables at startup.
+In this example, the database username, password and databasename is provided in `MONGODB_URL`. During local development, this value should be placed in a `server/.env`-file, which should be added to `.gitignore`. Update the `dev` script in the server to `tsx --env-file .env --watch server.ts` to read environment variables at startup.
 
 When deploying to Clever Cloud, add `MONGODB_URL` to ...
 

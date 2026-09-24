@@ -434,6 +434,25 @@ recommend starting the code from scratch for this exercise.
 3. We now need to create the Hono server to answer `/api/tasks`
 4. (You can commit at this point if you want to )
 
+### Step-by-step: Use the server in the React application
+
+1. The client code of `fetch("/api/tasks")` is correct, but this fetches from
+   http://localhost:5173/api/tasks and not http://localhost:8080/api/tasks.
+2. In order to make Vite forward API requests to Hono, we need to create a `vite.config.js`-file:
+
+   ```js
+   import { defineConfig } from "vite";
+
+   export default defineConfig({
+     server: {
+       proxy: { "/api": "http://localhost:8080" },
+     },
+   });
+   ```
+
+3. You need to restart `vite` for it to understand that there is a new config file
+4. If you go to http://localhost:5173/api/tasks you will get a HTTP status 502 (bad gateway), because we haven't yet created the server
+
 ### Step-by-step: Create the server
 
 For the full instructions, see the [reference materials](../README.md#creating-a-hono-application)
@@ -461,7 +480,7 @@ For the full instructions, see the [reference materials](../README.md#creating-a
 
 3. Start the server by running `npm run dev` in the `server` directory and go to http://localhost:3000.
    At this time, this will return a 404 error
-4. Fix the `server/index.js` to return the tasks
+4. Fix the `server/server.js` to return the tasks
    ```js
    const tasks = [
      { description: "Create project (server)", completed: true },
@@ -479,27 +498,10 @@ For the full instructions, see the [reference materials](../README.md#creating-a
    ```ts
    serve( {fetch: app.fetch, port: 8080 });
    ```
-6. Commit the changes to Git. MAKE SURE `server/node_modules` is Git-ignored
+7. You should now also be able to verify that Vite proxies the requests for http://localhost:5173/api/tasks to Hono
+8. If you did everything correct, you can now go to http://localhost:5173 as see your page loading the tasks from the server
+9. Commit the changes to Git. MAKE SURE `server/node_modules` is Git-ignored
 
-### Step-by-step: Use the server in the React application
-
-1. The client code of `fetch("/api/tasks")` is correct, but this fetches from
-   http://localhost:5173/api/tasks and not http://localhost:8080/api/tasks.
-2. In order to make Vite forward API requests to Hono, we need to create a `vite.config.js`-file:
-
-   ```js
-   import { defineConfig } from "vite";
-
-   export default defineConfig({
-     server: {
-       proxy: { "/api": "http://localhost:8080" },
-     },
-   });
-   ```
-
-3. You need to restart `vite` for it to understand that there is a new config file
-4. You can verify the changes by going to http://localhost:5173/
-5. Commit and push your changes
 
 ### Self-directed: Create tasks to be stored in Hono
 
@@ -529,7 +531,7 @@ In order to implement this, you have to make the following changes:
 - The client should display check-boxes with the value of `Task.completed`
 - The checkbox should have a `onChange` handler that calls fetch on the server:
   ```js
-  async function handleCompleted(taskId, competed) {
+  async function handleCompleted(taskId: number, completed: boolean) {
     await fetch(`/api/tasks/${taskId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -539,18 +541,6 @@ In order to implement this, you have to make the following changes:
   ```
 - The server should update the task state in `app.put("/api/tasks/:taskId")`
 - The client should refresh the task list after PUT-ing the new state
-
-### Bonus challenge: Typescript
-
-You should add TypeScript to the application. For the server, this
-requires you to replace `nodemon` with `tsx`. Try to put the definition
-of `TaskItem` in a place where both the client and the server use the
-same `.ts`-file.
-
-It's easiest to do this by 1. adding TypeScript, 2. renaming `vite.config.{js => ts}`
-and committing, 3. rename `src/main.{jsx => tsx}`, fix errors and commit,
-and 4. rename `server/index.{js => ts}` fix scripts and commit. Then add
-the `TaskItem` type and use it in the client and server.
 
 </details>
 
