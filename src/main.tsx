@@ -72,19 +72,18 @@ function Application() {
     });
   }
 
-  function handleClickUnset() {
-    fetchTasks().then((tasks) => {
-      console.log("I got " + JSON.stringify(tasks));
-      Promise.all(
-        tasks.map((t) =>
-          setTaskUnchecked(t).then(() =>
-            console.log(`marked task ${t.id} as done`),
-          ),
+  async function handleClickUnset() {
+    const tasks = await fetchTasks();
+    console.log("I got " + JSON.stringify(tasks));
+    await Promise.all(
+      tasks.map((t) =>
+        setTaskUnchecked(t).then(() =>
+          console.log(`marked task ${t.id} as done`),
         ),
-      )
-        .then(() => refreshTasks())
-        .then(() => console.log("done refreshing"));
-    });
+      ),
+    );
+    await refreshTasks();
+    console.log("done refreshing");
   }
 
   return (
