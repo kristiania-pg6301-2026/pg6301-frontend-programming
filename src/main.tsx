@@ -1,9 +1,19 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
+import React, { useState } from "react";
 import type { TaskItem } from "./TaskItem.js";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
+
+const TaskContext = React.createContext<{
+  tasks: TaskItem[];
+  onNewTask: (task: Omit<TaskItem, "id">) => void;
+  onTaskUpdate: (id: number, delta: Partial<TaskItem>) => void;
+}>({
+  tasks: [],
+  onNewTask: () => {},
+  onTaskUpdate: () => {},
+});
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([
@@ -28,23 +38,31 @@ function Application() {
   }
 
   return (
-    <Routes>
-      <Route
-        path={"/"}
-        element={
-          <FrontPage
-            tasks={tasks}
-            onNewTask={handleNewTask}
-            onTaskUpdate={handleTaskUpdate}
-          />
-        }
-      />
-      <Route
-        path={"/tasks/:id"}
-        element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
-      />
-      <Route path={"*"} element={<h1>Page not found</h1>} />
-    </Routes>
+    <TaskContext
+      value={{
+        tasks,
+        onNewTask: handleNewTask,
+        onTaskUpdate: handleTaskUpdate,
+      }}
+    >
+      <Routes>
+        <Route
+          path={"/"}
+          element={
+            <FrontPage
+              tasks={tasks}
+              onNewTask={handleNewTask}
+              onTaskUpdate={handleTaskUpdate}
+            />
+          }
+        />
+        <Route
+          path={"/tasks/:id"}
+          element={<TaskPage tasks={tasks} onTaskUpdate={handleTaskUpdate} />}
+        />
+        <Route path={"*"} element={<h1>Page not found</h1>} />
+      </Routes>
+    </TaskContext>
   );
 }
 
