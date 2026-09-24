@@ -39,44 +39,51 @@ function Application() {
     loadTasks();
   }, []);
 
-  function fetchTasks(callback: (tasks: TaskItem[]) => void) {
-    setTimeout(() => {
-      callback([
-        { id: 0, description: "Hei", completed: true },
-        { id: 1, description: "Hei", completed: true },
-      ]);
-    }, 200);
+  function fetchTasks() {
+    return new Promise<TaskItem[]>((resolve, reject) => {
+      setTimeout(() => {
+        resolve([
+          { id: 0, description: "Hei", completed: true },
+          { id: 1, description: "Hei", completed: true },
+        ]);
+      }, 200);
+    });
   }
 
-  function setTaskUnchecked(task: TaskItem, callback: () => void) {
-    setTimeout(
-      () => {
-        callback();
-      },
-      Math.random() * 1000 + 100,
-    );
+  function setTaskUnchecked(task: TaskItem) {
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(
+        () => {
+          resolve();
+        },
+        Math.random() * 1000 + 100,
+      );
+    });
   }
 
-  function refreshTasks(callback: () => void) {
-    setTimeout(
-      () => {
-        callback();
-      },
-      Math.random() * 200 + 50,
-    );
+  function refreshTasks() {
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(
+        () => {
+          resolve();
+        },
+        Math.random() * 200 + 50,
+      );
+    });
   }
 
   function handleClickUnset() {
-    fetchTasks((tasks) => {
+    fetchTasks().then((tasks) => {
       console.log("I got " + JSON.stringify(tasks));
-      for (const task of tasks) {
-        setTaskUnchecked(task, () => {
-          console.log(`marked ${task.id} as unchecked`);
-          refreshTasks(() => {
-            console.log("Done refreshing");
-          });
-        });
-      }
+      Promise.all(
+        tasks.map((t) =>
+          setTaskUnchecked(t).then(() =>
+            console.log(`marked task ${t.id} as done`),
+          ),
+        ),
+      )
+        .then(() => refreshTasks())
+        .then(() => console.log("done refreshing"));
     });
   }
 
