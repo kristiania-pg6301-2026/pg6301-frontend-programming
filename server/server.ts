@@ -15,8 +15,15 @@ const tasks: TaskItem[] = [
 ];
 let index = 6;
 
+async function delay(number: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, number));
+}
+
 app.get("/", (c) => c.text("Hello world"));
-app.get("/api/tasks", (c) => c.json(tasks));
+app.get("/api/tasks", async (c) => {
+  await delay(2000);
+  return c.json(tasks);
+});
 app.post("/api/tasks", async (c) => {
   const { description, completed } = await c.req.json();
   tasks.push({ id: index++, description, completed });

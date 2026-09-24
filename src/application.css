@@ -1,0 +1,23 @@
+.progress {
+  width: 4rem;
+  border-width: 20px;
+  border-color: lightgray;
+  border-style: solid;
+  content-visibility: hidden;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border-bottom-color: red;
+  animation: linear 2s spinn infinite;
+  position: absolute;
+  inset: 50% 50%;
+  translate: -50% -50%;
+}
+
+@keyframes spinn {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}

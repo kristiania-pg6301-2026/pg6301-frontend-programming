@@ -6,12 +6,15 @@ import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
 import { TaskContext } from "./taskContext.js";
 
+import "./application.css";
+
 async function delay(number: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, number));
 }
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   function handleNewTask(task: Omit<TaskItem, "id">) {
     fetch("/api/tasks", {
@@ -34,9 +37,15 @@ function Application() {
   }
 
   function loadTasks() {
-    fetch("/api/tasks").then((res) => {
-      res.json().then((json) => setTasks(json));
-    });
+    setLoading(true);
+    setTasks([]);
+    fetch("/api/tasks")
+      .then((res) => {
+        res.json().then((json) => setTasks(json));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -81,6 +90,7 @@ function Application() {
         onTaskUpdate: handleTaskUpdate,
       }}
     >
+      {loading && <div className={"progress"}>Loading...</div>}
       <Routes>
         <Route path={"/"} element={<FrontPage />} />
         <Route path={"/tasks/:id"} element={<TaskPage />} />
