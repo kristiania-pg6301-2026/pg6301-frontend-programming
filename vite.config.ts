@@ -1,5 +1,9 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/pg6301-frontend-programming",
+  server: {
+    proxy: {
+      "/api": "http://localhost:8080",
+    },
+  },
 });
