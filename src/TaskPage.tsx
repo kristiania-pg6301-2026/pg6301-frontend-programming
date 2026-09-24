@@ -6,9 +6,9 @@ import { TaskContext } from "./taskContext.js";
 export default function TaskPage() {
   const { id } = useParams();
 
-  const { tasks, onTaskUpdate } = useContext(TaskContext);
+  const { tasks } = useContext(TaskContext);
 
   const task = tasks.find((t) => t.id === parseInt(id!));
   if (!task) return <h1>Not found: Task with id {id}</h1>;
-  return <TaskView task={task} onTaskUpdate={onTaskUpdate} />;
+  return <TaskView task={task} />;
 }

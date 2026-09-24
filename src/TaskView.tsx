@@ -1,16 +1,12 @@
 import type { TaskItem } from "./TaskItem.js";
-import { type SubmitEvent, useState } from "react";
+import { type SubmitEvent, useContext, useState } from "react";
 import Dialog from "./Dialog.js";
+import { TaskContext } from "./taskContext.js";
 
-export default function TaskView({
-  task,
-  onTaskUpdate,
-}: {
-  task: TaskItem;
-  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
-}) {
+export default function TaskView({ task }: { task: TaskItem }) {
   const [details, setDetails] = useState(task.details || "");
   const [isEditing, setIsEditing] = useState(false);
+  const { onTaskUpdate } = useContext(TaskContext);
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
