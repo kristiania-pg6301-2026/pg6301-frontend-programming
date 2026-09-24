@@ -10,7 +10,11 @@ function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   function handleNewTask(task: Omit<TaskItem, "id">) {
-    setTasks((old) => [{ id: old.length, ...task }, ...old]);
+    fetch("/api/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
   }
 
   function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
