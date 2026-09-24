@@ -14,11 +14,19 @@ function Application() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
+    }).then((res) => {
+      loadTasks();
     });
   }
 
   function handleTaskUpdate(id: number, delta: Partial<TaskItem>) {
-    setTasks((old) => old.map((o) => (o.id === id ? { ...o, ...delta } : o)));
+    fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(delta),
+    }).then((res) => {
+      loadTasks();
+    });
   }
 
   function loadTasks() {
