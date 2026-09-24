@@ -37,16 +37,7 @@ function Application() {
       }}
     >
       <Routes>
-        <Route
-          path={"/"}
-          element={
-            <FrontPage
-              tasks={tasks}
-              onNewTask={handleNewTask}
-              onTaskUpdate={handleTaskUpdate}
-            />
-          }
-        />
+        <Route path={"/"} element={<FrontPage />} />
         <Route path={"/tasks/:id"} element={<TaskPage />} />
         <Route path={"*"} element={<h1>Page not found</h1>} />
       </Routes>

@@ -1,13 +1,10 @@
 import type { TaskItem } from "./TaskItem.js";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { TaskContext } from "./taskContext.js";
 
-export default function TaskList({
-  tasks,
-  onTaskUpdate,
-}: {
-  tasks: TaskItem[];
-  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
-}) {
+export default function TaskList() {
+  const { tasks, onTaskUpdate } = useContext(TaskContext);
   return (
     <ul>
       {tasks.map((t) => (

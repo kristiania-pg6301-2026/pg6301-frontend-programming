@@ -1,12 +1,10 @@
-import { useState, type SubmitEvent } from "react";
+import { useState, type SubmitEvent, useContext } from "react";
 import type { TaskItem } from "./TaskItem.js";
+import { TaskContext } from "./taskContext.js";
 
-export default function NewTaskForm({
-  onNewTask,
-}: {
-  onNewTask(task: Omit<TaskItem, "id">): void;
-}) {
+export default function NewTaskForm() {
   const [description, setDescription] = useState("");
+  const { onNewTask } = useContext(TaskContext);
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
