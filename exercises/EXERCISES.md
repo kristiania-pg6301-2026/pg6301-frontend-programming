@@ -235,7 +235,7 @@ Make sure you have signed up for GitHub Education and installed Node.js and Inte
    4. `npx husky init`
    5. `npm install react react-dom`
    6. `npm pkg set scripts.dev="vite"`
-3. Go to http://localhost:5173 to see the Vite development server running. You will receive a 404 error as it is empty
+3. Run `npm run dev` in the terminal and go to http://localhost:5173 to see the Vite development server running. You will receive a 404 error as it is empty
 4. Create a file named `index.html`:
    ```html
    <html lang="en">
@@ -277,7 +277,7 @@ emojiis on other entries. Despite knowing better from experience, I will let the
 
 ## Exercise 4
 
-<details open>
+<details>
 
 ### Updating tasks
 
@@ -351,7 +351,7 @@ You can choose whether this page just displays the task description or if you wa
 
 ## Exercise 6:
 
-<details>
+<details open>
 
 ### Implementing APIs with Hono
 
@@ -444,12 +444,12 @@ For the full instructions, see the [reference materials](../README.md#creating-a
    3. `npm init -y`
    4. WARNING: Unfortunately, this creates a problem in `server/package.json` that we need to
       fix with `npm pgk set type=module`
-   5. `npm i hono @hono/http-server`
-   6. `npm i -D nodemon`
-   7. `npm pkg set scripts.dev="nodemon index.js"`
+   5. `npm i hono @hono/node-server`
+   6. `npm i -D tsx`
+   7. `npm pkg set scripts.dev="tsx --watch server.ts"`
    8. Run `npm run dev` in the server directory to start the server
       - WARNING: This will crash at this point!
-2. Implement `server/index.js` as a Hono server application:
+2. Implement `server/server.ts` as a Hono server application:
 
    ```js
    import { Hono } from "hono";
@@ -474,12 +474,17 @@ For the full instructions, see the [reference materials](../README.md#creating-a
    });
    ```
 5. Verify that it works on http://localhost:3000/api/tasks
+6. Update `server/server.ts` to use port 8080 and verify at http://localhost:8080/api/tasks
+   Change the statement `serve(app)` to
+   ```ts
+   serve( {fetch: app.fetch, port: 8080 });
+   ```
 6. Commit the changes to Git. MAKE SURE `server/node_modules` is Git-ignored
 
 ### Step-by-step: Use the server in the React application
 
 1. The client code of `fetch("/api/tasks")` is correct, but this fetches from
-   http://localhost:5173/api/tasks and not http://localhost:3000/api/tasks.
+   http://localhost:5173/api/tasks and not http://localhost:8080/api/tasks.
 2. In order to make Vite forward API requests to Hono, we need to create a `vite.config.js`-file:
 
    ```js
@@ -487,7 +492,7 @@ For the full instructions, see the [reference materials](../README.md#creating-a
 
    export default defineConfig({
      server: {
-       proxy: { "/api": "http://localhost:3000" },
+       proxy: { "/api": "http://localhost:8080" },
      },
    });
    ```
