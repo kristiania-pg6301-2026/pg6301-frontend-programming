@@ -39,6 +39,47 @@ function Application() {
     loadTasks();
   }, []);
 
+  function fetchTasks(callback: (tasks: TaskItem[]) => void) {
+    setTimeout(() => {
+      callback([
+        { id: 0, description: "Hei", completed: true },
+        { id: 1, description: "Hei", completed: true },
+      ]);
+    }, 200);
+  }
+
+  function setTaskUnchecked(task: TaskItem, callback: () => void) {
+    setTimeout(
+      () => {
+        callback();
+      },
+      Math.random() * 1000 + 100,
+    );
+  }
+
+  function refreshTasks(callback: () => void) {
+    setTimeout(
+      () => {
+        callback();
+      },
+      Math.random() * 200 + 50,
+    );
+  }
+
+  function handleClickUnset() {
+    fetchTasks((tasks) => {
+      console.log("I got " + JSON.stringify(tasks));
+      for (const task of tasks) {
+        setTaskUnchecked(task, () => {
+          console.log(`marked ${task.id} as unchecked`);
+          refreshTasks(() => {
+            console.log("Done refreshing");
+          });
+        });
+      }
+    });
+  }
+
   return (
     <TaskContext
       value={{
@@ -52,6 +93,7 @@ function Application() {
         <Route path={"/tasks/:id"} element={<TaskPage />} />
         <Route path={"*"} element={<h1>Page not found</h1>} />
       </Routes>
+      <button onClick={handleClickUnset}>Set all as undone</button>
     </TaskContext>
   );
 }
