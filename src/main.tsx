@@ -6,6 +6,10 @@ import FrontPage from "./FrontPage.js";
 import TaskPage from "./TaskPage.js";
 import { TaskContext } from "./taskContext.js";
 
+async function delay(number: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, number));
+}
+
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
@@ -39,37 +43,20 @@ function Application() {
     loadTasks();
   }, []);
 
-  function fetchTasks() {
-    return new Promise<TaskItem[]>((resolve, reject) => {
-      setTimeout(() => {
-        resolve([
-          { id: 0, description: "Hei", completed: true },
-          { id: 1, description: "Hei", completed: true },
-        ]);
-      }, 200);
-    });
+  async function fetchTasks() {
+    await delay(200);
+    return [
+      { id: 0, description: "Hei", completed: true },
+      { id: 1, description: "Hei", completed: true },
+    ];
   }
 
-  function setTaskUnchecked(task: TaskItem) {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(
-        () => {
-          resolve();
-        },
-        Math.random() * 1000 + 100,
-      );
-    });
+  async function setTaskUnchecked(task: TaskItem) {
+    await delay(Math.random() * 1000 + 100);
   }
 
-  function refreshTasks() {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(
-        () => {
-          resolve();
-        },
-        Math.random() * 200 + 50,
-      );
-    });
+  async function refreshTasks() {
+    await delay(Math.random() * 500 + 100);
   }
 
   async function handleClickUnset() {
