@@ -1,15 +1,12 @@
-import type { TaskItem } from "./TaskItem.js";
 import { useParams } from "react-router-dom";
 import TaskView from "./TaskView.js";
+import { useContext } from "react";
+import { TaskContext } from "./taskContext.js";
 
-export default function TaskPage({
-  tasks,
-  onTaskUpdate,
-}: {
-  tasks: TaskItem[];
-  onTaskUpdate(id: number, delta: Partial<TaskItem>): void;
-}) {
+export default function TaskPage() {
   const { id } = useParams();
+
+  const { tasks, onTaskUpdate } = useContext(TaskContext);
 
   const task = tasks.find((t) => t.id === parseInt(id!));
   if (!task) return <h1>Not found: Task with id {id}</h1>;
