@@ -17,6 +17,17 @@ function Application() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description }),
     });
+    await loadTasks();
+    setDescription("");
+  }
+
+  async function handleUpdateTask(id: number, delta: Partial<TaskItem>) {
+    await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(delta),
+    });
+    await loadTasks();
   }
 
   useEffect(() => {
@@ -26,6 +37,22 @@ function Application() {
   return (
     <>
       <h1>Task applications</h1>
+
+      <h2>My tasks</h2>
+      <ul>
+        {tasks.map((t) => (
+          <li key={t.id}>
+            <input
+              type={"checkbox"}
+              checked={t.completed}
+              onChange={(e) =>
+                handleUpdateTask(t.id, { completed: e.target.checked })
+              }
+            />
+            {t.description}
+          </li>
+        ))}
+      </ul>
 
       <h2>New task</h2>
 
@@ -44,16 +71,6 @@ function Application() {
           <button>Save</button>
         </div>
       </form>
-
-      <h2>My tasks</h2>
-      <ul>
-        {tasks.map((t) => (
-          <li key={t.id}>
-            <input type={"checkbox"} checked={t.completed} />
-            {t.description}
-          </li>
-        ))}
-      </ul>
     </>
   );
 }
