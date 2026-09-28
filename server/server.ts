@@ -12,10 +12,16 @@ serve({ fetch: app.fetch, port: 8080 });
 let taskId = 1;
 const tasks: TaskItem[] = [
   { id: taskId++, description: "Fetch from server", completed: true },
-  { id: taskId++, description: "Save to server", completed: false },
+  { id: taskId++, description: "Save to server", completed: true },
   { id: taskId++, description: "Update on server", completed: false },
 ];
 
 app.get("/api/tasks", (c) => {
   return c.json(tasks);
+});
+
+app.post("/api/tasks", async (c) => {
+  const { description } = await c.req.json();
+  tasks.push({ id: taskId++, description, completed: false });
+  return c.newResponse(null, 201);
 });

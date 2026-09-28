@@ -9,6 +9,16 @@ function Application() {
     setTasks(await res.json());
   }
 
+  const [description, setDescription] = useState("");
+  async function handleSubmit(event: React.SubmitEvent) {
+    event.preventDefault();
+    await fetch("/api/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ description }),
+    });
+  }
+
   useEffect(() => {
     loadTasks();
   }, []);
@@ -19,10 +29,15 @@ function Application() {
 
       <h2>New task</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>
-            Description: <input type="text" />
+            Description:{" "}
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </label>
         </div>
         <div>
