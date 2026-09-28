@@ -351,7 +351,7 @@ You can choose whether this page just displays the task description or if you wa
 
 ## Exercise 6:
 
-<details open>
+<details>
 
 ### Implementing APIs with Hono
 
@@ -496,12 +496,11 @@ For the full instructions, see the [reference materials](../README.md#creating-a
 6. Update `server/server.ts` to use port 8080 and verify at http://localhost:8080/api/tasks
    Change the statement `serve(app)` to
    ```ts
-   serve( {fetch: app.fetch, port: 8080 });
+   serve({ fetch: app.fetch, port: 8080 });
    ```
 7. You should now also be able to verify that Vite proxies the requests for http://localhost:5173/api/tasks to Hono
 8. If you did everything correct, you can now go to http://localhost:5173 as see your page loading the tasks from the server
 9. Commit the changes to Git. MAKE SURE `server/node_modules` is Git-ignored
-
 
 ### Self-directed: Create tasks to be stored in Hono
 
@@ -544,9 +543,9 @@ In order to implement this, you have to make the following changes:
 
 </details>
 
-## Exercise 7
+## Exercise 7:
 
-<details>
+<details open>
 
 ### Deploying your application to Clever Cloud
 
@@ -555,207 +554,31 @@ you start exercise 7, but I recommend starting exercise 7 with a new repository 
 as small of an application as possible. When you have deployed it, you can expand it with the functionality you
 created in exercise 5 and 6.
 
-### Step-by-step: Getting the client ready
+_**IMPORTANT**_: Before you start this exercise, send the primary email address of your GitHub user account to the teacher
+so that you can be added to the class Clever Cloud account.
+
+### Step-by-step: Your first deployment
 
 1. Create a new GitHub repository and open it in IntelliJ
-2. Create a basic Node project with Vite, Husky, Prettier, and TypeScript
-   1. `npm init -y`
-   2. `npm pkg set type=module`
-   3. `npm i -D husky prettier typescript vite`
-   4. `npx tsc --init`
-   5. `npx husky init`
-   6. `npm pkg set scripts.test="tsc --noEmit && prettier --check ."`
-   7. Create a `vite.config.ts` file to avoid `tsc` failing with no input files
+2. Create a basic Node React project with Vite, Husky, Prettier, and TypeScript - using the instructions in the README-file
+3. Create a basic Hono Server project using the instructions in the README-file
+4. Deploy your application to Clever Cloud using the instructions in the README-file
 
-   ```ts
-   import { defineConfig } from "vite";
+### Developing the task application on Clever Cloud
 
-   export default defineConfig({});
-   ```
+These instructions assume that you have completed exercise 4-6 and only give a reminder of the important steps
 
-3. Update `.gitignore` and commit
-   1. `echo .idea/ > .gitignore`
-      - NOTE: This doesn't work with PowerShell. You have to update `.gitignore` manually
-   2. `echo node_modules/ >> .gitignore`
-   3. Commit and push your project
-4. Create a React application
-   1. `npm i react react-dom`
-   2. `npm i -D @types/react @types/react-dom`
-   3. Create `index.html`
-      ```html
-      <!doctype html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <title>Task application</title>
-        </head>
-        <body>
-          <div id="app"></div>
-        </body>
-        <script src="src/main.tsx" type="module"></script>
-      </html>
-      ```
-   4. Create `src/main.tsx`:
+1. Create a task application that uses client state to list current tasks and create new tasks
+2. Deploy the initial functionality to Clever Cloud, by committing and pushing to GitHub
+3. Move the initial list of tasks to the server and use `fetch` to populate on the web page.
+   You must create a `vite.config.ts` file to proxy the request to Hono.
+4. Push the change to GitHub to have Clever Cloud update the application
+5. Update the form submission to POST the new task to the server
+6. Push the changes to GitHub to make Clever Cloud update
+7. Implement checking and unchecking a task as done with a checkbox by PUT-ing the change to the server
+8. Push the changes to GitHub to make Clever Cloud update
 
-      ```tsx
-      import { createRoot } from "react-dom/client";
-      import React from "react";
-
-      export function Application() {
-        return <h1>Task application</h1>;
-      }
-
-      createRoot(document.getElementById("app")!).render(<Application />);
-      ```
-
-   5. `npm pkg set scripts.dev=vite`
-   6. Run `npm run dev` and click on the URL in the console to see your application running
-   7. Commit and push
-
-### Step-by-step: Create a client component to fetch the tasks from the server
-
-Make the task application fetch tasks from the server. This will not work until
-the server is implemented:
-
-```tsx
-export function Application() {
-  const [tasks, setTasks] = useState([
-    { description: "Create client", completed: true },
-    { description: "Fetch from server", completed: false },
-  ]);
-
-  async function loadTasks() {
-    const res = await fetch("/api/tasks");
-    setTasks(await res.json());
-  }
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
-  return (
-    <>
-      <h1>Task application</h1>
-      {tasks.map(({ description, complete }) => (
-        <li>
-          <input type="checkbox" checked={complete} /> {description}
-        </li>
-      ))}
-    </>
-  );
-}
-```
-
-Commit and push your code.
-
-### Step-by-step: Implement the server:
-
-Create the server `package.json` and the Hono server:
-
-1. `mkdir server`
-2. `cd server`
-3. `npm init -y`
-4. `npm i -D tsx`
-5. `npm pkg set type=module`
-6. `npm pkg set scripts.dev="tsx --watch index.ts"`
-7. `npm i hono @hono/node-server`
-8. Run `npm run dev` to start the server - this will crash until you make `index.ts`
-
-Create `server/index.ts`:
-
-```ts
-import { Hono } from "hono";
-import { serve } from "@hono/node-server";
-const app = new Hono();
-serve(app);
-```
-
-If you go to http://localhost:3000, you should now get a 404 as the server is
-running but doesn't have any content.
-
-Add a handler for `GET /api/tasks` in `index.ts`:
-
-```ts
-app.get("/api/tasks", (c) => {
-  return c.json([
-    { description: "Create client", completed: true },
-    { description: "Fetch from server", completed: true },
-    { description: "Deploy to Clever Cloud", completed: false },
-  ]);
-});
-```
-
-If you go to http://localhost:3000/api/tasks, you should now see the JSON.
-
-### Step-by-step: Integrate the client and the server
-
-If you followed the instructions correctly, `<Application />` should load the
-tasks with `fetch("/api/tasks")`. However, this fetches the tasks from
-http://localhost:5173/api/tasks, not http://localhost:3000/api/tasks. During
-development, we need to tell Vite to forward the requests to Hono.
-
-Update `vite.config.ts` to forward the requests:
-
-```ts
-export default defineConfig({
-  server: { proxy: { "/api": "http://localhost:3000" } },
-});
-```
-
-If you go to http://localhost:5173 the tasks from the server should now be visible.
-
-Commit and push your code.
-
-### Step-by-step: Create a Clever Cloud app
-
-...
-
-### Step-by-step: Making your application deployable to Clever Cloud
-
-Clever Cloud will perform the following steps:
-
-- Run `npm install` to download your dependencies (notice: we need to work around
-  some effects of Clever Cloud running with the environment variable `NODE_ENV=production`)
-- Run `npm run build` if there is a build script in your application
-- Run `npm start`
-
-This is what you need to do to set it up:
-
-1. `npm install` needs to also install the server dependencies
-   1. `npm pkg set scripts.postinstall="cd server && npm install"`
-2. `npm run build` needs to run Vite to build your React code which outputs to the `dist/` directory
-   1. `npm pkg set scripts.build="vite build"`
-   2. `echo dist >> .gitignore`
-3. Hono needs to serve the code build by Vite in the previous step. Update `server/index.ts`
-
-   ```ts
-   import { serveStatic } from "@hono/node-server/serve-static";
-
-   // ... the rest of the code goes here
-   app.use("*", serveStatic({ root: "../dist" }));
-   ```
-
-4. Clever Cloud needs a `start` script
-   1. `npm pkg set scripts.start="cd server && npm start"`
-   2. `cd server`
-   3. `npm pkg set scripts.start="tsx index.ts"`
-
-
-
-### Additional tasks
-
-1. Currently, the task items on the server and the client are not checked to be similar.
-   Create a `TaskItem` interface in `shared/taskItem.ts` and use it from both the
-   client and the server
-2. You should be able to add new tasks. Follow the steps in [exercise 6](#exercise-6)
-   to create the code on the client and the server. After you have developed and
-   checked the functionality locally, deploy it to Clever Cloud
-3. The user should be able to check a task as done. Follow the instructions in
-   exercise 6 to get it to work
-4. In [exercise 5](#exercise-5) we introduced React Router. Implement the same
-   functionality. If you use `<BrowserRouter />` refreshing the page on Clever Cloud
-   will return 404 (but `<HashRouter />`) will work. You will need a
-   "catch-all" route with Hono that serves statically `../dist/index.html`.
-   Can you figure it out?
+You should try to expand the application to include Routing and updating more information about each task.
 
 </details>
 
@@ -766,12 +589,12 @@ This is what you need to do to set it up:
 ### Communication between client and server
 
 For this lecture exercise, we will be starting work on the course assignment.
-The information will be given on [Mattermost](https://mattermost.kristiania.no/it-h2024/channels/3s-pg6301-webutvikling-og-api-design)
+The information will be given on [Canvas](https://mattermost.kristiania.no/it-h2024/channels/3s-pg6301-webutvikling-og-api-design)
 
 If you want to repeat the lecture of the week, a detailed script of the steps
-is provided in the [reference branch for lecture 8](https://github.com/kristiania-pg6301-2025/pg6301-frontend-programming/blob/reference/08/README.md).
+is provided in the [reference branch for lecture 8](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/blob/reference/08/README.md).
 The description does not explain all steps as the explanation has been covered
-in the previous lectures. If you haven't completed exercise 3-6 already and
+in the previous lectures. If you haven't completed exercise 3-6 already or
 you don't remember enough from the lectures, you will probably be lost.
 
 </details>

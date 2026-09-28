@@ -91,9 +91,6 @@ as a teaser to topics that will be important through the course. After the
 lecture, you will only be expected to know the basics of how to create a React
 application with Vite and React Router
 
-[Reference server running on Clever Cloud](...)
-[Lecture server running on Clever Cloud](...)
-
 ### Lecture 4: React, `useState` and props
 
 [![Lecture 4 code](https://img.shields.io/badge/Lecture_4-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/04)
@@ -129,7 +126,7 @@ We will also look at navigating in the app with React Router.
 [![Lecture 6 reference](https://img.shields.io/badge/Lecture_6-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/06)
 [![Lecture 6 exercise](https://img.shields.io/badge/Lecture_6-exercise-pink)](./exercises/EXERCISES.md#exercise-6)
 
-We will create an Hono server which serves a React application that uses an API implemented in [Hono](https://hono.dev/) to implement
+We will create a Hono server which serves a React application that uses an API implemented in [Hono](https://hono.dev/) to implement
 functionality.
 See [Convert to serve from Hono] on the steps to take the code from the
 previous lecture to be served from Hono.
@@ -140,11 +137,13 @@ previous lecture to be served from Hono.
 [![Lecture 7 reference](https://img.shields.io/badge/Lecture_7-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/07)
 [![Lecture 7 exercise](https://img.shields.io/badge/Lecture_7-exercise-pink)](./exercises/EXERCISES.md#exercise-7)
 
+[![Running website on Clever Cloud](https://img.shields.io/badge/Course-website-green)](https://app-09f58f91-bb2b-4bb7-93e6-9a3d9222f7c4.cleverapps.io)
+
 In this lecture, we will upload a simple web application to a cloud service and look at automatic deploys.
 See [the steps to deploy to Clever Cloud](#deploying-to-clever-cloud).
 
 In this lecture, we also look at ways to make sure our code is good, from formatting, to linting, to testing.
-We will look at the tools husky, prettier and Typescript. We will also be using GitHub to run our quality
+We will look at the tools husky, prettier and TypeScript. We will also be using GitHub to run our quality
 checks automatically.
 
 ### Lecture 8: Communication between client and server
@@ -199,7 +198,7 @@ services that also implement OpenID Connect, such as LinkedIn and Microsoft Entr
 [![Lecture 11 code](https://img.shields.io/badge/Lecture_11-lecture_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/lecture/11)
 [![Lecture 11 reference](https://img.shields.io/badge/Lecture_11-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/11)
 
-We were unable to fully complete the contents of lecture 9 and 10 so we will complete this this week, working with [Open-ID Connect](#openid-connect---log-on-with-google) and [MongoDB](#mongodb).
+We were unable to fully complete the contents of lecture 9 and 10 so we will complete this week, working with [Open-ID Connect](#openid-connect---log-on-with-google) and [MongoDB](#mongodb).
 
 There is no separate exercise for this lecture - instead: make sure that you complete the exercises for lecture 7 through 10.
 
@@ -270,6 +269,12 @@ import { createRoot } from "react-dom/client";
 createRoot(document.getElementById("root")).render(<h1>Hello React</h1>);
 ```
 
+#### Test out your application
+
+1. Run `npm run dev` to start the application
+2. Go to http://localhost:5173 to see it in the browser
+3. Update the text in `src/main.tsx` and press ctrl-s/cmd-s to save and see it update in the browser
+
 #### Commiting to Git
 
 1. Create a `.gitignore`-file that excludes `node_modules`, `dist` and `.idea`
@@ -327,7 +332,7 @@ jobs:
     permissions:
       id-token: write # to verify the deployment originates from an appropriate source
       pages: write # to deploy to Pages
-      contents: read # to checkout private repositories
+      contents: read # to check out private repositories
 ```
 
 </details>
@@ -357,7 +362,7 @@ This list of commands:
 4. Creates the scripts to develop and run the server
 
 ```shell
-npm pkg set scripts.postinstall="cd server && npm install --include=dev"
+npm pkg set scripts.postinstall="cd server && npm install"
 npm pkg set scripts.build="vite build"
 npm pkg set scripts.start="cd server && npm start"
 
@@ -386,8 +391,16 @@ const app = new Hono();
 // `serveStatic` makes Hono serve the output from `vite build`
 app.use("*", serveStatic({ root: "../dist" }));
 
-serve({fetch: app.fetch, port: 8080});
+serve({ fetch: app.fetch, port: 8080 });
 ```
+
+Test your application:
+
+1. On the top level, run `npm run build`
+2. Run `npm start`
+3. Go to http://localhost:8080 to see your application run on Hono
+4. Make sure `server/node_modules` and `/dist` at added to `.gitignore`
+5. Commit you code to Git
 
 **Deploying to Clever Cloud**
 
@@ -398,7 +411,14 @@ To set up your application to run with Clever Cloud:
 3. Select the "+ Create" button in Clever Cloud
 4. Select Application
 5. Select your repository from the GitHub dropdown
-6. Go to the Environment Variables page and add the `CC_POST_BUILD_HOOK` value `npm run build`
+6. Select "Node.js & Bun" when asked "What sort of application is this"
+7. Go to the Environment Variables page and add the `CC_POST_BUILD_HOOK` value `npm run build`
+8. Go to the Overview page and press "Re-build and restart". Go to the Activities page to see how your build is going
+9. Go to the Domain names page and press open the URL under "Domain names linked to this application"
+
+You should now make a small update in your application to see it change. Commit and push to GitHub.
+You should be able to see "Your application is restarting" on the Clever Cloud Overview page.
+When it is complete, refresh your page to see the changes.
 
 </details>
 
@@ -408,20 +428,22 @@ To set up your application to run with Clever Cloud:
 
 **Make Vite proxy (forward) calls to /api to port 3000 when running locally:**
 
-```js
+Update `vite.config.ts`
+
+```ts
 import { defineConfig } from "vite";
 
 export default defineConfig({
   server: {
-    proxy: { "/api": "http://localhost:3000" },
+    proxy: { "/api": "http://localhost:8080" },
   },
 });
 ```
 
 **In React: fetching data:**
 
-```jsx
-const [tasks, setTasks] = useState([]);
+```tsx
+const [tasks, setTasks] = useState<TaskItem[]>([]);
 async function loadTasks() {
   const res = await fetch("/api/tasks");
   setTasks(await res.json());
@@ -442,9 +464,9 @@ app.get("/api/tasks", (c) => {
 
 **In React: updating data:**
 
-```jsx
+```tsx
 const [description, setDescription] = useState("");
-async function handleSubmit(event) {
+async function handleSubmit(event: React.SubmitEvent) {
   event.preventDefault();
   await fetch("/api/tasks", {
     method: "POST",
@@ -456,10 +478,10 @@ async function handleSubmit(event) {
 
 **In Hono: updating data:**
 
-```jsx
+```ts
 app.post("/api/tasks", async (c) => {
-  const task = await c.req.json();
-  tasks.push(task);
+  const { description } = await c.req.json();
+  tasks.push({ id: taskId++, description, completed: false });
   return c.newResponse(null, 201);
 });
 ```
@@ -580,7 +602,7 @@ app.get("/api/movies", async (c) => {
 });
 ```
 
-In this example, the database username, password and databasename is provided in `MONGODB_URL`. During local development, this value should be placed in a `server/.env`-file, which should be added to `.gitignore`. Update the `dev` script in the server to `tsx --env-file .env --watch server.ts` to read environment variables at startup.
+In this example, the database username, password and database name is provided in `MONGODB_URL`. During local development, this value should be placed in a `server/.env`-file, which should be added to `.gitignore`. Update the `dev` script in the server to `tsx --env-file .env --watch server.ts` to read environment variables at startup.
 
 When deploying to Clever Cloud, add `MONGODB_URL` to ...
 
@@ -590,7 +612,7 @@ When deploying to Clever Cloud using [Atlas MongoDB](https://cloud.mongodb.com/)
 
 ## Tools
 
-### IntellJ shortcuts
+### IntelliJ shortcuts
 
 <details>
 These are some of the most versatile keyboard shortcuts in IntelliJ. There are many more, but learning these 12 will really speed up your code
