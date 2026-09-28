@@ -15,10 +15,30 @@ function Application() {
 
   return (
     <>
-      <h1>Task list</h1>
-      {tasks.map((t) => (
-        <li>{t.description}</li>
-      ))}
+      <h1>Task applications</h1>
+
+      <h2>New task</h2>
+
+      <form>
+        <div>
+          <label>
+            Description: <input type="text" />
+          </label>
+        </div>
+        <div>
+          <button>Save</button>
+        </div>
+      </form>
+
+      <h2>My tasks</h2>
+      <ul>
+        {tasks.map((t) => (
+          <li key={t.id}>
+            <input type={"checkbox"} checked={t.completed} />
+            {t.description}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

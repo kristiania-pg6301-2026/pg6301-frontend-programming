@@ -9,7 +9,12 @@ app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
-const tasks: TaskItem[] = [{ description: "Fetch from server" }];
+let taskId = 1;
+const tasks: TaskItem[] = [
+  { id: taskId++, description: "Fetch from server", completed: true },
+  { id: taskId++, description: "Save to server", completed: false },
+  { id: taskId++, description: "Update on server", completed: false },
+];
 
 app.get("/api/tasks", (c) => {
   return c.json(tasks);
