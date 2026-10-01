@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import type { TaskItem } from "./taskItem.js";
 
 function Application() {
-  const [tasks, setTasks] = useState([
-    { description: "Create react app", completed: true },
-    { description: "Deploy to Clever Cloud", completed: true },
-    { description: "Show tasks on client", completed: true },
-    { description: "Create tasks on client", completed: true },
-    { description: "Show tasks from server", completed: false },
-    { description: "Create tasks on server", completed: false },
-  ]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   const [description, setDescription] = useState("");
+
+  async function loadTasks() {
+    const res = await fetch("/api/tasks");
+    setTasks(await res.json());
+  }
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
   function handleSubmit(event: React.SubmitEvent) {
     event.preventDefault();
