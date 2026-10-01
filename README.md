@@ -137,7 +137,7 @@ previous lecture to be served from Hono.
 [![Lecture 7 reference](https://img.shields.io/badge/Lecture_7-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/07)
 [![Lecture 7 exercise](https://img.shields.io/badge/Lecture_7-exercise-pink)](./exercises/EXERCISES.md#exercise-7)
 
-[![Running website on Clever Cloud](https://img.shields.io/badge/Course-website-green)](https://app-09f58f91-bb2b-4bb7-93e6-9a3d9222f7c4.cleverapps.io)
+[![Running website on Clever Cloud](https://img.shields.io/badge/Course-website-green)](https://app-5160eb42-81c6-4176-9851-bbab1df77773.cleverapps.io/)
 
 In this lecture, we will upload a simple web application to a cloud service and look at automatic deploys.
 See [the steps to deploy to Clever Cloud](#deploying-to-clever-cloud).
