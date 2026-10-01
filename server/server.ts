@@ -9,15 +9,21 @@ app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
+let tasksId = 1;
 const tasks: TaskItem[] = [
-  { description: "Create react app", completed: true },
-  { description: "Deploy to Clever Cloud", completed: true },
-  { description: "Show tasks on client", completed: true },
-  { description: "Create tasks on client", completed: true },
-  { description: "Show tasks from server", completed: true },
-  { description: "Create tasks on server", completed: false },
+  { id: tasksId++, description: "Create react app", completed: true },
+  { id: tasksId++, description: "Deploy to Clever Cloud", completed: true },
+  { id: tasksId++, description: "Show tasks on client", completed: true },
+  { id: tasksId++, description: "Create tasks on client", completed: true },
+  { id: tasksId++, description: "Show tasks from server", completed: true },
+  { id: tasksId++, description: "Create tasks on server", completed: true },
 ];
 
 app.get("/api/tasks", (c) => {
   return c.json(tasks);
+});
+app.post("/api/tasks", async (c) => {
+  const { description } = await c.req.json();
+  tasks.push({ id: tasksId++, description, completed: false });
+  return c.newResponse(null, 201);
 });

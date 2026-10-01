@@ -16,9 +16,16 @@ function Application() {
     loadTasks();
   }, []);
 
-  function handleSubmit(event: React.SubmitEvent) {
+  async function handleSubmit(event: React.SubmitEvent) {
     event.preventDefault();
-    setTasks((old) => [...old, { description, completed: false }]);
+    await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({ description, completed: false }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await loadTasks();
   }
 
   return (
