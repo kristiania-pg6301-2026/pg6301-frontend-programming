@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import type { TaskItem } from "./taskItem.js";
 
+import "./application.css";
+
 function Application() {
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);

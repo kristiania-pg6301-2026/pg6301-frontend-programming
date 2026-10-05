@@ -1,0 +1,25 @@
+.progress {
+  box-sizing: border-box;
+  aspect-ratio: 1;
+  border-style: solid;
+  border-radius: 50%;
+  content-visibility: hidden;
+
+  animation: infinite linear 800ms rotate-object;
+
+  border-color: lightgray;
+  border-bottom-color: gray;
+
+  border-width: 0.5em;
+  width: 2em;
+  font-size: 2rem;
+}
+
+@keyframes rotate-object {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 1turn;
+  }
+}
