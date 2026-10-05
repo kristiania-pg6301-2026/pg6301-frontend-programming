@@ -22,15 +22,18 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Simulate errors on server", completed: false },
 ];
 
-app.get("/api/tasks", (c) => {
+app.get("/api/tasks", async (c) => {
+  await delay(500);
   return c.json(tasks);
 });
 app.post("/api/tasks", async (c) => {
+  await delay(400);
   const { description } = await c.req.json();
   tasks.push({ id: tasksId++, description, completed: false });
   return c.newResponse(null, 201);
 });
 app.put("/api/tasks/:id", async (c) => {
+  await delay(500);
   const id = parseInt(c.req.param().id);
   const delta = await c.req.json();
   for (let i = 0; i < tasks.length; i++) {
@@ -41,3 +44,9 @@ app.put("/api/tasks/:id", async (c) => {
   }
   return c.newResponse(null, 200);
 });
+
+async function delay(millis: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, millis);
+  });
+}

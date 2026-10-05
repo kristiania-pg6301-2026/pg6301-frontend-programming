@@ -3,13 +3,16 @@ import { createRoot } from "react-dom/client";
 import type { TaskItem } from "./taskItem.js";
 
 function Application() {
+  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   const [description, setDescription] = useState("");
 
   async function loadTasks() {
+    setLoading(true);
     const res = await fetch("/api/tasks");
     setTasks(await res.json());
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -53,20 +56,22 @@ function Application() {
         </div>
       </form>
       <h2>My Tasks</h2>
-      {tasks.map((t) => (
-        <li key={t.id}>
-          <label>
-            <input
-              type={"checkbox"}
-              checked={t.completed}
-              onChange={(e) =>
-                handleUpdate(t.id, { completed: e.target.checked })
-              }
-            />
-            {t.description}
-          </label>
-        </li>
-      ))}
+      {loading && <div className={"progress"}>Loading</div>}
+      {loading ||
+        tasks.map((t) => (
+          <li key={t.id}>
+            <label>
+              <input
+                type={"checkbox"}
+                checked={t.completed}
+                onChange={(e) =>
+                  handleUpdate(t.id, { completed: e.target.checked })
+                }
+              />
+              {t.description}
+            </label>
+          </li>
+        ))}
     </>
   );
 }
