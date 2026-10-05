@@ -86,6 +86,7 @@ function Application() {
         >
           <div className={"input-with-spinner"}>
             <input
+              required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
