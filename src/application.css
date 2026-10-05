@@ -25,6 +25,12 @@
   }
 }
 
+.error {
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 0.25em;
+}
+
 .progress {
   box-sizing: border-box;
   aspect-ratio: 1;

@@ -7,6 +7,7 @@ import "./application.css";
 function Application() {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingError, setLoadingError] = useState<string>();
   const [creating, setCreating] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
@@ -16,7 +17,12 @@ function Application() {
   async function loadTasks() {
     setLoading(true);
     const res = await fetch("/api/tasks");
-    setTasks(await res.json());
+    if (res.ok) {
+      setTasks(await res.json());
+      setLoadingError(undefined);
+    } else {
+      setLoadingError(`Error on load ${res.status} ${res.statusText}`);
+    }
     setLoading(false);
   }
 
@@ -77,7 +83,13 @@ function Application() {
       </div>
       <h2>My Tasks</h2>
       {loading && <div className={"progress"}>Loading</div>}
+      {loadingError && (
+        <div className={"error"}>
+          ⚠️ {loadingError} <button onClick={loadTasks}>Retry</button>
+        </div>
+      )}
       {loading ||
+        !!loadingError ||
         tasks.map((t) => (
           <li key={t.id}>
             <label>
