@@ -18,7 +18,12 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Show tasks from server", completed: true },
   { id: tasksId++, description: "Create tasks on server", completed: true },
   { id: tasksId++, description: "Mark items as done", completed: true },
-  { id: tasksId++, description: "Simulate delay on server", completed: false },
+  {
+    id: tasksId++,
+    description: "Simulate delay on load and update",
+    completed: true,
+  },
+  { id: tasksId++, description: "Simulate delay on create", completed: false },
   { id: tasksId++, description: "Simulate errors on server", completed: false },
 ];
 

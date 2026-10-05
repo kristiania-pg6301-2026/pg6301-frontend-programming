@@ -6,6 +6,7 @@ import "./application.css";
 
 function Application() {
   const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   const [description, setDescription] = useState("");
@@ -34,11 +35,13 @@ function Application() {
   }
 
   async function handleUpdate(id: number, delta: Partial<TaskItem>) {
+    setUpdating(true);
     await fetch(`/api/tasks/${id}`, {
       method: "PUT",
       body: JSON.stringify(delta),
       headers: { "Content-Type": "application/json" },
     });
+    setUpdating(false);
     await loadTasks();
   }
 
@@ -65,6 +68,7 @@ function Application() {
             <label>
               <input
                 type={"checkbox"}
+                disabled={updating}
                 checked={t.completed}
                 onChange={(e) =>
                   handleUpdate(t.id, { completed: e.target.checked })
