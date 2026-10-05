@@ -4,11 +4,16 @@ import type { TaskItem } from "./taskItem.js";
 
 import "./application.css";
 
+interface ErrorFromServer {
+  error: string;
+}
+
 function Application() {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingError, setLoadingError] = useState<string>();
   const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | ErrorFromServer>();
   const [updating, setUpdating] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
@@ -30,10 +35,9 @@ function Application() {
     loadTasks();
   }, []);
 
-  async function handleSubmit(event: React.SubmitEvent) {
-    event.preventDefault();
+  async function submitTask() {
     setCreating(true);
-    await fetch("/api/tasks", {
+    var res = await fetch("/api/tasks", {
       method: "POST",
       body: JSON.stringify({ description, completed: false }),
       headers: {
@@ -41,8 +45,19 @@ function Application() {
       },
     });
     setCreating(false);
-    (document.activeElement as HTMLElement)?.blur();
-    await loadTasks();
+    if (res.ok) {
+      (document.activeElement as HTMLElement)?.blur();
+      await loadTasks();
+    } else if (res.status >= 400 && res.status < 500) {
+      setCreateError(await res.json());
+    } else {
+      setCreateError(`Error on create ${res.status} ${res.statusText}`);
+    }
+  }
+
+  async function handleSubmit(event: React.SubmitEvent) {
+    event.preventDefault();
+    await submitTask();
   }
 
   async function handleUpdate(id: number, delta: Partial<TaskItem>) {
@@ -76,6 +91,18 @@ function Application() {
             />
             {creating && <span className={"progress"} />}
           </div>
+          {createError && (
+            <div className={"error"}>
+              ⚠️{" "}
+              {typeof createError === "object" ? (
+                <>{createError.error}</>
+              ) : (
+                <>
+                  {createError} <button onClick={submitTask}>Retry</button>
+                </>
+              )}
+            </div>
+          )}
           <div>
             <button>Add task</button>
           </div>

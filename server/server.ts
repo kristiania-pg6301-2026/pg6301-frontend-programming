@@ -24,7 +24,7 @@ const tasks: TaskItem[] = [
     completed: true,
   },
   { id: tasksId++, description: "Simulate delay on create", completed: true },
-  { id: tasksId++, description: "Simulate errors on server", completed: false },
+  { id: tasksId++, description: "Simulate errors on server", completed: true },
 ];
 
 app.get("/api/tasks", async (c) => {
@@ -33,7 +33,10 @@ app.get("/api/tasks", async (c) => {
 });
 app.post("/api/tasks", async (c) => {
   await delay(400);
-  const { description } = await c.req.json();
+  const { description } = (await c.req.json()) as Partial<TaskItem>;
+  if (!description || description.length === 0) {
+    return c.json({ error: "Missing description" }, 400);
+  }
   tasks.push({ id: tasksId++, description, completed: false });
   return c.newResponse(null, 201);
 });
