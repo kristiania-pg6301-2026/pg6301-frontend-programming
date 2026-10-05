@@ -32,8 +32,12 @@ app.put("/api/tasks/:id", async (c) => {
   const { id } = c.req.param();
   const task = tasks.find((o) => o.id === parseInt(id))!;
   const { description, completed, details } = await c.req.json();
+  if (completed !== undefined) {
+    if (completed === task.completed)
+      return c.json({ error: "rechecking is illegal" }, 400);
+    task.completed = completed;
+  }
   if (description !== undefined) task.description = description;
-  if (completed !== undefined) task.completed = completed;
   if (details !== undefined) task.details = details;
 
   return c.newResponse(null, 200);
