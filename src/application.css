@@ -63,7 +63,7 @@ span.progress {
 
 @keyframes rotate-object {
   0% {
-    rotate: 0deg;
+    rotate: 0;
   }
   100% {
     rotate: 1turn;
