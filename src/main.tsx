@@ -5,7 +5,9 @@ import type { TaskItem } from "./taskItem.js";
 import "./application.css";
 
 function Application() {
+  const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [creating, setCreating] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
@@ -24,6 +26,7 @@ function Application() {
 
   async function handleSubmit(event: React.SubmitEvent) {
     event.preventDefault();
+    setCreating(true);
     await fetch("/api/tasks", {
       method: "POST",
       body: JSON.stringify({ description, completed: false }),
@@ -31,6 +34,8 @@ function Application() {
         "Content-Type": "application/json",
       },
     });
+    setCreating(false);
+    (document.activeElement as HTMLElement)?.blur();
     await loadTasks();
   }
 
@@ -49,17 +54,27 @@ function Application() {
     <>
       <h1>Task Manager</h1>
       <h2>Create new task</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div>
-          <button>Add task</button>
-        </div>
-      </form>
+      <div
+        className={editing || creating ? "create-form editing" : "create-form"}
+      >
+        <div className={"overlay"} />
+        <form
+          onSubmit={handleSubmit}
+          onFocus={() => setEditing(true)}
+          onBlur={() => setEditing(false)}
+        >
+          <div className={"input-with-spinner"}>
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            {creating && <span className={"progress"} />}
+          </div>
+          <div>
+            <button>Add task</button>
+          </div>
+        </form>
+      </div>
       <h2>My Tasks</h2>
       {loading && <div className={"progress"}>Loading</div>}
       {loading ||
