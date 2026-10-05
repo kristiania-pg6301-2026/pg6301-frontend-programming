@@ -17,6 +17,9 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Create tasks on client", completed: true },
   { id: tasksId++, description: "Show tasks from server", completed: true },
   { id: tasksId++, description: "Create tasks on server", completed: true },
+  { id: tasksId++, description: "Mark items as done", completed: false },
+  { id: tasksId++, description: "Simulate delay on server", completed: false },
+  { id: tasksId++, description: "Simulate errors on server", completed: false },
 ];
 
 app.get("/api/tasks", (c) => {
