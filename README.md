@@ -223,11 +223,10 @@ For the exercise-time start on the last exercise that you haven't completed. You
 This list of commands:
 
 1. Creates a `package.json`-file
-2. Installs [Vite](https://vite.dev) which transforms `index.html` + `.tsx`-files to JavaScript
-3. Installs [TypeScript](https://www.typescriptlang.org/) to check the correctness of your code
+2. Installs [Vite](https://vite.dev) together with [React](https://react.dev) which transforms `index.html` + `.tsx`-files to JavaScript
+3. Installs [TypeScript](https://www.typescriptlang.org/) to check the correctness of your code, together with the type definitions for React
 4. Installs [Prettier](https://prettier.io/) to check the coding style of your code
 5. Installs [Husky](https://typicode.github.io/husky/) which runs checks before each login
-6. Installs the [Vitest](https://vitest.dev) testing library
 
 ```shell
 npm init -y
@@ -342,7 +341,7 @@ jobs:
 
 <details>
 
-#### Deploying to Clever Cloud
+#### Deploying with a backend
 
 By running on Clever Cloud, you can have a server-side application which accesses a database.
 
@@ -402,7 +401,7 @@ Test your application:
 4. Make sure `server/node_modules` and `/dist` at added to `.gitignore`
 5. Commit you code to Git
 
-**Deploying to Clever Cloud**
+#### Deploying to Clever Cloud
 
 To set up your application to run with Clever Cloud:
 

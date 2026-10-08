@@ -560,9 +560,9 @@ so that you can be added to the class Clever Cloud account.
 ### Step-by-step: Your first deployment
 
 1. Create a new GitHub repository and open it in IntelliJ
-2. Create a basic Node React project with Vite, Husky, Prettier, and TypeScript - using the instructions in the README-file
-3. Create a basic Hono Server project using the instructions in the README-file
-4. Deploy your application to Clever Cloud using the instructions in the README-file
+2. Create a basic Node React project with Vite, Husky, Prettier, and TypeScript - using the [instructions in the README-file](../README.md#creating-a-react-application)
+3. Create a basic Hono Server project using the [instructions in the README-file](../README.md#creating-a-hono-application)
+4. Deploy your application to Clever Cloud using the [instructions in the README-file](../README.md#deploying-to-clever-cloud)
 
 ### Developing the task application on Clever Cloud
 
