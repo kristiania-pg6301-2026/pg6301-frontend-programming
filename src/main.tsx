@@ -6,21 +6,20 @@ import "./application.css";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
-  const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState<string>();
 
   const [description, setDescription] = useState("");
 
   async function loadTasks() {
-    setLoading(true);
+    setUpdating(true);
     const res = await fetch("/api/tasks", { method: "GET" });
     if (res.ok) {
       setTasks(await res.json());
     } else {
       setError(`Failed to load ${res.url}: ${res.status} ${res.statusText}`);
     }
-    setLoading(false);
+    setUpdating(false);
   }
 
   useEffect(() => {
@@ -28,6 +27,7 @@ function Application() {
   }, []);
 
   async function handleSubmit(event: React.SubmitEvent) {
+    setUpdating(true);
     event.preventDefault();
     await fetch("/api/tasks", {
       method: "POST",
@@ -40,7 +40,6 @@ function Application() {
   }
 
   async function handleUpdate(id: number, delta: Partial<TaskItem>) {
-    setLoading(true);
     setUpdating(true);
     await fetch(`/api/tasks/${id}`, {
       method: "PUT",
@@ -48,7 +47,6 @@ function Application() {
       headers: { "Content-Type": "application/json" },
     });
     await loadTasks();
-    setUpdating(false);
   }
 
   return (
@@ -56,19 +54,21 @@ function Application() {
       <h1>Task Manager</h1>
       <h2>Create new task</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div>
-          <button>Add task</button>
-        </div>
+        <fieldset disabled={updating}>
+          <div>
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div>
+            <button>Add task</button>
+          </div>
+        </fieldset>
       </form>
       <h2>My Tasks</h2>
       <div className={"task-component"}>
-        {loading && <div className={"progress-spinner"}>Loading</div>}
+        {updating && <div className={"progress-spinner"}>Loading</div>}
         {error && <div className={"error"}>⚠️ {error}</div>}
         {tasks.map((t) => (
           <li key={t.id}>

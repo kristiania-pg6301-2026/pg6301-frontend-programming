@@ -21,7 +21,7 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Handle delay on load", completed: true },
   { id: tasksId++, description: "Handle error on load", completed: true },
   { id: tasksId++, description: "Handle delay on update", completed: true },
-  { id: tasksId++, description: "Handle delay on create", completed: false },
+  { id: tasksId++, description: "Handle delay on create", completed: true },
   { id: tasksId++, description: "Handle errors", completed: false },
 ];
 
@@ -33,19 +33,22 @@ app.get("/api/tasks", (c) => {
   return delay(500).then(() => c.json(tasks));
 });
 app.post("/api/tasks", async (c) => {
+  await delay(2000);
   const { description } = await c.req.json();
   tasks.push({ id: tasksId++, description, completed: false });
   return c.newResponse(null, 201);
 });
-app.put("/api/tasks/:id", async (c) => {
-  await delay(1000);
+app.put("/api/tasks/:id", (c) => {
   const id = parseInt(c.req.param().id);
-  const { completed, description } = await c.req.json();
-  for (const task of tasks) {
-    if (task.id === id) {
-      if (completed !== undefined) task.completed = completed;
-      if (description !== undefined) task.description = description;
-    }
-  }
-  return c.newResponse(null, 200);
+  return delay(1000)
+    .then(() => c.req.json())
+    .then(({ completed, description }) => {
+      for (const task of tasks) {
+        if (task.id === id) {
+          if (completed !== undefined) task.completed = completed;
+          if (description !== undefined) task.description = description;
+        }
+      }
+      return c.newResponse(null, 200);
+    });
 });
