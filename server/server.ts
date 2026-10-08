@@ -17,6 +17,7 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Create tasks on client", completed: true },
   { id: tasksId++, description: "Show tasks from server", completed: true },
   { id: tasksId++, description: "Create tasks on server", completed: true },
+  { id: tasksId++, description: "Implement update", completed: true },
   { id: tasksId++, description: "Handle delay on load", completed: false },
   { id: tasksId++, description: "Handle delay on update", completed: false },
   { id: tasksId++, description: "Handle delay on create", completed: false },
@@ -30,4 +31,15 @@ app.post("/api/tasks", async (c) => {
   const { description } = await c.req.json();
   tasks.push({ id: tasksId++, description, completed: false });
   return c.newResponse(null, 201);
+});
+app.put("/api/tasks/:id", async (c) => {
+  const id = parseInt(c.req.param().id);
+  const { completed, description } = await c.req.json();
+  for (const task of tasks) {
+    if (task.id === id) {
+      if (completed !== undefined) task.completed = completed;
+      if (description !== undefined) task.description = description;
+    }
+  }
+  return c.newResponse(null, 200);
 });

@@ -8,7 +8,7 @@ function Application() {
   const [description, setDescription] = useState("");
 
   async function loadTasks() {
-    const res = await fetch("/api/tasks");
+    const res = await fetch("/api/tasks", { method: "GET" });
     setTasks(await res.json());
   }
 
@@ -24,6 +24,15 @@ function Application() {
       headers: {
         "Content-Type": "application/json",
       },
+    });
+    await loadTasks();
+  }
+
+  async function handleUpdate(id: number, delta: Partial<TaskItem>) {
+    await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(delta),
+      headers: { "Content-Type": "application/json" },
     });
     await loadTasks();
   }
@@ -46,7 +55,13 @@ function Application() {
       <h2>My Tasks</h2>
       {tasks.map((t) => (
         <li>
-          <input type={"checkbox"} checked={t.completed} />
+          <input
+            type={"checkbox"}
+            checked={t.completed}
+            onChange={(e) =>
+              handleUpdate(t.id, { completed: e.target.checked })
+            }
+          />
           {t.description}
         </li>
       ))}
