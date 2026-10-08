@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "tsc --noEmit && prettier --check .",
-    "dev": "vite",
+    "dev": "concurrently npm:dev:client npm:dev:server",
+    "dev:client": "vite",
+    "dev:server": "cd server && npm run dev",
     "prepare": "husky",
     "postinstall": "cd server && npm install",
     "build": "vite build",
@@ -25,6 +27,7 @@
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "concurrently": "^10.0.5",
     "husky": "^9.1.7",
     "prettier": "^3.9.9",
     "typescript": "^7.0.2",
