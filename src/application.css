@@ -1,0 +1,18 @@
+.progress-spinner {
+  border: 15px solid lightgray;
+  border-top-color: gray;
+  border-radius: 50%;
+  content-visibility: hidden;
+  height: 3rem;
+  aspect-ratio: 1;
+  animation: rotate-all-around 800ms linear infinite;
+}
+
+@keyframes rotate-all-around {
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: 1turn;
+  }
+}

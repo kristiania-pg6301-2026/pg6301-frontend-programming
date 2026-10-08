@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import type { TaskItem } from "./taskItem.js";
 
+import "./application.css";
+
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const [description, setDescription] = useState("");
 
   async function loadTasks() {
+    setLoading(true);
     const res = await fetch("/api/tasks", { method: "GET" });
     setTasks(await res.json());
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -53,6 +58,7 @@ function Application() {
         </div>
       </form>
       <h2>My Tasks</h2>
+      {loading && <div className={"progress-spinner"}>Loading</div>}
       {tasks.map((t) => (
         <li>
           <input
