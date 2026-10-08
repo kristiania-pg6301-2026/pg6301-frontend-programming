@@ -8,6 +8,7 @@ function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState<string | Error>();
+  const [saveError, setSaveError] = useState<string | Error>();
 
   const [description, setDescription] = useState("");
 
@@ -34,14 +35,21 @@ function Application() {
 
   async function handleSubmit(event: React.SubmitEvent) {
     setUpdating(true);
+    setSaveError(undefined);
     event.preventDefault();
-    await fetch("/api/tasks", {
+    const res = await fetch("/api/tasks", {
       method: "POST",
       body: JSON.stringify({ description, completed: false }),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    if (!res.ok) {
+      const error = await res.json();
+      setSaveError(error.error);
+      setUpdating(false);
+      return;
+    }
     await loadTasks();
   }
 
@@ -64,6 +72,9 @@ function Application() {
       <h2>Create new task</h2>
       <form onSubmit={handleSubmit}>
         <fieldset disabled={updating}>
+          {saveError && (
+            <div className={"error"}>⚠️ {saveError.toString()}</div>
+          )}
           <div>
             <input
               value={description}

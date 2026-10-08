@@ -22,7 +22,7 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Handle error on load", completed: true },
   { id: tasksId++, description: "Handle delay on update", completed: true },
   { id: tasksId++, description: "Handle delay on create", completed: true },
-  { id: tasksId++, description: "Handle errors", completed: false },
+  { id: tasksId++, description: "Handle errors", completed: true },
 ];
 
 async function delay(millis: number) {
@@ -33,8 +33,11 @@ app.get("/api/tasks", (c) => {
   return delay(500).then(() => c.json(tasks));
 });
 app.post("/api/tasks", async (c) => {
-  await delay(2000);
   const { description } = await c.req.json();
+  if (!description) {
+    return c.json({ error: "You have to have a description" }, 400);
+  }
+  await delay(2000);
   tasks.push({ id: tasksId++, description, completed: false });
   return c.newResponse(null, 201);
 });
