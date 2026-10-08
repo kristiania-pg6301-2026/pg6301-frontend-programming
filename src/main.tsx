@@ -7,6 +7,7 @@ import "./application.css";
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [error, setError] = useState<string>();
 
   const [description, setDescription] = useState("");
@@ -39,12 +40,15 @@ function Application() {
   }
 
   async function handleUpdate(id: number, delta: Partial<TaskItem>) {
+    setLoading(true);
+    setUpdating(true);
     await fetch(`/api/tasks/${id}`, {
       method: "PUT",
       body: JSON.stringify(delta),
       headers: { "Content-Type": "application/json" },
     });
     await loadTasks();
+    setUpdating(false);
   }
 
   return (
@@ -63,20 +67,25 @@ function Application() {
         </div>
       </form>
       <h2>My Tasks</h2>
-      {loading && <div className={"progress-spinner"}>Loading</div>}
-      {error && <div className={"error"}>⚠️ {error}</div>}
-      {tasks.map((t) => (
-        <li key={t.id}>
-          <input
-            type={"checkbox"}
-            checked={t.completed}
-            onChange={(e) =>
-              handleUpdate(t.id, { completed: e.target.checked })
-            }
-          />
-          {t.description}
-        </li>
-      ))}
+      <div className={"task-component"}>
+        {loading && <div className={"progress-spinner"}>Loading</div>}
+        {error && <div className={"error"}>⚠️ {error}</div>}
+        {tasks.map((t) => (
+          <li key={t.id}>
+            <label>
+              <input
+                type={"checkbox"}
+                checked={t.completed}
+                disabled={updating}
+                onChange={(e) =>
+                  handleUpdate(t.id, { completed: e.target.checked })
+                }
+              />
+              {t.description}
+            </label>
+          </li>
+        ))}
+      </div>
     </>
   );
 }

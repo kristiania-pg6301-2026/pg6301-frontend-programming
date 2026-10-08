@@ -20,7 +20,7 @@ const tasks: TaskItem[] = [
   { id: tasksId++, description: "Implement update", completed: true },
   { id: tasksId++, description: "Handle delay on load", completed: true },
   { id: tasksId++, description: "Handle error on load", completed: true },
-  { id: tasksId++, description: "Handle delay on update", completed: false },
+  { id: tasksId++, description: "Handle delay on update", completed: true },
   { id: tasksId++, description: "Handle delay on create", completed: false },
   { id: tasksId++, description: "Handle errors", completed: false },
 ];
@@ -38,6 +38,7 @@ app.post("/api/tasks", async (c) => {
   return c.newResponse(null, 201);
 });
 app.put("/api/tasks/:id", async (c) => {
+  await delay(1000);
   const id = parseInt(c.req.param().id);
   const { completed, description } = await c.req.json();
   for (const task of tasks) {
