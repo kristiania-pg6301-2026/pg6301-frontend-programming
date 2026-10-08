@@ -1,3 +1,9 @@
+.error {
+  border: 5px solid red;
+  padding: 2px;
+  display: inline-block;
+}
+
 .progress-spinner {
   border: 15px solid lightgray;
   border-top-color: gray;
