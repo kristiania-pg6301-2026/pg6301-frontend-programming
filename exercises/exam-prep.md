@@ -92,5 +92,5 @@ Du kan be andre om hjelp under eksamen, men du må angi i README.md kode du ikke
 - [ ] Innleveringen skal være i form av en ZIP-fil. Maks størrelse på fila er 5MB
 - [ ] Applikasjonsdata skal lagres i MongoDB
 - [ ] Applikasjonen skal deployes til Clever Cloud
-- [ ] Applikasjonen skal ha tester for visning og brukerhandlinger i React og for API i Express
+- [ ] Applikasjonen skal ha tester for visning og brukerhandlinger i React og for API i Hono
 - [ ] Det anbefales at du bruker TypeScript, Husky og Prettier for å sikre at koden din er korrekt og ryddig

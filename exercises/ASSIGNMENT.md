@@ -17,16 +17,16 @@ For å bli godkjent for å gå opp til eksamen må du få godkjent et arbeidskra
 
 ## Mal for innlevering
 
-<inkluder lenke til Heroku-applikasjonen>
+<inkluder lenke til Clever Cloud-applikasjonen>
 
 - [ ] Applikasjonen har en React frontend
 - [ ] Applikasjonen lister "tasks" (dere kan bytte ut "tasks" med annen funksjon dersom dere har lyst)
 - [ ] Applikasjonen lar brukeren legge til "tasks"
 - [ ] Applikasjonen lar brukeren markere en "task" for utført
 - [ ] React-koden illustrerer bruk av komponenter, props, `useState` og `useEffect`
-- [ ] Applikasjonen har en Express backend
+- [ ] Applikasjonen har en Hono backend
 - [ ] Frontend kommuniserer med backend sitt API via `fetch` requester
-- [ ] Applikasjonen er deployet til Heroku
+- [ ] Applikasjonen er deployet til Clever Cloud
 - [ ] Koden har en korrekt `.gitignore`-fil og har ikke sjekket inn filer som skulle vært ekskludert
 - [ ] Koden er formattert med `prettier` og du har script på plass for å sikre at
 
