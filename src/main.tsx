@@ -77,12 +77,13 @@ function Application() {
           )}
           <div>
             <input
+              required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <div>
-            <button>Add task</button>
+            <button disabled={!description}>Add task</button>
           </div>
         </fieldset>
       </form>

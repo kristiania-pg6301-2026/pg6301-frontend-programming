@@ -3,6 +3,14 @@ fieldset {
   padding: unset;
 }
 
+input:user-invalid {
+  outline: 2px solid red;
+}
+
+input:user-valid {
+  outline: 2px solid green;
+}
+
 .error {
   border: 5px solid red;
   padding: 2px;
