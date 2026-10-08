@@ -7,19 +7,25 @@ import "./application.css";
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string | Error>();
 
   const [description, setDescription] = useState("");
 
   async function loadTasks() {
     setUpdating(true);
-    const res = await fetch("/api/tasks", { method: "GET" });
-    if (res.ok) {
-      setTasks(await res.json());
-    } else {
-      setError(`Failed to load ${res.url}: ${res.status} ${res.statusText}`);
+    try {
+      const res = await fetch("/api/tasks", { method: "GET" });
+      if (res.ok) {
+        setTasks(await res.json());
+      } else {
+        setError(`Failed to load ${res.url}: ${res.status} ${res.statusText}`);
+      }
+    } catch (error) {
+      setTasks([]);
+      setError(error as Error);
+    } finally {
+      setUpdating(false);
     }
-    setUpdating(false);
   }
 
   useEffect(() => {
@@ -41,12 +47,15 @@ function Application() {
 
   async function handleUpdate(id: number, delta: Partial<TaskItem>) {
     setUpdating(true);
-    await fetch(`/api/tasks/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(delta),
-      headers: { "Content-Type": "application/json" },
-    });
-    await loadTasks();
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(delta),
+        headers: { "Content-Type": "application/json" },
+      });
+    } finally {
+      await loadTasks();
+    }
   }
 
   return (
@@ -69,7 +78,7 @@ function Application() {
       <h2>My Tasks</h2>
       <div className={"task-component"}>
         {updating && <div className={"progress-spinner"}>Loading</div>}
-        {error && <div className={"error"}>⚠️ {error}</div>}
+        {error && <div className={"error"}>⚠️ {error.toString()}</div>}
         {tasks.map((t) => (
           <li key={t.id}>
             <label>
