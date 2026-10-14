@@ -9,7 +9,8 @@ app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
-const mongo = new MongoClient("mongodb://localhost:27017");
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb://localhost:27017/";
+const mongo = new MongoClient(MONGODB_URL);
 
 const connection = await mongo.connect();
 const db = connection.db("tasks_db");
