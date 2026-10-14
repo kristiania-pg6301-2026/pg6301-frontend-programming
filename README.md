@@ -155,9 +155,6 @@ checks automatically.
 In this lecture, we will start from a blank application to review what we have covered so far. This will also give us
 some chance to deal with some information we have glossed over about the communication between the client and the server.
 
-In this lecture, we will also hand out the assignment for the course on
-[Mattermost](https://mattermost.kristiania.no/it-h2024/channels/3s-pg6301-webutvikling-og-api-design)
-
 **Reference material:**
 
 In this lecture, we will be seeing Promises and async/await a lot more. This can be confusing and I recommend these

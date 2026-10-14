@@ -608,7 +608,7 @@ you don't remember enough from the lectures, you will probably be lost.
 Feel free to work on the assignment this week. If you find extra time, you can play with MongoDB.
 You should complete at least exercise 7 before attempting this exercise.
 
-1. Follow the [notes from lecture 9](https://github.com/kristiania-pg6301-2025/pg6301-frontend-programming/blob/reference/09/README.md)
+1. Follow the [notes from lecture 9](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/blob/reference/09/README.md)
    to set up a React + Hono application
 
 ### Run Mongodb in Docker Desktop
@@ -648,10 +648,10 @@ app.post("/api/tasks", async (c) => {
 });
 ```
 
-## Use MongoDB Atlas to play with a sample database and access Mongo from Clever Cloud
+### Use MongoDB Atlas to play with a sample database and access Mongo from Clever Cloud
 
 1. Sign up with [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
-2. Create an organization (can be your name) and a project (exercise06)
+2. Create an organization (can be your name) and a project (exercise09)
 3. Select "Create a deployment" to create a database
    - **Make sure you select M0** to avoid having to pay for hosting
 4. Add a user and your local IP-address (NB: You will need to "allow access from Cloud Environment" to use with Clever Cloud)
@@ -700,7 +700,7 @@ Create a new file named `.env` with the following line:
 MONGODB_URL=<your mongo db URL, including password>
 ```
 
-\*\*Make sure to add `.env` to `.gitignore`. This is a very secret file!
+**Make sure to add `.env` to `.gitignore`. This is a very secret file!**
 
 To use the environment file in your code:
 
@@ -717,12 +717,11 @@ To set up the environment variable in Clever Cloud, ....
 3. Let the use specify filter values, for example by year, country or cast
 4. Let the user specify multiple countries
 5. Show the available options for years and countries in the in drop down lists
-6. Update POST /api/movies so that new movies are stored in MongoD-B
+6. Update POST /api/movies so that new movies are stored in MongoDB
 7. Create or update supertest tests that store data to MongoDB
-8. Deploy your code to Cleve Cloud - this requires you to set up security:
-
-- In Clever Cloud: Update the MONGODB_URL under your app Settings as a Config Var
-- In MongoDB: Update Security > Network Access to allow all IP addresses
+8. Deploy your code to Clever Cloud - this requires you to set up security:
+   - In Clever Cloud: Update the MONGODB_URL under your app Settings as a Config Var
+   - In MongoDB: Update Security > Network Access to allow all IP addresses
 
 </details>
 
