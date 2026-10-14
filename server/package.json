@@ -12,9 +12,13 @@
   "type": "module",
   "dependencies": {
     "@hono/node-server": "^2.1.5",
-    "hono": "^4.13.13"
+    "hono": "^4.13.13",
+    "mongodb": "^7.7.0"
   },
   "devDependencies": {
     "tsx": "^4.23.15"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
