@@ -27,7 +27,10 @@ const mongo = new MongoClient("mongodb://localhost:27017");
 const connection = await mongo.connect();
 const db = connection.db("tasks_db");
 
-app.get("/api/tasks", (c) => c.json(tasks));
+app.get("/api/tasks", async (c) => {
+  const tasks = await db.collection("tasks").find().toArray();
+  return c.json(tasks);
+});
 app.post("/api/tasks", async (c) => {
   const { description, completed } = await c.req.json();
   const task = { id: ++index, description, completed };
