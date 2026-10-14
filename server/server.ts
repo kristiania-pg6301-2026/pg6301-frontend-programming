@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const app = new Hono();
 // `serveStatic` makes Hono serve the output from `vite build`
@@ -22,5 +22,11 @@ app.post("/api/tasks", async (c) => {
   const { description, completed } = await c.req.json();
   const task = { description, completed };
   await db.collection("tasks").insertOne(task);
+  return c.newResponse(null, 200);
+});
+app.put("/api/tasks/:_id", async (c) => {
+  const { completed } = await c.req.json();
+  const _id = ObjectId.createFromHexString(c.req.param()._id);
+  await db.collection("tasks").updateOne({ _id }, { $set: { completed } });
   return c.newResponse(null, 200);
 });

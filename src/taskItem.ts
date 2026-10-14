@@ -1,5 +1,5 @@
 export interface TaskItem {
-  id: number;
+  _id: string;
   description: string;
   completed: boolean;
 }

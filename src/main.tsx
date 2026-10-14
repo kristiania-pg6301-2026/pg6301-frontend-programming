@@ -24,6 +24,15 @@ function Application() {
     await loadTasks();
   }
 
+  async function handleTaskUpdate(_id: string, delta: Partial<TaskItem>) {
+    await fetch(`/api/tasks/${_id}`, {
+      method: "PUT",
+      body: JSON.stringify(delta),
+      headers: { "Content-Type": "application/json" },
+    });
+    await loadTasks();
+  }
+
   return (
     <>
       <h2>New task</h2>
@@ -42,8 +51,17 @@ function Application() {
       <h2>My tasks</h2>
       <ul>
         {tasks.map((t) => (
-          <li key={t.id}>
-            <input type={"checkbox"} checked={t.completed} /> {t.description}
+          <li key={t._id}>
+            <label>
+              <input
+                type={"checkbox"}
+                checked={t.completed}
+                onChange={(e) =>
+                  handleTaskUpdate(t._id, { completed: e.target.checked })
+                }
+              />{" "}
+              {t.description}
+            </label>
           </li>
         ))}
       </ul>
