@@ -30,3 +30,9 @@ app.put("/api/tasks/:_id", async (c) => {
   await db.collection("tasks").updateOne({ _id }, { $set: { completed } });
   return c.newResponse(null, 200);
 });
+
+const movieDb = connection.db("sample_mflix");
+app.get("/api/movies", async (c) => {
+  const movies = await movieDb.collection("movies").find().limit(100).toArray();
+  return c.json(movies);
+});

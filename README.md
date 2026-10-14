@@ -247,3 +247,27 @@ app.put("/api/tasks/:_id", async (c) => {
   return c.newResponse(null, 200);
 });
 ```
+
+# Exploring the sample data
+
+<details>
+
+## Getting started
+
+1. Download the [Mongodb Compass UI](https://www.mongodb.com/try/download/compass)
+2. Download the [Mongodb database management tools](https://www.mongodb.com/try/download/database-tools)
+3. Extract the `mongorestore` binary from the database management tools
+4. Download the [Mongodb sample data](https://atlas-education.s3.amazonaws.com/sampledata.archive)
+5. Restore the sample data into your local database `mongorestore --archive=sampledata.archive`
+
+`server/server.ts`
+
+```ts
+const movieDb = connection.db("sample_mflix");
+app.get("/api/movies", async (c) => {
+  const movies = await movieDb.collection("movies").find().limit(100).toArray();
+  return c.json(movies);
+});
+```
+
+</details>
