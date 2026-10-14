@@ -12,7 +12,7 @@ serve({ fetch: app.fetch, port: 8080 });
 let index = 1;
 const tasks: TaskItem[] = [
   { id: ++index, description: "Fetch data from server", completed: true },
-  { id: ++index, description: "Create new task on server", completed: false },
+  { id: ++index, description: "Create new task on server", completed: true },
   { id: ++index, description: "Save tasks to MongoDB", completed: false },
   {
     id: ++index,
@@ -21,3 +21,8 @@ const tasks: TaskItem[] = [
   },
 ];
 app.get("/api/tasks", (c) => c.json(tasks));
+app.post("/api/tasks", async (c) => {
+  const { description, completed } = await c.req.json();
+  tasks.push({ id: ++index, description, completed });
+  return c.newResponse(null, 200);
+});

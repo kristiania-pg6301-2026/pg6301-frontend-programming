@@ -4,7 +4,7 @@ import type { TaskItem } from "./taskItem.js";
 
 function Application() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
-
+  const [description, setDescription] = useState("");
   async function loadTasks() {
     const res = await fetch("/api/tasks");
     setTasks(await res.json());
@@ -14,9 +14,32 @@ function Application() {
     loadTasks();
   }, []);
 
+  async function handleSubmit(event: React.SubmitEvent) {
+    event.preventDefault();
+    await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({ description, completed: false }),
+      headers: { "Content-Type": "application/json " },
+    });
+    await loadTasks();
+  }
+
   return (
     <>
-      <h1>My tasks</h1>
+      <h2>New task</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type={"text"}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div>
+          <button>Save task</button>
+        </div>
+      </form>
+      <h2>My tasks</h2>
       <ul>
         {tasks.map((t) => (
           <li key={t.id}>
