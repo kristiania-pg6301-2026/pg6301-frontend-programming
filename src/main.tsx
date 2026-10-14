@@ -1,5 +1,5 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { MovieApplication } from "./setMovies.js";
+import { TodoApplication } from "./todoApplication.js";
 
-createRoot(document.getElementById("root")!).render(<MovieApplication />);
+createRoot(document.getElementById("root")!).render(<TodoApplication />);
