@@ -1,0 +1,5 @@
+services:
+  mongodb_pg6301:
+    image: mongo
+    ports:
+      - "27017:27017"
