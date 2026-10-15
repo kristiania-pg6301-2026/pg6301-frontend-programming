@@ -1,11 +1,15 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { MongoClient, ObjectId } from "mongodb";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono();
-serve(app);
+app.use("*", serveStatic({ root: "../dist" }));
+serve({ fetch: app.fetch, port: 8080 });
 
-const mongo = new MongoClient("mongodb://localhost:27017/");
+const mongo = new MongoClient(process.env.MONGODB_URI!, {
+  connectTimeoutMS: 2000,
+});
 
 mongo.connect().then((client) => {
   const db = client.db("task_db");
