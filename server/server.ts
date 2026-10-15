@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const app = new Hono();
 serve(app);
@@ -19,6 +19,13 @@ mongo.connect().then((client) => {
     const { description, completed } = await c.req.json();
     const task = { description, completed };
     await db.collection("tasks").insertOne(task);
+    return c.newResponse(null, 200);
+  });
+
+  app.put("/api/tasks/:_id", async (c) => {
+    const _id = ObjectId.createFromHexString(c.req.param()._id);
+    const { completed } = await c.req.json();
+    await db.collection("tasks").updateOne({ _id }, { $set: { completed } });
     return c.newResponse(null, 200);
   });
 });

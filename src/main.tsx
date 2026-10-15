@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
 interface TaskItem {
-  id: number;
+  _id: string;
   description: string;
   completed: boolean;
 }
@@ -34,6 +34,17 @@ function Application() {
     await loadTasks();
   }
 
+  async function handleChangeTask(_id: string, delta: Partial<TaskItem>) {
+    await fetch(`/api/tasks/${_id}`, {
+      method: "PUT",
+      body: JSON.stringify(delta),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await loadTasks();
+  }
+
   return (
     <>
       <h1>Task application</h1>
@@ -55,7 +66,18 @@ function Application() {
 
       <h2>List tasks</h2>
       {tasks.map((t) => (
-        <li>{t.description}</li>
+        <li key={t._id}>
+          <label>
+            <input
+              type={"checkbox"}
+              checked={t.completed}
+              onChange={(e) =>
+                handleChangeTask(t._id, { completed: e.target.checked })
+              }
+            />
+            {t.description}
+          </label>
+        </li>
       ))}
     </>
   );
