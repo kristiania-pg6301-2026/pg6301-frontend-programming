@@ -14,11 +14,14 @@ mongo.connect().then((client) => {
     { description: "list tasks", completed: true },
     { description: "create new task", completed: true },
     { description: "save new task in database", completed: true },
-    { description: "list tasks from database", completed: false },
+    { description: "list tasks from database", completed: true },
   ];
-  app.get("/api/tasks", (c) => c.json(tasks));
-
   const db = client.db("task_db");
+
+  app.get("/api/tasks", async (c) => {
+    const tasks = await db.collection("tasks").find().toArray();
+    return c.json(tasks);
+  });
 
   app.post("/api/tasks", async (c) => {
     const { description, completed } = await c.req.json();
