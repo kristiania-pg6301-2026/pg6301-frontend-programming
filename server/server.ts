@@ -13,3 +13,8 @@ const tasks: TaskItem[] = [
 ];
 
 app.get("/api/tasks", (c) => c.json(tasks));
+app.get("/api/userinfo", (c) => c.json({ error: "Not logged in" }, 401));
+app.get("/api/login/:idProvider/start", (c) => {
+  const { idProvider } = c.req.param();
+  return c.json({ status: `Starting login flow with ${idProvider}` });
+});
