@@ -1,0 +1,40 @@
+{
+  "name": "pg6301-frontend-programming-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc --noEmit && prettier --check .",
+    "dev": "concurrently npm:dev:client npm:dev:server",
+    "prepare": "husky",
+    "postinstall": "cd server && npm install",
+    "build": "vite build",
+    "start": "cd server && npm start",
+    "dev:client": "vite",
+    "dev:server": "cd server && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/issues"
+  },
+  "homepage": "https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "concurrently": "^10.0.6",
+    "husky": "^9.1.7",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
