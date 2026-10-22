@@ -22,14 +22,40 @@ function FrontPage() {
   );
 }
 
+interface Userinfo {
+  name: string;
+  email?: string;
+  email_verified?: boolean;
+  picture?: string;
+}
+
+function UserinfoView({
+  userinfo: { name, email, picture },
+}: {
+  userinfo: Userinfo;
+}) {
+  return (
+    <div>
+      <div title={email}>
+        <strong>Name: </strong> {name}
+      </div>
+      {picture && (
+        <div>
+          <img alt={`profile picture for ${name}`} src={picture} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ProfilePage() {
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
-  const [profile, setProfile] = useState();
+  const [userinfo, setUserinfo] = useState<Userinfo>();
   async function loadProfile() {
     const res = await fetch("/api/userinfo");
     if (res.ok) {
-      setProfile(await res.json());
+      setUserinfo(await res.json());
     } else if (res.status === 401) {
       navigate("/login");
     } else {
@@ -44,7 +70,7 @@ function ProfilePage() {
     <>
       <h1>Your profile</h1>
       {error && <div className={"error"}>{error}</div>}
-      <pre>{JSON.stringify(profile, null, 2)}</pre>
+      {userinfo && <UserinfoView userinfo={userinfo} />}
     </>
   );
 }

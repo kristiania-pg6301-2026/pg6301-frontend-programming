@@ -51,7 +51,7 @@ app.get("/api/login/:idProvider/start", async (c) => {
       c.req.url,
     ).toString(),
     client_id: GOOGLE_CLIENT_ID,
-    scope: "openid",
+    scope: "openid profile email",
   };
   return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
 });
