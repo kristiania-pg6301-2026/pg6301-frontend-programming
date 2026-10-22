@@ -26,13 +26,17 @@ app.get("/api/login/:idProvider/start", async (c) => {
   );
   const { authorization_endpoint } = discoveryDoc;
 
+  const redirect_uri = new URL(
+    "/api/login/google/complete",
+    c.req.url,
+  ).toString();
   return c.redirect(
     authorization_endpoint +
       "?" +
       new URLSearchParams({
         response_type: "code",
         scope: "openid",
-        redirect_uri: "http://localhost:5173/api/login/google/complete",
+        redirect_uri,
         client_id:
           "34816606807-c2lql016g0opseg5kcccr2k6id4rplpo.apps.googleusercontent.com",
       }),
