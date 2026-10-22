@@ -1,6 +1,6 @@
 # PG6301 Web Development and API design
 
-[![Running website on GH pages](https://img.shields.io/badge/Course-website-green)](https://kristiania-pg6301-2026.github.io/pg6301-frontend-programming/)
+[![Running website on Clever Cloud](https://img.shields.io/badge/Course-website-green)](https://app-09f58f91-bb2b-4bb7-93e6-9a3d9222f7c4.cleverapps.io)
 
 Welcome to this course in Web Development and API Design. In this course, we will
 look at creating single-page applications with React backed by APIs implemented
@@ -187,8 +187,7 @@ In this lecture, we learn how to store and retrieve data in [MongoDB](https://ww
 [![Lecture 10 reference](https://img.shields.io/badge/Lecture_10-reference_code-blue)](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/tree/reference/10)
 [![Lecture 10 exercise](https://img.shields.io/badge/Lecture_10-exercise-pink)](./exercises/EXERCISES.md#exercise-10)
 
-In this lecture we will implement "log in with Google"-functionality. We will also explore other identity
-services that also implement OpenID Connect, such as LinkedIn and Microsoft Entra ID.
+In this lecture we will implement "log in with Google"-functionality.
 
 ### Lecture 11: Completing OpenID Connect and MongoDB
 
@@ -234,7 +233,7 @@ npm pkg set scripts.dev=vite
 
 npm install -D typescript
 npm install -D @types/react @types/react-dom
-npx tsc --init --jsx react
+npx tsc --init
 
 npm install -D prettier
 npx prettier --write .
@@ -356,6 +355,20 @@ This list of commands:
 2. Creates a directory for the server with a separate `package.json`
 3. Adds dependencies on [Hono](https://hono.dev/)
 4. Creates the scripts to develop and run the server
+
+<details>
+
+If you want to run the client and server with the same command, you can run this:
+
+```shell
+npm install -D concurrently
+npm pkg set scripts.dev:client=vite
+npm pkg set scripts.dev:server="cd server && npm run dev"
+npm pkg set scripts.dev="concurrently npm:dev:client npm:dev:server"
+
+```
+
+</details>
 
 ```shell
 npm pkg set scripts.postinstall="cd server && npm install"

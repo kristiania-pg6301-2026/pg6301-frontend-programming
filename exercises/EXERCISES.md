@@ -545,7 +545,7 @@ In order to implement this, you have to make the following changes:
 
 ## Exercise 7:
 
-<details open>
+<details>
 
 ### Deploying your application to Clever Cloud
 
@@ -662,11 +662,11 @@ app.post("/api/tasks", async (c) => {
    the web page under Security > Database Access > Edit
 8. Explore the `sample_mflix` database in Compass
 
-## Create a Hono API for MongoDB
+### Create a Hono API for MongoDB
 
 Create a Hono application similarly to how we have done before:
 
-## Give the API access to the Mongo database
+### Give the API access to the Mongo database
 
 `npm install mongodb`
 
@@ -692,7 +692,7 @@ app.get("/api/movies", async (req, res) => {
 
 Check that you get 20 movies for 2013 when you go to http://localhost:3000
 
-## Treat the password with care!
+### Treat the password with care!
 
 Create a new file named `.env` with the following line:
 
@@ -709,7 +709,7 @@ To use the environment file in your code:
 
 To set up the environment variable in Clever Cloud, ....
 
-## Tasks
+### Tasks
 
 1. Try to add different filtering and sorting options. For example - list all movies from a country sorted by the most
    popular
@@ -732,18 +732,18 @@ To set up the environment variable in Clever Cloud, ....
 ### Securing your application with OpenID Connect
 
 The goal of this exercise is to add authentication to your application by letting the user sign in with their Google
-Account. You should have completed [exercise 8](#exercise-8) before attempting this exercise.
+Account. You should have completed [exercise 9](#exercise-9) - deployment before attempting this exercise.
 
 ### Steps:
 
-1. Follow the [notes from lecture 9](https://github.com/kristiania-pg6301-2025/pg6301-frontend-programming/blob/reference/09/README.md)
+1. Follow the [notes from lecture 8](https://github.com/kristiania-pg6301-2026/pg6301-frontend-programming/blob/reference/08/README.md)
    to set up a React + Hono application
 2. Add `react-router-dom` to the application and create a `LoginPage` and `ProfilePage` component that the user can navigate to
 3. When the user navigates to `ProfilePage`, do a `fetch("/api/userinfo")` with some error handling
 4. Implement `fetch("/api/userinfo")` to return a 401 (Unauthenticated) status code
 5. When the `ProfilePage` gets 401, it should use `useNavigate` to go to `/login`
 6. On the `LoginPage`, create a link to `/api/login/google/start`
-7. In Hono, you need to implement `/api/login/google/start`, which will start the authentication flow
+7. In Hono, you need to implement `/api/login/google/start`, which will start the authentication flow (see the next section)
 
 ### Setting up the authentication backend
 
@@ -752,16 +752,16 @@ Account. You should have completed [exercise 8](#exercise-8) before attempting t
    - If you have deployed to Clever Cloud, you should add the path `/api/login/google/complete` on your app
 2. Implement `/api/login/google/start` by redirecting the user to the `authorization_endpoint` from
    https://accounts.google.com/.well-known/openid-configuration, with `client_id`, and `redirect_uri` from the last step.
-   You also need the http parameters `scope=email` and `response_type=code`.
+   You also need the http parameters `scope=openid` and `response_type=code`.
    You should experiment and see what error messages you get when you miss a parameter
    ```ts
-   const query = { client_id, redirect_uri, response_type: "code", scope };
+   const query = { client_id, redirect_uri, response_type: "code", scope: "openid" };
    return c.redirect(`${authorization_endpoint}?${new URLSearchParams(query)}`);
    ```
 3. If you try to log in, you will eventually be redirected back to http://localhost:5173/api/login/google/complete
    with the parameter `code`. To get an access code for the user, find the `token_endpoint`
    in https://accounts.google.com/.well-known/openid-configuration and make a POST request to get the access token
-   (the `client_id`, `redirect_uri` and `client_secret` comes from your registration with Google,:
+   (the `client_id`, `redirect_uri` and `client_secret` comes from your registration with Google,
    while the `code` was returned with the redirect)
    ```ts
    const payload = {
@@ -773,7 +773,6 @@ Account. You should have completed [exercise 8](#exercise-8) before attempting t
    };
    const tokenRes = await fetch(token_endpoint, {
      method: "POST",
-     headers: { "Content-Type": "application/x-www-form-urlencoded" },
      body: new URLSearchParams(payload),
    });
    const { access_token } = await tokenRes.json();
@@ -798,8 +797,8 @@ Account. You should have completed [exercise 8](#exercise-8) before attempting t
 - You should try to deploy your authenticated application to Clever Cloud. You need to
   create a Clever Cloud app and in the Google Console, you have to add a redirect_url
   matching the Clever Cloud app name. See if you can find out how to dynamically create
-  the redirect url using `c.req.url`. In Clever Cloud, you should add the client secret
-  ...
+  the redirect url using `c.req.url` (⚠️ you will need to change the URL from `http` to `https`). 
+  In Clever Cloud, you should add the client secret under Environment Variables and restart the app
 - Try to implement alternative logins like LinkedIn. For a slightly bigger challenge,
   you can implement login with GitHub. How would you change your application to
   support multiple logins?
