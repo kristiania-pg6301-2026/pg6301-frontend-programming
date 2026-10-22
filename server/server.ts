@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { setCookie } from "hono/cookie";
+import { getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
 // `serveStatic` makes Hono serve the output from `vite build`
@@ -15,12 +15,22 @@ const client_configuration = {
   client_secret: process.env.GOOGLE_CLIENT_SECRET!,
 };
 
-app.get("/api/userinfo", (c) => {
-  return c.json({ error: "User is not logged in" }, 401);
+app.get("/api/userinfo", async (c) => {
+  const access_token = getCookie(c, "pg6301_token");
+  if (!access_token) return c.json({ error: "User is not logged in" }, 401);
+
+  const { userinfo_endpoint } = await fetchJSON(
+    "https://accounts.google.com/.well-known/openid-configuration",
+  );
+  return c.json(
+    await fetchJSON(userinfo_endpoint, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    }),
+  );
 });
 
-async function fetchJSON(url: string) {
-  const res = await fetch(url);
+async function fetchJSON(url: string, init?: RequestInit) {
+  const res = await fetch(url, init);
   return await res.json();
 }
 

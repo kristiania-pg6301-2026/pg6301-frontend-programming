@@ -29,7 +29,12 @@ function ProfilePage() {
   return (
     <>
       <h1>Your profile</h1>
-      {userinfo && <pre>{JSON.stringify(userinfo)}</pre>}
+      {userinfo?.picture && (
+        <div>
+          <img src={userinfo.picture} />
+        </div>
+      )}
+      {userinfo && <pre>{JSON.stringify(userinfo, null, 2)}</pre>}
     </>
   );
 }
