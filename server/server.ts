@@ -10,6 +10,5 @@ app.use("*", serveStatic({ root: "../dist" }));
 serve({ fetch: app.fetch, port: 8080 });
 
 app.get("/api/userinfo", (c) => {
-  const userinfo: Userinfo = { name: "The Very Fine User" };
-  return c.json(userinfo);
+  return c.json({ error: "User is not logged in" }, 401);
 });

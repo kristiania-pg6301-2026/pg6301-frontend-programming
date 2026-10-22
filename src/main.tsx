@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import type { Userinfo } from "./userinfo.js";
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 
 function ProfilePage() {
   const [userinfo, setUserinfo] = useState<Userinfo>();
+  const navigate = useNavigate();
 
   async function loadUserinfo() {
     const res = await fetch("/api/userinfo");
-    setUserinfo(await res.json());
+    if (res.ok) {
+      setUserinfo(await res.json());
+    } else if (res.status === 401) {
+      navigate("/login");
+    }
   }
 
   useEffect(() => {
@@ -22,4 +34,34 @@ function ProfilePage() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<ProfilePage />);
+function FrontPage() {
+  return (
+    <>
+      <h1>Front Page</h1>
+      <nav>
+        <Link to={"/profile"}>My Profile</Link>
+      </nav>
+    </>
+  );
+}
+
+function LoginPage() {
+  return <h1>Please Log In</h1>;
+}
+
+function Application() {
+  return (
+    <Routes>
+      <Route path={"/"} element={<FrontPage />} />
+      <Route path={"/login"} element={<LoginPage />} />
+      <Route path={"/profile"} element={<ProfilePage />} />
+      <Route path={"*"} element={<h1>Not found</h1>} />
+    </Routes>
+  );
+}
+
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
+    <Application />
+  </BrowserRouter>,
+);
