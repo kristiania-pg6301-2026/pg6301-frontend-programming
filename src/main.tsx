@@ -46,7 +46,12 @@ function FrontPage() {
 }
 
 function LoginPage() {
-  return <h1>Please Log In</h1>;
+  return (
+    <>
+      <h1>Please Log In</h1>
+      <a href={"/api/login/google/start"}>Log in with Google</a>
+    </>
+  );
 }
 
 function Application() {
@@ -55,7 +60,7 @@ function Application() {
       <Route path={"/"} element={<FrontPage />} />
       <Route path={"/login"} element={<LoginPage />} />
       <Route path={"/profile"} element={<ProfilePage />} />
-      <Route path={"*"} element={<h1>Not found</h1>} />
+      <Route path={"*"} element={<h1>Not found (frontend)</h1>} />
     </Routes>
   );
 }
