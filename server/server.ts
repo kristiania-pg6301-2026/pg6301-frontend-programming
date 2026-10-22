@@ -14,6 +14,7 @@ const tasks: TaskItem[] = [
 
 const GOOGLE_CLIENT_ID =
   "34816606807-7snj16t94726hrcoa9h1se1n2e46s2ps.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 app.get("/api/tasks", (c) => c.json(tasks));
 app.get("/api/userinfo", (c) => c.json({ error: "Not logged in" }, 401));
@@ -40,4 +41,34 @@ app.get("/api/login/:idProvider/start", async (c) => {
     scope: "openid",
   };
   return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
+});
+
+app.get("/api/login/:idProvider/complete", async (c) => {
+  const { idProvider } = c.req.param();
+  const { code } = c.req.query();
+  const { token_endpoint } = await fetchJson(
+    "https://accounts.google.com/.well-known/openid-configuration",
+  );
+  if (code) {
+    const body = {
+      code,
+      grant_type: "authorization_code",
+      client_id: GOOGLE_CLIENT_ID,
+      client_secret: GOOGLE_CLIENT_SECRET!,
+      redirect_uri: new URL(
+        `/api/login/${idProvider}/complete`,
+        c.req.url,
+      ).toString(),
+    };
+    console.log(JSON.stringify(body));
+    const res = await fetch(token_endpoint, {
+      method: "POST",
+      body: new URLSearchParams(body),
+    });
+    const responseJson = await res.json();
+    console.log(JSON.stringify(responseJson));
+    return c.json(responseJson);
+  } else {
+    return c.json(c.req.query());
+  }
 });
