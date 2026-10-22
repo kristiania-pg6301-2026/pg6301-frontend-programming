@@ -18,16 +18,22 @@ const GOOGLE_CLIENT_ID =
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 app.get("/api/tasks", (c) => c.json(tasks));
-app.get("/api/userinfo", (c) => {
+app.get("/api/userinfo", async (c) => {
   const access_token = getCookie(c, "access_token");
   if (access_token) {
-    return c.json({ access_token });
+    const { userinfo_endpoint } = await fetchJson(
+      "https://accounts.google.com/.well-known/openid-configuration",
+    );
+    const userinfo = await fetchJson(userinfo_endpoint, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
+    return c.json(userinfo);
   }
   return c.json({ error: "Not logged in" }, 401);
 });
 
-async function fetchJson(url: string) {
-  const res = await fetch(url);
+async function fetchJson(url: string, init?: RequestInit) {
+  const res = await fetch(url, init);
   return await res.json();
 }
 
@@ -45,7 +51,7 @@ app.get("/api/login/:idProvider/start", async (c) => {
       c.req.url,
     ).toString(),
     client_id: GOOGLE_CLIENT_ID,
-    scope: "openid profile email",
+    scope: "openid",
   };
   return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
 });
