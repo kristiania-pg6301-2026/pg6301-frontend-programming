@@ -30,6 +30,7 @@
     "concurrently": "^10.0.6",
     "husky": "^9.1.7",
     "prettier": "^3.9.10",
+    "react-router-dom": "^7.18.4",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"
   },
