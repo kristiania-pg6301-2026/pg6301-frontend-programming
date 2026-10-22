@@ -56,7 +56,7 @@ app.get("/api/login/:idProvider/complete", async (c) => {
   const result = await res.json();
   const { access_token } = result;
   if (access_token) setCookie(c, "pg6301_token", access_token);
-  return c.json(result);
+  return c.redirect("/profile");
 });
 
 function redirectUri(base: string) {
@@ -77,7 +77,7 @@ app.get("/api/login/:idProvider/start", async (c) => {
       "?" +
       new URLSearchParams({
         response_type: "code",
-        scope: "openid",
+        scope: "openid profile email",
         redirect_uri: redirectUri(c.req.url),
         client_id,
       }),

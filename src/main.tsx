@@ -28,7 +28,7 @@ function ProfilePage() {
 
   return (
     <>
-      <h1>Your profile</h1>
+      <h1>Your profile: {userinfo?.name}</h1>
       {userinfo?.picture && (
         <div>
           <img src={userinfo.picture} />
