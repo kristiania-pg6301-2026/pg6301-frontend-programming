@@ -20,16 +20,14 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 app.get("/api/tasks", (c) => c.json(tasks));
 app.get("/api/userinfo", async (c) => {
   const access_token = getCookie(c, "access_token");
-  if (access_token) {
-    const { userinfo_endpoint } = await fetchJson(
-      "https://accounts.google.com/.well-known/openid-configuration",
-    );
-    const userinfo = await fetchJson(userinfo_endpoint, {
-      headers: { Authorization: `Bearer ${access_token}` },
-    });
-    return c.json(userinfo);
-  }
-  return c.json({ error: "Not logged in" }, 401);
+  if (!access_token) return c.json({ error: "Not logged in" }, 401);
+  const { userinfo_endpoint } = await fetchJson(
+    "https://accounts.google.com/.well-known/openid-configuration",
+  );
+  const userinfo = await fetchJson(userinfo_endpoint, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+  return c.json(userinfo);
 });
 
 async function fetchJson(url: string, init?: RequestInit) {
@@ -69,28 +67,23 @@ app.get("/api/login/:idProvider/complete", async (c) => {
   const { token_endpoint } = await fetchJson(
     "https://accounts.google.com/.well-known/openid-configuration",
   );
-  if (code) {
-    const body = {
-      code,
-      grant_type: "authorization_code",
-      client_id: GOOGLE_CLIENT_ID,
-      client_secret: GOOGLE_CLIENT_SECRET!,
-      redirect_uri: redirectUri(idProvider, c.req.url),
-    };
-    console.log(JSON.stringify(body));
-    const res = await fetch(token_endpoint, {
-      method: "POST",
-      body: new URLSearchParams(body),
-    });
-    const responseJson = await res.json();
-    console.log(JSON.stringify(responseJson));
-    const { access_token } = responseJson;
-    if (access_token) {
-      setCookie(c, "access_token", access_token);
-      return c.redirect("/profile");
-    }
-    return c.json(responseJson);
-  } else {
-    return c.json(c.req.query());
-  }
+  if (!code) return c.json(c.req.query());
+  const body = {
+    code,
+    grant_type: "authorization_code",
+    client_id: GOOGLE_CLIENT_ID,
+    client_secret: GOOGLE_CLIENT_SECRET!,
+    redirect_uri: redirectUri(idProvider, c.req.url),
+  };
+  console.log(JSON.stringify(body));
+  const res = await fetch(token_endpoint, {
+    method: "POST",
+    body: new URLSearchParams(body),
+  });
+  const responseJson = await res.json();
+  console.log(JSON.stringify(responseJson));
+  const { access_token } = responseJson;
+  if (!access_token) return c.json(responseJson);
+  setCookie(c, "access_token", access_token);
+  return c.redirect("/profile");
 });
