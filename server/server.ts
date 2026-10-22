@@ -37,6 +37,16 @@ async function fetchJson(url: string, init?: RequestInit) {
   return await res.json();
 }
 
+function redirectUri(idProvider: any, baseUrl: string) {
+  const result = new URL(
+    `/api/login/${idProvider}/complete`,
+    baseUrl,
+  ).toString();
+  if (result.startsWith("http://localhost")) return result;
+  if (result.startsWith("https:")) return result;
+  return result.replace("http://", "https://");
+}
+
 app.get("/api/login/:idProvider/start", async (c) => {
   const { idProvider } = c.req.param();
 
@@ -46,10 +56,7 @@ app.get("/api/login/:idProvider/start", async (c) => {
 
   const params = {
     response_type: "code",
-    redirect_uri: new URL(
-      `/api/login/${idProvider}/complete`,
-      c.req.url,
-    ).toString(),
+    redirect_uri: redirectUri(idProvider, c.req.url),
     client_id: GOOGLE_CLIENT_ID,
     scope: "openid profile email",
   };
@@ -68,10 +75,7 @@ app.get("/api/login/:idProvider/complete", async (c) => {
       grant_type: "authorization_code",
       client_id: GOOGLE_CLIENT_ID,
       client_secret: GOOGLE_CLIENT_SECRET!,
-      redirect_uri: new URL(
-        `/api/login/${idProvider}/complete`,
-        c.req.url,
-      ).toString(),
+      redirect_uri: redirectUri(idProvider, c.req.url),
     };
     console.log(JSON.stringify(body));
     const res = await fetch(token_endpoint, {
