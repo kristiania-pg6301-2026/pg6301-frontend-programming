@@ -25,9 +25,11 @@ function FrontPage() {
 function ProfilePage() {
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
+  const [profile, setProfile] = useState();
   async function loadProfile() {
     const res = await fetch("/api/userinfo");
     if (res.ok) {
+      setProfile(await res.json());
     } else if (res.status === 401) {
       navigate("/login");
     } else {
@@ -37,11 +39,12 @@ function ProfilePage() {
 
   useEffect(() => {
     loadProfile();
-  });
+  }, []);
   return (
     <>
       <h1>Your profile</h1>
       {error && <div className={"error"}>{error}</div>}
+      <pre>{JSON.stringify(profile, null, 2)}</pre>
     </>
   );
 }

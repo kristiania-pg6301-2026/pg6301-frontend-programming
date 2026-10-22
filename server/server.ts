@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { getCookie, setCookie } from "hono/cookie";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import type { TaskItem } from "../src/taskItem.js";
@@ -17,7 +18,13 @@ const GOOGLE_CLIENT_ID =
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 app.get("/api/tasks", (c) => c.json(tasks));
-app.get("/api/userinfo", (c) => c.json({ error: "Not logged in" }, 401));
+app.get("/api/userinfo", (c) => {
+  const access_token = getCookie(c, "access_token");
+  if (access_token) {
+    return c.json({ access_token });
+  }
+  return c.json({ error: "Not logged in" }, 401);
+});
 
 async function fetchJson(url: string) {
   const res = await fetch(url);
@@ -38,7 +45,7 @@ app.get("/api/login/:idProvider/start", async (c) => {
       c.req.url,
     ).toString(),
     client_id: GOOGLE_CLIENT_ID,
-    scope: "openid",
+    scope: "openid profile email",
   };
   return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
 });
@@ -67,6 +74,11 @@ app.get("/api/login/:idProvider/complete", async (c) => {
     });
     const responseJson = await res.json();
     console.log(JSON.stringify(responseJson));
+    const { access_token } = responseJson;
+    if (access_token) {
+      setCookie(c, "access_token", access_token);
+      return c.redirect("/profile");
+    }
     return c.json(responseJson);
   } else {
     return c.json(c.req.query());
