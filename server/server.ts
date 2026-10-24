@@ -4,7 +4,6 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
-// `serveStatic` makes Hono serve the output from `vite build`
 app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
@@ -42,18 +41,17 @@ app.get("/api/login/:idProvider/complete", async (c) => {
     "https://accounts.google.com/.well-known/openid-configuration",
   );
   const { client_id, client_secret } = client_configuration;
-  const res = await fetch(token_endpoint, {
+  const params = {
+    code,
+    grant_type: "authorization_code",
+    client_id,
+    client_secret,
+    redirect_uri: redirectUri(c.req.url),
+  };
+  const result = await fetchJSON(token_endpoint, {
     method: "POST",
-    body: new URLSearchParams({
-      code,
-      grant_type: "authorization_code",
-      client_id,
-      client_secret,
-      redirect_uri: redirectUri(c.req.url),
-    }),
+    body: new URLSearchParams(params),
   });
-
-  const result = await res.json();
   const { access_token } = result;
   if (access_token) setCookie(c, "pg6301_token", access_token);
   return c.redirect("/profile");
@@ -72,14 +70,11 @@ app.get("/api/login/:idProvider/start", async (c) => {
 
   const { client_id } = client_configuration;
 
-  return c.redirect(
-    authorization_endpoint +
-      "?" +
-      new URLSearchParams({
-        response_type: "code",
-        scope: "openid profile email",
-        redirect_uri: redirectUri(c.req.url),
-        client_id,
-      }),
-  );
+  const params = {
+    response_type: "code",
+    scope: "openid profile email",
+    redirect_uri: redirectUri(c.req.url),
+    client_id,
+  };
+  return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
 });
