@@ -4,7 +4,6 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
-app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
@@ -96,3 +95,6 @@ app.get("/api/login/end_session", (c) => {
   });
   return c.redirect("/");
 });
+
+app.use("*", serveStatic({ root: "../dist" }));
+app.get("*", serveStatic({ path: "../dist/index.html" }));
