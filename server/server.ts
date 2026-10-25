@@ -13,7 +13,7 @@ const client_configurations: Record<
   { client_id: string; client_secret: string; discovery_doc: string }
 > = {
   linkedin: {
-    client_id: "",
+    client_id: "78ggt9z21t62rj",
     client_secret: process.env.LINKEDIN_CLIENT_SECRET!,
     discovery_doc:
       "https://www.linkedin.com/oauth/.well-known/openid-configuration",
@@ -26,21 +26,23 @@ const client_configurations: Record<
     client_secret: process.env.GOOGLE_CLIENT_SECRET!,
   },
 };
+function redirectUri(base: string, url: string) {
+  return new URL(url, base).toString();
+}
 
-app.get("/api/userinfo", async (c) => {
-  const idProvider = Object.keys(client_configurations).find((idp) =>
-    getCookie(c, `${idp}_access_token`),
-  );
-  if (!idProvider) return c.json({ error: "User is not logged in" }, 401);
+app.get("/api/login/:idProvider/start", async (c) => {
+  const { idProvider } = c.req.param();
 
-  const access_token = getCookie(c, `${idProvider}_access_token`);
-  const { discovery_doc } = client_configurations["google"]!;
-  const { userinfo_endpoint } = await fetchJSON(discovery_doc);
-  return c.json(
-    await fetchJSON(userinfo_endpoint, {
-      headers: { Authorization: `Bearer ${access_token}` },
-    }),
-  );
+  const { client_id, discovery_doc } = client_configurations[idProvider]!;
+  const { authorization_endpoint } = await fetchJSON(discovery_doc);
+
+  const params = {
+    response_type: "code",
+    scope: "openid profile email",
+    redirect_uri: redirectUri(c.req.url, `/api/login/${idProvider}/complete`),
+    client_id,
+  };
+  return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
 });
 
 async function fetchJSON(url: string, init?: RequestInit) {
@@ -61,7 +63,7 @@ app.get("/api/login/:idProvider/complete", async (c) => {
     grant_type: "authorization_code",
     client_id,
     client_secret,
-    redirect_uri: redirectUri(c.req.url),
+    redirect_uri: redirectUri(c.req.url, `/api/login/${idProvider}/complete`),
   };
   const result = await fetchJSON(token_endpoint, {
     method: "POST",
@@ -72,23 +74,20 @@ app.get("/api/login/:idProvider/complete", async (c) => {
   return c.redirect("/profile");
 });
 
-function redirectUri(base: string) {
-  return new URL("/api/login/google/complete", base).toString();
-}
+app.get("/api/userinfo", async (c) => {
+  const idProvider = Object.keys(client_configurations).find((idp) =>
+    getCookie(c, `${idp}_access_token`),
+  );
+  if (!idProvider) return c.json({ error: "User is not logged in" }, 401);
 
-app.get("/api/login/:idProvider/start", async (c) => {
-  const { idProvider } = c.req.param();
-
-  const { client_id, discovery_doc } = client_configurations[idProvider]!;
-  const { authorization_endpoint } = await fetchJSON(discovery_doc);
-
-  const params = {
-    response_type: "code",
-    scope: "openid profile email",
-    redirect_uri: redirectUri(c.req.url),
-    client_id,
-  };
-  return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
+  const access_token = getCookie(c, `${idProvider}_access_token`);
+  const { discovery_doc } = client_configurations[idProvider]!;
+  const { userinfo_endpoint } = await fetchJSON(discovery_doc);
+  return c.json(
+    await fetchJSON(userinfo_endpoint, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    }),
+  );
 });
 
 app.get("/api/login/end_session", (c) => {

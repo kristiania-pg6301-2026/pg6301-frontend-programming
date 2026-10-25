@@ -57,7 +57,12 @@ function LoginPage() {
   return (
     <>
       <h1>Please Log In</h1>
-      <a href={"/api/login/google/start"}>Log in with Google</a>
+      <div>
+        <a href={"/api/login/google/start"}>Log in with Google</a>
+      </div>
+      <div>
+        <a href={"/api/login/linkedin/start"}>Log in with LinkedIn</a>
+      </div>
     </>
   );
 }
