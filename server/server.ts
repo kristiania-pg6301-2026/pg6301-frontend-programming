@@ -26,6 +26,9 @@ const client_configurations: Record<
   },
 };
 function redirectUri(base: string, url: string) {
+  if (base.startsWith("http://") && !base.startsWith("http://localhost")) {
+    base = base.replace("http://", "https://");
+  }
   return new URL(url, base).toString();
 }
 
