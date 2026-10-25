@@ -21,7 +21,7 @@ const client_configurations: Record<
     discovery_doc:
       "https://accounts.google.com/.well-known/openid-configuration",
     client_id:
-      "34816606807-c2lql016g0opseg5kcccr2k6id4rplpo.apps.googleusercontent.com",
+      "34816606807-7snj16t94726hrcoa9h1se1n2e46s2ps.apps.googleusercontent.com",
     client_secret: process.env.GOOGLE_CLIENT_SECRET!,
   },
 };
