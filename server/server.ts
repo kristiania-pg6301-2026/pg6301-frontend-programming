@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { getCookie, setCookie } from "hono/cookie";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
 app.use("*", serveStatic({ root: "../dist" }));
@@ -89,4 +89,11 @@ app.get("/api/login/:idProvider/start", async (c) => {
     client_id,
   };
   return c.redirect(`${authorization_endpoint}?${new URLSearchParams(params)}`);
+});
+
+app.get("/api/login/end_session", (c) => {
+  Object.keys(client_configurations).forEach((idp) => {
+    deleteCookie(c, `${idp}_access_token`);
+  });
+  return c.redirect("/");
 });

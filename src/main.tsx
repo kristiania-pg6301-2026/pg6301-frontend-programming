@@ -29,6 +29,9 @@ function ProfilePage() {
   return (
     <>
       <h1>Your profile: {userinfo?.name}</h1>
+      <div>
+        <a href="/api/login/end_session">Log out</a>
+      </div>
       {userinfo?.picture && (
         <div>
           <img src={userinfo.picture} />
