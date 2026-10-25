@@ -8,19 +8,34 @@ app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
-const client_configuration = {
-  client_id:
-    "34816606807-c2lql016g0opseg5kcccr2k6id4rplpo.apps.googleusercontent.com",
-  client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+const client_configurations: Record<
+  string,
+  { client_id: string; client_secret: string; discovery_doc: string }
+> = {
+  linkedin: {
+    client_id: "",
+    client_secret: process.env.LINKEDIN_CLIENT_SECRET!,
+    discovery_doc:
+      "https://www.linkedin.com/oauth/.well-known/openid-configuration",
+  },
+  google: {
+    discovery_doc:
+      "https://accounts.google.com/.well-known/openid-configuration",
+    client_id:
+      "34816606807-c2lql016g0opseg5kcccr2k6id4rplpo.apps.googleusercontent.com",
+    client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+  },
 };
 
 app.get("/api/userinfo", async (c) => {
-  const access_token = getCookie(c, "pg6301_token");
-  if (!access_token) return c.json({ error: "User is not logged in" }, 401);
-
-  const { userinfo_endpoint } = await fetchJSON(
-    "https://accounts.google.com/.well-known/openid-configuration",
+  const idProvider = Object.keys(client_configurations).find((idp) =>
+    getCookie(c, `${idp}_access_token`),
   );
+  if (!idProvider) return c.json({ error: "User is not logged in" }, 401);
+
+  const access_token = getCookie(c, `${idProvider}_access_token`);
+  const { discovery_doc } = client_configurations["google"]!;
+  const { userinfo_endpoint } = await fetchJSON(discovery_doc);
   return c.json(
     await fetchJSON(userinfo_endpoint, {
       headers: { Authorization: `Bearer ${access_token}` },
@@ -34,13 +49,13 @@ async function fetchJSON(url: string, init?: RequestInit) {
 }
 
 app.get("/api/login/:idProvider/complete", async (c) => {
+  const { idProvider } = c.req.param();
   const { code } = c.req.query();
   if (!code) return c.json(c.req.query());
 
-  const { token_endpoint } = await fetchJSON(
-    "https://accounts.google.com/.well-known/openid-configuration",
-  );
-  const { client_id, client_secret } = client_configuration;
+  const { client_id, client_secret, discovery_doc } =
+    client_configurations[idProvider]!;
+  const { token_endpoint } = await fetchJSON(discovery_doc);
   const params = {
     code,
     grant_type: "authorization_code",
@@ -53,7 +68,7 @@ app.get("/api/login/:idProvider/complete", async (c) => {
     body: new URLSearchParams(params),
   });
   const { access_token } = result;
-  if (access_token) setCookie(c, "pg6301_token", access_token);
+  if (access_token) setCookie(c, `${idProvider}_access_token`, access_token);
   return c.redirect("/profile");
 });
 
@@ -64,11 +79,8 @@ function redirectUri(base: string) {
 app.get("/api/login/:idProvider/start", async (c) => {
   const { idProvider } = c.req.param();
 
-  const { authorization_endpoint } = await fetchJSON(
-    "https://accounts.google.com/.well-known/openid-configuration",
-  );
-
-  const { client_id } = client_configuration;
+  const { client_id, discovery_doc } = client_configurations[idProvider]!;
+  const { authorization_endpoint } = await fetchJSON(discovery_doc);
 
   const params = {
     response_type: "code",
