@@ -105,5 +105,8 @@ async function fetchJSON(url: string, init?: RequestInit) {
 }
 
 function redirectUri(url: string, base: string) {
+  if (base.startsWith("http://") && !base.startsWith("http://localhost")) {
+    base = base.replace("http://", "https://");
+  }
   return new URL(url, base).toString();
 }
