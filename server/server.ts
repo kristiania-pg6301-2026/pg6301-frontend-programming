@@ -71,22 +71,32 @@ app.get("/api/login/:idProvider/complete", async (c) => {
     return c.json(result);
   }
   const { access_token } = result;
-  if (access_token) setCookie(c, "pg6301_token", access_token);
+  if (access_token) setCookie(c, `${idProvider}_token`, access_token);
   return c.redirect("/profile");
 });
 
 app.get("/api/userinfo", async (c) => {
-  const access_token = getCookie(c, "pg6301_token");
+  const idProvider = Object.keys(idProviders).find((i) =>
+    getCookie(c, `${i}_token`),
+  );
+  if (!idProvider) return c.json({ error: "User is not logged in" }, 401);
+  const access_token = getCookie(c, `${idProvider}_token`);
   if (!access_token) return c.json({ error: "User is not logged in" }, 401);
 
-  const { userinfo_endpoint } = await fetchJSON(
-    "https://www.linkedin.com/oauth/.well-known/openid-configuration",
-  );
+  const config = idProviders[idProvider]!;
+  const { discovery_endpoint } = config;
+
+  const { userinfo_endpoint } = await fetchJSON(discovery_endpoint);
   return c.json(
     await fetchJSON(userinfo_endpoint, {
       headers: { Authorization: `Bearer ${access_token}` },
     }),
   );
+});
+
+app.get("/api/login/end_session", (c) => {
+  Object.keys(idProviders).forEach((i) => deleteCookie(c, `${i}_token`));
+  return c.redirect("/");
 });
 
 async function fetchJSON(url: string, init?: RequestInit) {
@@ -97,8 +107,3 @@ async function fetchJSON(url: string, init?: RequestInit) {
 function redirectUri(url: string, base: string) {
   return new URL(url, base).toString();
 }
-
-app.get("/api/login/end_session", (c) => {
-  deleteCookie(c, "pg6301_token");
-  return c.redirect("/");
-});
