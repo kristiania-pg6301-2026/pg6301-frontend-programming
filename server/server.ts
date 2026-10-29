@@ -4,8 +4,6 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
-// `serveStatic` makes Hono serve the output from `vite build`
-app.use("*", serveStatic({ root: "../dist" }));
 
 serve({ fetch: app.fetch, port: 8080 });
 
@@ -110,3 +108,6 @@ function redirectUri(url: string, base: string) {
   }
   return new URL(url, base).toString();
 }
+
+app.use("*", serveStatic({ root: "../dist" }));
+app.get("*", serveStatic({ path: "../dist/index.html" }));
