@@ -15,9 +15,11 @@ mongo.connect().then((client) => {
   const movieDb = client.db("sample_mflix");
 
   app.get("/api/movies", async (c) => {
+    const country = c.req.query().country || "Norway";
     const movies = await movieDb
       .collection("movies")
-      .find()
+      .find({ countries: [country], year: { $gt: 2010 } })
+      .sort("imdb.rating", "desc")
       .limit(10)
       .toArray();
     return c.json(movies);
