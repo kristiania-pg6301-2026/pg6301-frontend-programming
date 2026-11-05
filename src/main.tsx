@@ -7,76 +7,32 @@ interface TaskItem {
   completed: boolean;
 }
 
+interface Movie {
+  _id: string;
+  title: string;
+  year: number;
+}
+
 function Application() {
-  const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
 
-  async function loadTasks() {
-    const res = await fetch("/api/tasks");
-    setTasks(await res.json());
+  async function loadMovies() {
+    const res = await fetch("/api/movies");
+    setMovies(await res.json());
   }
-
-  const [description, setDescription] = useState("");
 
   useEffect(() => {
-    loadTasks();
+    loadMovies();
   }, []);
-
-  async function handleSubmit(event: React.SubmitEvent) {
-    event.preventDefault();
-
-    await fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify({ description, completed: false }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    await loadTasks();
-  }
-
-  async function handleChangeTask(_id: string, delta: Partial<TaskItem>) {
-    await fetch(`/api/tasks/${_id}`, {
-      method: "PUT",
-      body: JSON.stringify(delta),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    await loadTasks();
-  }
 
   return (
     <>
-      <h1>Task application</h1>
+      <h1>Movies</h1>
 
-      <h2>New task</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div>
-          <button>Save</button>
-        </div>
-      </form>
-
-      <h2>List tasks</h2>
-      {tasks.map((t) => (
+      <h2>List movies</h2>
+      {movies.map((t) => (
         <li key={t._id}>
-          <label>
-            <input
-              type={"checkbox"}
-              checked={t.completed}
-              onChange={(e) =>
-                handleChangeTask(t._id, { completed: e.target.checked })
-              }
-            />
-            {t.description}
-          </label>
+          <label>{t.title}</label>
         </li>
       ))}
     </>
